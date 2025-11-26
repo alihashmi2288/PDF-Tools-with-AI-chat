@@ -30,7 +30,7 @@ export function Navbar() {
                         </SheetTrigger>
                         <SheetContent side="left" className="w-[240px] sm:w-[300px]">
                             <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
-                            <div className="flex flex-col gap-6 py-4">
+                            <div className="flex flex-col gap-6 py-4 px-6">
                                 <Link href="/" className="flex items-center space-x-2" onClick={() => setIsOpen(false)}>
                                     <div className="bg-primary/10 p-2 rounded-lg">
                                         <FileText className="h-6 w-6 text-primary" />
