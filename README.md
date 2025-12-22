@@ -1,19 +1,40 @@
-# PDF Web App
+# PDF AI Master
 
-A modern, responsive web application for managing PDF files, featuring AI-powered tools and a sleek user interface.
+A modern, responsive web application for managing PDF files, featuring AI-powered tools, document converters, and a sleek user interface.
 
 ## Features
 
-- **PDF Tools**: Comprehensive suite of tools to Merge, Split, Compress, Edit, and perform OCR (Optical Character Recognition) on PDF files.
-- **AI Integration**: Chat with your PDFs using Google's Gemini AI to summarize content, ask questions, and extract insights.
-- **Modern UI**: Built with a responsive design, featuring smooth animations, a polished blue/cyan theme, and an intuitive user experience.
+### PDF Tools
+- **Merge PDFs**: Combine multiple PDF documents into one
+- **Split PDF**: Extract specific pages or separate documents
+- **Compress PDF**: Optimize file size without quality loss
+- **Edit PDF**: Add text, shapes, and images to PDFs
+- **OCR**: Extract text from scanned images and PDFs
+
+### Document Converters
+- **Images to PDF**: Convert JPG, PNG, and other images to PDF
+- **DOCX to PDF**: Convert Word documents to PDF
+- **Excel to PDF**: Convert spreadsheets to PDF with table formatting
+- **CSV to PDF**: Convert CSV data to formatted PDF tables
+- **Markdown to PDF**: Convert Markdown files to formatted PDFs
+
+### AI Integration
+- **Chat with PDFs**: Use Google's Gemini AI to summarize content, ask questions, and extract insights from your documents
+
+### Modern UI
+- Responsive design for desktop and mobile
+- Dark/Light mode support
+- Smooth animations and transitions
+- Polished blue/cyan theme
+- Intuitive user experience
 
 ## Tech Stack
 
 - **Framework**: [Next.js 16](https://nextjs.org/)
 - **Language**: [TypeScript](https://www.typescriptlang.org/)
 - **Styling**: [Tailwind CSS 4](https://tailwindcss.com/), [shadcn/ui](https://ui.shadcn.com/)
-- **PDF Processing**: [pdf-lib](https://pdf-lib.js.org/), [pdfjs-dist](https://mozilla.github.io/pdf.js/)
+- **PDF Processing**: [pdf-lib](https://pdf-lib.js.org/), [pdfjs-dist](https://mozilla.github.io/pdf.js/), [react-pdf](https://react-pdf.org/)
+- **Document Conversion**: [mammoth](https://github.com/mwilliamson/mammoth.js) (DOCX), [xlsx](https://sheetjs.com/) (Excel), [papaparse](https://www.papaparse.com/) (CSV), [marked](https://marked.js.org/) (Markdown), [jsPDF](https://github.com/parallax/jsPDF)
 - **AI**: [Google Generative AI (Gemini)](https://ai.google.dev/)
 - **OCR**: [Tesseract.js](https://tesseract.projectnaptha.com/)
 
