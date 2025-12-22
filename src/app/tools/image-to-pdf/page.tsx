@@ -43,7 +43,7 @@ export default function ImageToPdfPage() {
 
         try {
             const pdfBytes = await convertImagesToPdf(files);
-            const blob = new Blob([pdfBytes], { type: "application/pdf" });
+            const blob = new Blob([new Uint8Array(pdfBytes)], { type: "application/pdf" });
             const url = URL.createObjectURL(blob);
             setImageToPdf({ pdfUrl: url });
         } catch (error) {
