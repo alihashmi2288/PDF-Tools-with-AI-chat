@@ -6,7 +6,7 @@ import { Card } from "@/components/ui/card";
 import { FileSpreadsheet, Download, Loader2 } from "lucide-react";
 import Papa from "papaparse";
 import jsPDF from "jspdf";
-import autoTable from "jspdf-autotable";
+import "jspdf-autotable";
 
 export default function CsvToPdfPage() {
     const [file, setFile] = useState<File | null>(null);

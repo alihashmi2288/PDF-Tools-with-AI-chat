@@ -6,7 +6,7 @@ import { Card } from "@/components/ui/card";
 import { FileSpreadsheet, Download, Loader2 } from "lucide-react";
 import * as XLSX from "xlsx";
 import jsPDF from "jspdf";
-import autoTable from "jspdf-autotable";
+import "jspdf-autotable";
 
 export default function ExcelToPdfPage() {
     const [file, setFile] = useState<File | null>(null);
