@@ -48,7 +48,7 @@ export default function CsvToPdfPage() {
                     pdf.save(file.name.replace(/\.csv$/i, ".pdf"));
                     setConverting(false);
                 },
-                error: (error) => {
+                error: (error: any) => {
                     console.error("Parse error:", error);
                     alert("Failed to parse CSV file");
                     setConverting(false);
