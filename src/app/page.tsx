@@ -28,7 +28,7 @@ export default function Home() {
         <div className="flex flex-col items-center text-center space-y-8 max-w-5xl mx-auto pt-8">
           <div className="inline-flex items-center rounded-full border px-4 py-1.5 text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-blue-50 text-blue-700 hover:bg-blue-100 dark:bg-blue-900/30 dark:text-blue-300 shadow-sm">
             <Sparkles className="mr-2 h-4 w-4" />
-            <span>Powered by Advanced AI</span>
+            <span>We love working with PDFs</span>
           </div>
 
           <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl leading-tight">

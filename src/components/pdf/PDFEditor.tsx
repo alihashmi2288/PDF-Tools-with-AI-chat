@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 import { AVAILABLE_FONTS, FontDefinition } from "@/lib/fonts";
 
 // Configure worker
-pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
+pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.mjs';
 
 interface EditorElement {
     id: string;
@@ -78,9 +78,12 @@ export function PDFEditor({ file }: PDFEditorProps) {
         } : { r: 0, g: 0, b: 0 };
     };
 
+    // Helper for ID generation
+    const generateId = () => Math.random().toString(36).substring(2, 9) + Date.now().toString(36);
+
     const addText = () => {
         const newElement: EditorElement = {
-            id: crypto.randomUUID(),
+            id: generateId(),
             type: 'text',
             x: 50,
             y: 50,
@@ -100,7 +103,7 @@ export function PDFEditor({ file }: PDFEditorProps) {
 
     const addRect = () => {
         const newElement: EditorElement = {
-            id: crypto.randomUUID(),
+            id: generateId(),
             type: 'rect',
             x: 40,
             y: 40,
@@ -122,7 +125,7 @@ export function PDFEditor({ file }: PDFEditorProps) {
         reader.onload = (event) => {
             const base64 = event.target?.result as string;
             const newElement: EditorElement = {
-                id: crypto.randomUUID(),
+                id: generateId(),
                 type: 'image',
                 x: 30,
                 y: 30,

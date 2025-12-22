@@ -21,6 +21,12 @@ interface EditState {
     file: File | null;
 }
 
+interface ImageToPdfState {
+    files: File[];
+    pdfUrl: string | null;
+    isConverting: boolean;
+}
+
 interface GlobalToolContextType {
     ocr: OCRState;
     setOCR: (state: Partial<OCRState>) => void;
@@ -28,6 +34,8 @@ interface GlobalToolContextType {
     setMerge: (state: Partial<MergeState>) => void;
     edit: EditState;
     setEdit: (state: Partial<EditState>) => void;
+    imageToPdf: ImageToPdfState;
+    setImageToPdf: (state: Partial<ImageToPdfState>) => void;
 }
 
 const GlobalToolContext = createContext<GlobalToolContextType | undefined>(undefined);
@@ -52,6 +60,12 @@ export function GlobalToolProvider({ children }: { children: ReactNode }) {
         file: null
     });
 
+    const [imageToPdf, setImageToPdfState] = useState<ImageToPdfState>({
+        files: [],
+        pdfUrl: null,
+        isConverting: false
+    });
+
     const setOCR = (updates: Partial<OCRState>) => {
         setOCRState(prev => ({ ...prev, ...updates }));
     };
@@ -64,8 +78,12 @@ export function GlobalToolProvider({ children }: { children: ReactNode }) {
         setEditState(prev => ({ ...prev, ...updates }));
     };
 
+    const setImageToPdf = (updates: Partial<ImageToPdfState>) => {
+        setImageToPdfState(prev => ({ ...prev, ...updates }));
+    };
+
     return (
-        <GlobalToolContext.Provider value={{ ocr, setOCR, merge, setMerge, edit, setEdit }}>
+        <GlobalToolContext.Provider value={{ ocr, setOCR, merge, setMerge, edit, setEdit, imageToPdf, setImageToPdf }}>
             {children}
         </GlobalToolContext.Provider>
     );

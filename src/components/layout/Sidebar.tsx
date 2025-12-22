@@ -2,7 +2,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import { Menu, FileText, MessageSquare, Scissors, Combine, FileType, ScanText, Minimize2 } from "lucide-react"
+import { Menu, FileText, MessageSquare, Scissors, Combine, FileType, ScanText, Minimize2, ImagePlus, FileSpreadsheet, FileCode } from "lucide-react"
 
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> { }
 
@@ -55,6 +55,36 @@ export function Sidebar({ className }: SidebarProps) {
                             <Button variant="ghost" className="w-full justify-start">
                                 <FileText className="mr-2 h-4 w-4" />
                                 Edit PDF
+                            </Button>
+                        </Link>
+                        <Link href="/tools/image-to-pdf">
+                            <Button variant="ghost" className="w-full justify-start">
+                                <ImagePlus className="mr-2 h-4 w-4" />
+                                Images to PDF
+                            </Button>
+                        </Link>
+                        <Link href="/tools/docx-to-pdf">
+                            <Button variant="ghost" className="w-full justify-start">
+                                <FileText className="mr-2 h-4 w-4" />
+                                DOCX to PDF
+                            </Button>
+                        </Link>
+                        <Link href="/tools/excel-to-pdf">
+                            <Button variant="ghost" className="w-full justify-start">
+                                <FileSpreadsheet className="mr-2 h-4 w-4" />
+                                Excel to PDF
+                            </Button>
+                        </Link>
+                        <Link href="/tools/csv-to-pdf">
+                            <Button variant="ghost" className="w-full justify-start">
+                                <FileSpreadsheet className="mr-2 h-4 w-4" />
+                                CSV to PDF
+                            </Button>
+                        </Link>
+                        <Link href="/tools/markdown-to-pdf">
+                            <Button variant="ghost" className="w-full justify-start">
+                                <FileCode className="mr-2 h-4 w-4" />
+                                Markdown to PDF
                             </Button>
                         </Link>
                     </div>

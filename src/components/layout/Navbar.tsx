@@ -57,6 +57,11 @@ export function Navbar() {
                                             <Link href="/tools/compress" className="text-sm text-muted-foreground hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>Compress PDF</Link>
                                             <Link href="/tools/edit" className="text-sm text-muted-foreground hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>Edit PDF</Link>
                                             <Link href="/tools/ocr" className="text-sm text-muted-foreground hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>OCR (Image to Text)</Link>
+                                            <Link href="/tools/image-to-pdf" className="text-sm text-muted-foreground hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>Images to PDF</Link>
+                                            <Link href="/tools/docx-to-pdf" className="text-sm text-muted-foreground hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>DOCX to PDF</Link>
+                                            <Link href="/tools/excel-to-pdf" className="text-sm text-muted-foreground hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>Excel to PDF</Link>
+                                            <Link href="/tools/csv-to-pdf" className="text-sm text-muted-foreground hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>CSV to PDF</Link>
+                                            <Link href="/tools/markdown-to-pdf" className="text-sm text-muted-foreground hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>Markdown to PDF</Link>
                                         </div>
                                     </div>
 
@@ -109,6 +114,21 @@ export function Navbar() {
                                 </DropdownMenuItem>
                                 <DropdownMenuItem asChild>
                                     <Link href="/tools/ocr" className="cursor-pointer">OCR (Image to Text)</Link>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem asChild>
+                                    <Link href="/tools/image-to-pdf" className="cursor-pointer">Images to PDF</Link>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem asChild>
+                                    <Link href="/tools/docx-to-pdf" className="cursor-pointer">DOCX to PDF</Link>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem asChild>
+                                    <Link href="/tools/excel-to-pdf" className="cursor-pointer">Excel to PDF</Link>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem asChild>
+                                    <Link href="/tools/csv-to-pdf" className="cursor-pointer">CSV to PDF</Link>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem asChild>
+                                    <Link href="/tools/markdown-to-pdf" className="cursor-pointer">Markdown to PDF</Link>
                                 </DropdownMenuItem>
                             </DropdownMenuContent>
                         </DropdownMenu>
