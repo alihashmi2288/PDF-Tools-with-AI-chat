@@ -25,9 +25,7 @@ export async function splitPDF(pdfBytes: Uint8Array, pageIndices: number[]): Pro
 export async function extractTextFromPDF(file: File): Promise<string> {
     try {
         const { pdfjs } = await import('react-pdf');
-        if (typeof window !== 'undefined' && !pdfjs.GlobalWorkerOptions.workerSrc) {
-            pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
-        }
+        pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
         const arrayBuffer = await file.arrayBuffer();
         const pdf = await pdfjs.getDocument(arrayBuffer).promise;
