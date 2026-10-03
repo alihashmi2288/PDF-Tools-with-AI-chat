@@ -137,3 +137,24 @@
   background-image: radial-gradient(color-mix(in oklch, var(--foreground) 9%, transparent) 1px, transparent 1px);
   background-size: 24px 24px;
 }
+
+@keyframes scanner-sweep {
+  0% { transform: translateY(0); opacity: 0; }
+  20% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { transform: translateY(110px); opacity: 0; }
+}
+
+.animate-scanner {
+  animation: scanner-sweep 3.2s ease-in-out infinite;
+}
+
+@keyframes gentle-float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-3px); }
+}
+
+.animate-float {
+  animation: gentle-float 6s ease-in-out infinite;
+}
+

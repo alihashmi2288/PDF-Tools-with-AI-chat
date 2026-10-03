@@ -38,7 +38,7 @@ export function Navbar() {
     const pathname = usePathname();
 
     const navLinks = [
-        { href: "/", label: "Workspace" },
+        { href: "/", label: "Home" },
         { href: "/documents", label: "Viewer & Editor" },
         { href: "/chat", label: "AI Document Chat", icon: Sparkles },
     ];
