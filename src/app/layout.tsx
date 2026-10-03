@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
-import { Sidebar } from "@/components/layout/Sidebar";
+import { AppShell } from "@/components/layout/AppShell";
 import { Footer } from "@/components/layout/Footer";
 import { ThemeProvider } from "@/components/theme-provider";
 import { PDFProvider } from "@/context/PDFContext";
@@ -19,8 +19,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "PDF AI Master",
-  description: "Manage and chat with your PDFs using AI",
+  title: "PDF AI Master – Precision Document Workstation & AI",
+  description: "Next-generation client-side PDF utility suite. Chat with documents, merge, split, compress, OCR, and convert with 100% privacy.",
 };
 
 export default function RootLayout({
@@ -31,23 +31,20 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col bg-background text-foreground`}
       >
         <ThemeProvider
           attribute="class"
-          defaultTheme="light"
-          enableSystem={false}
+          defaultTheme="dark"
+          enableSystem
           disableTransitionOnChange
         >
           <PDFProvider>
             <GlobalToolProvider>
               <Navbar />
-              <div className="flex flex-1 container mx-auto">
-                <Sidebar />
-                <main className="flex-1 p-4 md:p-6">
-                  {children}
-                </main>
-              </div>
+              <AppShell>
+                {children}
+              </AppShell>
               <Footer />
             </GlobalToolProvider>
           </PDFProvider>

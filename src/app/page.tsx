@@ -1,167 +1,526 @@
+'use client';
+
+import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useDropzone } from "react-dropzone";
 import { Button } from "@/components/ui/button";
+import { usePDFContext } from "@/context/PDFContext";
+import { extractTextFromPDF } from "@/lib/pdf-utils";
 import {
   FileText,
   Sparkles,
-  Zap,
-  Merge,
-  Split,
-  Minimize2,
-  Edit,
-  ScanText,
   ArrowRight,
-  CheckCircle2
+  ShieldCheck,
+  Cpu,
+  Lock,
+  Combine,
+  Scissors,
+  Minimize2,
+  SlidersHorizontal,
+  ScanText,
+  ImagePlus,
+  FileSpreadsheet,
+  FileCode,
+  Upload,
+  CheckCircle2,
+  X,
+  Zap
 } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export default function Home() {
+  const router = useRouter();
+  const { setFile, setPdfText } = usePDFContext();
+  const [droppedFile, setDroppedFile] = useState<File | null>(null);
+  const [isProcessing, setIsProcessing] = useState(false);
+
+  const formatFileSize = (bytes: number) => {
+    if (bytes === 0) return '0 B';
+    const k = 1024;
+    const sizes = ['B', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
+  };
+
+  const onDrop = async (acceptedFiles: File[]) => {
+    if (acceptedFiles.length === 0) return;
+    const file = acceptedFiles[0];
+    setDroppedFile(file);
+
+    if (file.type === "application/pdf") {
+      setIsProcessing(true);
+      try {
+        setFile(file);
+        const text = await extractTextFromPDF(file);
+        setPdfText(text);
+      } catch (err) {
+        console.error("Text extraction notice:", err);
+      } finally {
+        setIsProcessing(false);
+      }
+    }
+  };
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    multiple: false,
+  });
+
+  const clearDroppedFile = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setDroppedFile(null);
+  };
+
+  const routeToFileAction = (path: string) => {
+    if (droppedFile && droppedFile.type === "application/pdf") {
+      setFile(droppedFile);
+    }
+    router.push(path);
+  };
+
   return (
-    <div className="relative flex flex-col items-center justify-center min-h-[calc(100vh-3.5rem)] overflow-hidden bg-background">
+    <div className="relative min-h-screen bg-background text-foreground flex flex-col items-center">
+      {/* Subtle architectural background texture */}
+      <div className="absolute inset-0 -z-10 pointer-events-none architect-grid opacity-70" />
 
-      {/* Background Grid Pattern */}
-      <div className="absolute inset-0 -z-10 h-full w-full bg-white dark:bg-slate-950 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px]">
-        <div className="absolute left-0 right-0 top-0 -z-10 m-auto h-[310px] w-[310px] rounded-full bg-blue-400 opacity-20 blur-[100px] dark:bg-blue-900"></div>
-      </div>
-
-      <div className="container px-4 md:px-6 py-12 md:py-24 space-y-24">
-
-        {/* Hero Section */}
-        <div className="flex flex-col items-center text-center space-y-8 max-w-5xl mx-auto pt-8">
-          <div className="inline-flex items-center rounded-full border px-4 py-1.5 text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-blue-50 text-blue-700 hover:bg-blue-100 dark:bg-blue-900/30 dark:text-blue-300 shadow-sm">
-            <Sparkles className="mr-2 h-4 w-4" />
-            <span>We love working with PDFs</span>
+      <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 py-10 md:py-16 space-y-16">
+        
+        {/* Section 1: Hero & Command Station */}
+        <section className="space-y-8 text-center max-w-3xl mx-auto">
+          {/* Engineering Pill */}
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-medium bg-secondary/80 border border-border/70 text-foreground">
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+            <span>100% Client-Side Engine • Zero Cloud Logs</span>
           </div>
 
-          <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl leading-tight">
-            Enhance your PDF Experience with <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-cyan-500 to-teal-400 animate-gradient-x">Intelligent Tools</span>
-          </h1>
-
-          <p className="mx-auto max-w-[800px] text-muted-foreground text-lg md:text-xl leading-relaxed">
-            Experience the ultimate PDF workspace. Chat with your documents, edit with ease, and unlock the power of intelligent tools designed for modern professionals.
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-5 w-full justify-center pt-4">
-            <Link href="/documents">
-              <Button size="lg" className="h-14 px-10 w-full sm:w-auto text-lg font-semibold shadow-xl shadow-blue-500/20 hover:shadow-blue-500/30 hover:-translate-y-0.5 transition-all duration-300 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 border-0">
-                Get Started Now <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            </Link>
-            <Link href="/about">
-              <Button variant="outline" size="lg" className="h-14 px-10 w-full sm:w-auto text-lg font-medium hover:bg-secondary/50 border-2 hover:border-blue-200 dark:hover:border-blue-800 transition-all duration-300">
-                Meet the Developer
-              </Button>
-            </Link>
+          <div className="space-y-4">
+            <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-foreground leading-[1.12]">
+              Precision Document Studio & Local Intelligence
+            </h1>
+            <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto font-normal leading-relaxed">
+              Edit, merge, compress, extract text, and converse with documents entirely inside your browser sandbox. Instant execution with WebAssembly.
+            </p>
           </div>
 
-          <div className="flex flex-wrap justify-center gap-x-8 gap-y-4 text-sm font-medium text-muted-foreground pt-8">
-            <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/30 border border-border/50">
-              <CheckCircle2 className="h-4 w-4 text-green-500" />
-              <span>Free Forever</span>
-            </div>
-            <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/30 border border-border/50">
-              <CheckCircle2 className="h-4 w-4 text-blue-500" />
-              <span>Secure Processing</span>
-            </div>
-            <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/30 border border-border/50">
-              <CheckCircle2 className="h-4 w-4 text-purple-500" />
-              <span>No Signup Required</span>
+          {/* Interactive Omni-Dropzone */}
+          <div className="pt-2">
+            <div
+              {...getRootProps()}
+              className={cn(
+                "relative group rounded-xl border transition-all duration-200 p-6 sm:p-8 cursor-pointer text-left bg-card/60 backdrop-blur-md shadow-xs",
+                isDragActive
+                  ? "border-foreground bg-accent/30 ring-2 ring-foreground/10"
+                  : "border-border/80 hover:border-foreground/40 hover:bg-card/90"
+              )}
+            >
+              <input {...getInputProps()} />
+
+              {!droppedFile ? (
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
+                  <div className="flex items-center gap-4">
+                    <div className="h-12 w-12 rounded-lg bg-secondary flex items-center justify-center shrink-0 border border-border/60 group-hover:scale-105 transition-transform">
+                      <Upload className="h-5 w-5 text-foreground" />
+                    </div>
+                    <div>
+                      <p className="font-semibold text-sm sm:text-base text-foreground">
+                        Drop any document here, or <span className="underline decoration-border underline-offset-4">browse</span>
+                      </p>
+                      <p className="text-xs text-muted-foreground mt-0.5">
+                        Supports PDF, Word (.docx), Excel (.xlsx), CSV, Markdown, and Images
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2 shrink-0">
+                    <span className="text-[11px] font-mono text-muted-foreground px-2 py-1 rounded bg-secondary/80 border border-border/50">
+                      WASM Ready
+                    </span>
+                    <Button size="sm" variant="default" className="pointer-events-none text-xs h-8">
+                      Select File
+                    </Button>
+                  </div>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="h-10 w-10 rounded-lg bg-secondary flex items-center justify-center shrink-0 border border-border/60">
+                        <FileText className="h-5 w-5 text-foreground" />
+                      </div>
+                      <div>
+                        <p className="font-semibold text-sm text-foreground truncate max-w-xs sm:max-w-md">
+                          {droppedFile.name}
+                        </p>
+                        <p className="text-xs font-mono text-muted-foreground tabular-nums">
+                          {formatFileSize(droppedFile.size)} • {droppedFile.type || "Document"}
+                        </p>
+                      </div>
+                    </div>
+
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="h-8 w-8 text-muted-foreground hover:text-foreground"
+                      onClick={clearDroppedFile}
+                    >
+                      <X className="h-4 w-4" />
+                    </Button>
+                  </div>
+
+                  {/* Contextual Action Shelf */}
+                  <div className="pt-2 border-t border-border/50 flex flex-wrap gap-2">
+                    <span className="text-xs text-muted-foreground self-center mr-1">Direct Actions:</span>
+                    
+                    {droppedFile.type === "application/pdf" ? (
+                      <>
+                        <Button 
+                          size="sm" 
+                          variant="secondary" 
+                          className="h-8 text-xs gap-1.5"
+                          onClick={() => routeToFileAction("/chat")}
+                        >
+                          <Sparkles className="h-3.5 w-3.5 text-blue-500" />
+                          Chat with AI
+                        </Button>
+                        <Button 
+                          size="sm" 
+                          variant="secondary" 
+                          className="h-8 text-xs gap-1.5"
+                          onClick={() => routeToFileAction("/documents")}
+                        >
+                          <FileText className="h-3.5 w-3.5" />
+                          View & Annotate
+                        </Button>
+                        <Button 
+                          size="sm" 
+                          variant="secondary" 
+                          className="h-8 text-xs gap-1.5"
+                          onClick={() => routeToFileAction("/tools/compress")}
+                        >
+                          <Minimize2 className="h-3.5 w-3.5" />
+                          Compress
+                        </Button>
+                        <Button 
+                          size="sm" 
+                          variant="secondary" 
+                          className="h-8 text-xs gap-1.5"
+                          onClick={() => routeToFileAction("/tools/split")}
+                        >
+                          <Scissors className="h-3.5 w-3.5" />
+                          Split
+                        </Button>
+                      </>
+                    ) : droppedFile.name.endsWith(".docx") ? (
+                      <Button 
+                        size="sm" 
+                        variant="default" 
+                        className="h-8 text-xs gap-1.5"
+                        onClick={() => router.push("/tools/docx-to-pdf")}
+                      >
+                        Convert DOCX to PDF
+                      </Button>
+                    ) : droppedFile.name.endsWith(".xlsx") ? (
+                      <Button 
+                        size="sm" 
+                        variant="default" 
+                        className="h-8 text-xs gap-1.5"
+                        onClick={() => router.push("/tools/excel-to-pdf")}
+                      >
+                        Convert Excel to PDF
+                      </Button>
+                    ) : droppedFile.name.endsWith(".csv") ? (
+                      <Button 
+                        size="sm" 
+                        variant="default" 
+                        className="h-8 text-xs gap-1.5"
+                        onClick={() => router.push("/tools/csv-to-pdf")}
+                      >
+                        Convert CSV to PDF Table
+                      </Button>
+                    ) : (
+                      <Button 
+                        size="sm" 
+                        variant="default" 
+                        className="h-8 text-xs gap-1.5"
+                        onClick={() => router.push("/tools/ocr")}
+                      >
+                        Scan with OCR
+                      </Button>
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
-        </div>
+        </section>
 
-        {/* Features Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-
-          <Link href="/chat" className="group">
-            <div className="h-full p-8 border rounded-2xl bg-card hover:border-blue-500/50 hover:shadow-xl hover:shadow-blue-500/5 transition-all duration-300 hover:-translate-y-1 relative overflow-hidden">
-              <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                <Sparkles className="h-24 w-24 text-blue-500" />
-              </div>
-              <div className="h-12 w-12 rounded-xl bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                <Sparkles className="h-6 w-6 text-blue-600 dark:text-blue-400" />
-              </div>
-              <h3 className="text-xl font-bold mb-3">AI Chat Assistant</h3>
-              <p className="text-muted-foreground leading-relaxed">
-                Interact with your PDFs naturally. Ask questions, get summaries, and find information instantly.
+        {/* Section 2: Structured Workspace Bento Grid */}
+        <section className="space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2 border-b border-border/60 pb-3">
+            <div>
+              <h2 className="text-lg font-bold tracking-tight text-foreground">
+                Document Tool Suites
+              </h2>
+              <p className="text-xs text-muted-foreground">
+                Modular instruments engineered for reliability and high throughput
               </p>
             </div>
-          </Link>
+            <span className="text-xs font-mono text-muted-foreground">
+              10 Specialized Engines
+            </span>
+          </div>
 
-          <Link href="/tools/edit" className="group">
-            <div className="h-full p-8 border rounded-2xl bg-card hover:border-green-500/50 hover:shadow-xl hover:shadow-green-500/5 transition-all duration-300 hover:-translate-y-1 relative overflow-hidden">
-              <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                <Edit className="h-24 w-24 text-green-500" />
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
+            
+            {/* Bento Tile 1: AI Chat Assistant (Span 7) */}
+            <div className="md:col-span-7 rounded-xl border border-border/70 bg-card p-6 flex flex-col justify-between group hover:border-foreground/30 transition-all shadow-xs">
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <div className="h-8 w-8 rounded-lg bg-blue-500/10 text-blue-500 flex items-center justify-center border border-blue-500/20">
+                      <Sparkles className="h-4 w-4" />
+                    </div>
+                    <span className="text-xs font-mono uppercase font-semibold text-blue-500 tracking-wider">
+                      Intelligence
+                    </span>
+                  </div>
+                  <span className="text-[11px] font-mono text-muted-foreground px-2 py-0.5 rounded bg-secondary">
+                    Gemini API
+                  </span>
+                </div>
+
+                <div className="space-y-1.5">
+                  <h3 className="text-lg font-bold text-foreground tracking-tight">
+                    Conversational PDF Intelligence
+                  </h3>
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    Ask questions, verify contractual clauses, extract structured data, or summarize complex technical papers directly against extracted document text.
+                  </p>
+                </div>
+
+                {/* Micro prompt chips */}
+                <div className="flex flex-wrap gap-1.5 pt-1">
+                  {["Summarize key findings", "Audit liability terms", "Extract tables to Markdown"].map((chip) => (
+                    <span key={chip} className="text-[11px] px-2 py-0.8 rounded-md bg-secondary/70 text-muted-foreground border border-border/40 font-mono">
+                      {chip}
+                    </span>
+                  ))}
+                </div>
               </div>
-              <div className="h-12 w-12 rounded-xl bg-green-100 dark:bg-green-900/30 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                <Edit className="h-6 w-6 text-green-600 dark:text-green-400" />
+
+              <div className="pt-6 mt-4 border-t border-border/50 flex items-center justify-between">
+                <span className="text-xs text-muted-foreground">Interactive chat & memory</span>
+                <Link href="/chat">
+                  <Button size="sm" variant="ghost" className="h-8 text-xs gap-1 group-hover:translate-x-0.5 transition-transform">
+                    Launch Assistant <ArrowRight className="h-3.5 w-3.5" />
+                  </Button>
+                </Link>
               </div>
-              <h3 className="text-xl font-bold mb-3">Smart Editor</h3>
-              <p className="text-muted-foreground leading-relaxed">
-                Modify text, redact sensitive data, and annotate your documents directly in the browser.
-              </p>
             </div>
-          </Link>
 
-          <Link href="/tools/ocr" className="group">
-            <div className="h-full p-8 border rounded-2xl bg-card hover:border-cyan-500/50 hover:shadow-xl hover:shadow-cyan-500/5 transition-all duration-300 hover:-translate-y-1 relative overflow-hidden">
-              <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                <ScanText className="h-24 w-24 text-cyan-500" />
+            {/* Bento Tile 2: OCR Scanner (Span 5) */}
+            <div className="md:col-span-5 rounded-xl border border-border/70 bg-card p-6 flex flex-col justify-between group hover:border-foreground/30 transition-all shadow-xs">
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <div className="h-8 w-8 rounded-lg bg-emerald-500/10 text-emerald-500 flex items-center justify-center border border-emerald-500/20">
+                      <ScanText className="h-4 w-4" />
+                    </div>
+                    <span className="text-xs font-mono uppercase font-semibold text-emerald-500 tracking-wider">
+                      Optical Vision
+                    </span>
+                  </div>
+                  <span className="text-[11px] font-mono text-muted-foreground px-2 py-0.5 rounded bg-secondary">
+                    Tesseract.js
+                  </span>
+                </div>
+
+                <div className="space-y-1.5">
+                  <h3 className="text-lg font-bold text-foreground tracking-tight">
+                    OCR Text Extraction
+                  </h3>
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    Digitize scanned invoices, handwritten notes, and image-based PDFs into clean selectable text with zero server roundtrips.
+                  </p>
+                </div>
+
+                <div className="p-2.5 rounded-lg bg-secondary/50 border border-border/40 font-mono text-[11px] text-muted-foreground flex items-center justify-between">
+                  <span>Client-side neural OCR</span>
+                  <span className="text-emerald-500 font-semibold">100% Private</span>
+                </div>
               </div>
-              <div className="h-12 w-12 rounded-xl bg-cyan-100 dark:bg-cyan-900/30 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                <ScanText className="h-6 w-6 text-cyan-600 dark:text-cyan-400" />
+
+              <div className="pt-6 mt-4 border-t border-border/50 flex items-center justify-between">
+                <span className="text-xs text-muted-foreground">Image to text engine</span>
+                <Link href="/tools/ocr">
+                  <Button size="sm" variant="ghost" className="h-8 text-xs gap-1 group-hover:translate-x-0.5 transition-transform">
+                    Open OCR <ArrowRight className="h-3.5 w-3.5" />
+                  </Button>
+                </Link>
               </div>
-              <h3 className="text-xl font-bold mb-3">OCR Extraction</h3>
-              <p className="text-muted-foreground leading-relaxed">
-                Convert scanned images and non-selectable PDFs into editable text with high precision.
-              </p>
             </div>
-          </Link>
 
-          <Link href="/tools/merge" className="group">
-            <div className="h-full p-8 border rounded-2xl bg-card hover:border-orange-500/50 hover:shadow-xl hover:shadow-orange-500/5 transition-all duration-300 hover:-translate-y-1 relative overflow-hidden">
-              <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                <Merge className="h-24 w-24 text-orange-500" />
+            {/* Bento Tile 3: Core PDF Manipulators (Span 6) */}
+            <div className="md:col-span-6 rounded-xl border border-border/70 bg-card p-6 space-y-5 shadow-xs">
+              <div className="flex items-center justify-between">
+                <div className="space-y-0.5">
+                  <h3 className="text-sm font-bold uppercase tracking-wider text-foreground">
+                    PDF Manipulation Suite
+                  </h3>
+                  <p className="text-xs text-muted-foreground">High-performance page & byte editing</p>
+                </div>
+                <span className="text-[10px] font-mono uppercase bg-secondary px-2 py-0.5 rounded text-muted-foreground">
+                  pdf-lib
+                </span>
               </div>
-              <div className="h-12 w-12 rounded-xl bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                <Merge className="h-6 w-6 text-orange-600 dark:text-orange-400" />
+
+              <div className="grid grid-cols-2 gap-2.5">
+                <Link href="/tools/merge" className="p-3 rounded-lg border border-border/60 bg-secondary/30 hover:bg-secondary/70 hover:border-foreground/30 transition-all flex flex-col justify-between">
+                  <div className="flex items-center gap-2 mb-1">
+                    <Combine className="h-4 w-4 text-foreground" />
+                    <span className="text-xs font-semibold text-foreground">Merge PDFs</span>
+                  </div>
+                  <p className="text-[11px] text-muted-foreground leading-snug">
+                    Combine documents with drag-and-drop reordering.
+                  </p>
+                </Link>
+
+                <Link href="/tools/split" className="p-3 rounded-lg border border-border/60 bg-secondary/30 hover:bg-secondary/70 hover:border-foreground/30 transition-all flex flex-col justify-between">
+                  <div className="flex items-center gap-2 mb-1">
+                    <Scissors className="h-4 w-4 text-foreground" />
+                    <span className="text-xs font-semibold text-foreground">Split Pages</span>
+                  </div>
+                  <p className="text-[11px] text-muted-foreground leading-snug">
+                    Extract ranges, odd/even pages, or single slices.
+                  </p>
+                </Link>
+
+                <Link href="/tools/compress" className="p-3 rounded-lg border border-border/60 bg-secondary/30 hover:bg-secondary/70 hover:border-foreground/30 transition-all flex flex-col justify-between">
+                  <div className="flex items-center gap-2 mb-1">
+                    <Minimize2 className="h-4 w-4 text-foreground" />
+                    <span className="text-xs font-semibold text-foreground">Compress</span>
+                  </div>
+                  <p className="text-[11px] text-muted-foreground leading-snug">
+                    Clean redundant streams to optimize file size.
+                  </p>
+                </Link>
+
+                <Link href="/tools/edit" className="p-3 rounded-lg border border-border/60 bg-secondary/30 hover:bg-secondary/70 hover:border-foreground/30 transition-all flex flex-col justify-between">
+                  <div className="flex items-center gap-2 mb-1">
+                    <SlidersHorizontal className="h-4 w-4 text-foreground" />
+                    <span className="text-xs font-semibold text-foreground">Smart Editor</span>
+                  </div>
+                  <p className="text-[11px] text-muted-foreground leading-snug">
+                    Annotate, draw, redact, and insert text directly.
+                  </p>
+                </Link>
               </div>
-              <h3 className="text-xl font-bold mb-3">Merge Files</h3>
-              <p className="text-muted-foreground leading-relaxed">
-                Combine multiple PDF documents into a single, organized file in just a few clicks.
-              </p>
             </div>
-          </Link>
 
-          <Link href="/tools/split" className="group">
-            <div className="h-full p-8 border rounded-2xl bg-card hover:border-red-500/50 hover:shadow-xl hover:shadow-red-500/5 transition-all duration-300 hover:-translate-y-1 relative overflow-hidden">
-              <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                <Split className="h-24 w-24 text-red-500" />
+            {/* Bento Tile 4: Document Converters (Span 6) */}
+            <div className="md:col-span-6 rounded-xl border border-border/70 bg-card p-6 space-y-5 shadow-xs">
+              <div className="flex items-center justify-between">
+                <div className="space-y-0.5">
+                  <h3 className="text-sm font-bold uppercase tracking-wider text-foreground">
+                    Universal Converters
+                  </h3>
+                  <p className="text-xs text-muted-foreground">Office documents, data tables & code to PDF</p>
+                </div>
+                <span className="text-[10px] font-mono uppercase bg-secondary px-2 py-0.5 rounded text-muted-foreground">
+                  jsPDF • Mammoth
+                </span>
               </div>
-              <div className="h-12 w-12 rounded-xl bg-red-100 dark:bg-red-900/30 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                <Split className="h-6 w-6 text-red-600 dark:text-red-400" />
+
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                <Link href="/tools/docx-to-pdf" className="p-2.5 rounded-lg border border-border/60 bg-secondary/20 hover:bg-secondary/60 transition-all group">
+                  <FileText className="h-4 w-4 text-blue-500 mb-1.5" />
+                  <p className="text-xs font-medium text-foreground">Word (.docx)</p>
+                  <p className="text-[10px] text-muted-foreground">To styled PDF</p>
+                </Link>
+
+                <Link href="/tools/excel-to-pdf" className="p-2.5 rounded-lg border border-border/60 bg-secondary/20 hover:bg-secondary/60 transition-all group">
+                  <FileSpreadsheet className="h-4 w-4 text-emerald-500 mb-1.5" />
+                  <p className="text-xs font-medium text-foreground">Excel (.xlsx)</p>
+                  <p className="text-[10px] text-muted-foreground">Sheet to PDF</p>
+                </Link>
+
+                <Link href="/tools/csv-to-pdf" className="p-2.5 rounded-lg border border-border/60 bg-secondary/20 hover:bg-secondary/60 transition-all group">
+                  <FileSpreadsheet className="h-4 w-4 text-amber-500 mb-1.5" />
+                  <p className="text-xs font-medium text-foreground">CSV Table</p>
+                  <p className="text-[10px] text-muted-foreground">Data formatting</p>
+                </Link>
+
+                <Link href="/tools/image-to-pdf" className="p-2.5 rounded-lg border border-border/60 bg-secondary/20 hover:bg-secondary/60 transition-all group">
+                  <ImagePlus className="h-4 w-4 text-purple-500 mb-1.5" />
+                  <p className="text-xs font-medium text-foreground">Images</p>
+                  <p className="text-[10px] text-muted-foreground">JPG, PNG, WebP</p>
+                </Link>
+
+                <Link href="/tools/markdown-to-pdf" className="p-2.5 rounded-lg border border-border/60 bg-secondary/20 hover:bg-secondary/60 transition-all group">
+                  <FileCode className="h-4 w-4 text-cyan-500 mb-1.5" />
+                  <p className="text-xs font-medium text-foreground">Markdown (.md)</p>
+                  <p className="text-[10px] text-muted-foreground">Formatted docs</p>
+                </Link>
+
+                <Link href="/documents" className="p-2.5 rounded-lg border border-border/60 bg-secondary/20 hover:bg-secondary/60 transition-all group">
+                  <Zap className="h-4 w-4 text-rose-500 mb-1.5" />
+                  <p className="text-xs font-medium text-foreground">Studio View</p>
+                  <p className="text-[10px] text-muted-foreground">Integrated hub</p>
+                </Link>
               </div>
-              <h3 className="text-xl font-bold mb-3">Split PDF</h3>
-              <p className="text-muted-foreground leading-relaxed">
-                Extract specific pages or separate a large document into smaller files effortlessly.
-              </p>
             </div>
-          </Link>
 
-          <Link href="/tools/compress" className="group">
-            <div className="h-full p-8 border rounded-2xl bg-card hover:border-teal-500/50 hover:shadow-xl hover:shadow-teal-500/5 transition-all duration-300 hover:-translate-y-1 relative overflow-hidden">
-              <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                <Minimize2 className="h-24 w-24 text-teal-500" />
+          </div>
+        </section>
+
+        {/* Section 3: Privacy & Security Architecture Strip */}
+        <section className="rounded-xl border border-border/70 bg-card/60 p-6 md:p-8 backdrop-blur-sm">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="flex items-start gap-3.5">
+              <div className="h-9 w-9 rounded-lg bg-emerald-500/10 text-emerald-500 flex items-center justify-center shrink-0 border border-emerald-500/20">
+                <Lock className="h-4 w-4" />
               </div>
-              <div className="h-12 w-12 rounded-xl bg-teal-100 dark:bg-teal-900/30 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                <Minimize2 className="h-6 w-6 text-teal-600 dark:text-teal-400" />
+              <div className="space-y-1">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-foreground">
+                  Zero Cloud Ingestion
+                </h4>
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                  Your contracts, invoices, and sensitive documents never touch a third-party server. All byte operations run in your local memory.
+                </p>
               </div>
-              <h3 className="text-xl font-bold mb-3">Compress PDF</h3>
-              <p className="text-muted-foreground leading-relaxed">
-                Optimize file size for easy sharing and storage without compromising quality.
-              </p>
             </div>
-          </Link>
 
-        </div>
+            <div className="flex items-start gap-3.5">
+              <div className="h-9 w-9 rounded-lg bg-blue-500/10 text-blue-500 flex items-center justify-center shrink-0 border border-blue-500/20">
+                <Cpu className="h-4 w-4" />
+              </div>
+              <div className="space-y-1">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-foreground">
+                  WebAssembly Acceleration
+                </h4>
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                  Engineered with Mozilla PDF.js and pdf-lib WebAssembly binaries for near-instant rendering and page operations.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-3.5">
+              <div className="h-9 w-9 rounded-lg bg-purple-500/10 text-purple-500 flex items-center justify-center shrink-0 border border-purple-500/20">
+                <ShieldCheck className="h-4 w-4" />
+              </div>
+              <div className="space-y-1">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-foreground">
+                  Direct AI Integration
+                </h4>
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                  Only the extracted text of the specific query you submit is processed through Google Gemini, maintaining strict audit boundaries.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
       </div>
     </div>
   );
