@@ -45,7 +45,7 @@ export default function MultiPdfWorkspacePage() {
         {
             id: 'welcome',
             role: 'assistant',
-            content: "Welcome to your Multi-PDF Project Workspace! Upload 2 to 20 documents below (contracts, research papers, reports). Once loaded, ask cross-document synthesis questions like 'Compare payment terms across these vendor contracts' or 'Synthesize key conclusions across all studies.'",
+            content: "Welcome to your Multi-PDF Workspace! Add 2 or more documents below (such as contracts, receipts, or study notes). Then ask questions like 'Compare the costs across these invoices' or 'Summarize the main takeaways across all files.'",
             timestamp: new Date()
         }
     ]);
@@ -188,7 +188,7 @@ export default function MultiPdfWorkspacePage() {
                         </h1>
                     </div>
                     <p className="text-xs text-muted-foreground">
-                        Chat across 5–20 documents simultaneously. Ask synthesis questions and track citations.
+                        Ask questions across multiple documents at the same time. Compare files, summarize key points, and find answers in seconds.
                     </p>
                 </div>
 

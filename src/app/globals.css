@@ -7,6 +7,19 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  --color-canvas: var(--canvas);
+  --color-canvas-elevated: var(--canvas-elevated);
+  --color-hairline: var(--hairline);
+  --color-hairline-soft: var(--hairline-soft);
+  --color-ink: var(--ink);
+  --color-body: var(--body);
+  --color-mute: var(--mute);
+  --color-faint: var(--faint);
+  --color-link: var(--link);
+  --color-link-deep: var(--link-deep);
+  --color-link-soft: var(--link-soft);
+
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -15,11 +28,7 @@
   --color-sidebar-primary: var(--sidebar-primary);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
+
   --color-ring: var(--ring);
   --color-input: var(--input);
   --color-border: var(--border);
@@ -36,71 +45,98 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-pill-category: 64px;
+  --radius-pill: 100px;
 }
 
 :root {
-  --radius: 0.625rem;
-  /* Light theme: clean, architectural warm slate */
-  --background: oklch(0.985 0.003 240);
-  --foreground: oklch(0.16 0.015 250);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.16 0.015 250);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.16 0.015 250);
-  --primary: oklch(0.24 0.03 260);
-  --primary-foreground: oklch(0.99 0 0);
-  --secondary: oklch(0.95 0.005 240);
-  --secondary-foreground: oklch(0.22 0.02 250);
-  --muted: oklch(0.95 0.005 240);
-  --muted-foreground: oklch(0.48 0.015 250);
-  --accent: oklch(0.94 0.01 240);
-  --accent-foreground: oklch(0.2 0.02 250);
-  --destructive: oklch(0.57 0.22 25);
-  --border: oklch(0.89 0.006 240);
-  --input: oklch(0.89 0.006 240);
-  --ring: oklch(0.55 0.15 255);
-  --sidebar: oklch(0.97 0.004 240);
-  --sidebar-foreground: oklch(0.16 0.015 250);
-  --sidebar-primary: oklch(0.24 0.03 260);
-  --sidebar-primary-foreground: oklch(0.99 0 0);
-  --sidebar-accent: oklch(0.93 0.008 240);
-  --sidebar-accent-foreground: oklch(0.16 0.015 250);
-  --sidebar-border: oklch(0.89 0.006 240);
-  --sidebar-ring: oklch(0.55 0.15 255);
+  /* Vercel Geist Light System */
+  --canvas: #fafafa;
+  --canvas-elevated: #ffffff;
+  --hairline: #ebebeb;
+  --hairline-soft: #f2f2f2;
+  --ink: #171717;
+  --body: #4d4d4d;
+  --mute: #8f8f8f;
+  --faint: #a1a1a1;
+  --link: #0070f3;
+  --link-deep: #0761d1;
+  --link-soft: #d3e5ff;
+
+  --background: #fafafa;
+  --foreground: #171717;
+  --card: #ffffff;
+  --card-foreground: #171717;
+  --popover: #ffffff;
+  --popover-foreground: #171717;
+  --primary: #171717;
+  --primary-foreground: #ffffff;
+  --secondary: #f2f2f2;
+  --secondary-foreground: #171717;
+  --muted: #f2f2f2;
+  --muted-foreground: #8f8f8f;
+  --accent: #f2f2f2;
+  --accent-foreground: #171717;
+  --destructive: #ee0000;
+  --border: #ebebeb;
+  --input: #ebebeb;
+  --ring: #171717;
+
+  --sidebar: #fafafa;
+  --sidebar-foreground: #171717;
+  --sidebar-primary: #171717;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #f2f2f2;
+  --sidebar-accent-foreground: #171717;
+  --sidebar-border: #ebebeb;
+  --sidebar-ring: #171717;
 }
 
 .dark {
-  /* Dark theme: deep obsidian slate with precision contrast */
-  --background: oklch(0.12 0.012 255);
-  --foreground: oklch(0.96 0.005 240);
-  --card: oklch(0.15 0.012 255);
-  --card-foreground: oklch(0.96 0.005 240);
-  --popover: oklch(0.16 0.014 255);
-  --popover-foreground: oklch(0.96 0.005 240);
-  --primary: oklch(0.94 0.008 240);
-  --primary-foreground: oklch(0.12 0.012 255);
-  --secondary: oklch(0.19 0.012 255);
-  --secondary-foreground: oklch(0.92 0.005 240);
-  --muted: oklch(0.19 0.012 255);
-  --muted-foreground: oklch(0.65 0.01 250);
-  --accent: oklch(0.22 0.015 255);
-  --accent-foreground: oklch(0.98 0 0);
-  --destructive: oklch(0.65 0.2 25);
-  --border: oklch(0.24 0.012 255);
-  --input: oklch(0.24 0.012 255);
-  --ring: oklch(0.65 0.15 255);
-  --sidebar: oklch(0.135 0.012 255);
-  --sidebar-foreground: oklch(0.96 0.005 240);
-  --sidebar-primary: oklch(0.94 0.008 240);
-  --sidebar-primary-foreground: oklch(0.12 0.012 255);
-  --sidebar-accent: oklch(0.19 0.012 255);
-  --sidebar-accent-foreground: oklch(0.96 0.005 240);
-  --sidebar-border: oklch(0.22 0.012 255);
-  --sidebar-ring: oklch(0.65 0.15 255);
+  /* Vercel Geist Dark System */
+  --canvas: #000000;
+  --canvas-elevated: #0a0a0a;
+  --hairline: #262626;
+  --hairline-soft: #171717;
+  --ink: #ededed;
+  --body: #a1a1a1;
+  --mute: #737373;
+  --faint: #525252;
+  --link: #0070f3;
+  --link-deep: #0761d1;
+  --link-soft: #1c283d;
+
+  --background: #000000;
+  --foreground: #ededed;
+  --card: #0a0a0a;
+  --card-foreground: #ededed;
+  --popover: #0a0a0a;
+  --popover-foreground: #ededed;
+  --primary: #ededed;
+  --primary-foreground: #000000;
+  --secondary: #171717;
+  --secondary-foreground: #ededed;
+  --muted: #171717;
+  --muted-foreground: #737373;
+  --accent: #171717;
+  --accent-foreground: #ededed;
+  --destructive: #ee0000;
+  --border: #262626;
+  --input: #262626;
+  --ring: #ededed;
+
+  --sidebar: #050505;
+  --sidebar-foreground: #ededed;
+  --sidebar-primary: #ededed;
+  --sidebar-primary-foreground: #000000;
+  --sidebar-accent: #171717;
+  --sidebar-accent-foreground: #ededed;
+  --sidebar-border: #262626;
+  --sidebar-ring: #ededed;
 }
 
 @layer base {
@@ -113,48 +149,117 @@
   }
 }
 
-/* Precision Utility Classes */
-.tabular-nums {
-  font-variant-numeric: tabular-nums;
+/* Geist Typography Scale from DESIGN.md */
+.type-display-xl {
+  font-size: clamp(2.5rem, 5vw, 3.75rem);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -2.4px;
 }
 
+.type-heading-lg {
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 2.5rem;
+  letter-spacing: -1.28px;
+}
+
+.type-heading-md {
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.75rem;
+  letter-spacing: -0.4px;
+}
+
+.type-label-sm {
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.25rem;
+  letter-spacing: -0.28px;
+}
+
+.type-mono-eyebrow {
+  font-family: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.type-code {
+  font-family: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.25rem;
+}
+
+/* Authentic Vercel Hero Multi-Stop Mesh Gradient */
+.hero-mesh-canvas {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 1200px;
+  height: 520px;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.75;
+}
+
+.dark .hero-mesh-canvas {
+  opacity: 0.55;
+}
+
+.hero-mesh-gradient {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    radial-gradient(circle at 18% 22%, rgba(80, 227, 194, 0.42) 0%, transparent 45%),
+    radial-gradient(circle at 50% 15%, rgba(0, 124, 240, 0.45) 0%, transparent 50%),
+    radial-gradient(circle at 75% 25%, rgba(121, 40, 202, 0.38) 0%, transparent 48%),
+    radial-gradient(circle at 85% 55%, rgba(235, 54, 127, 0.32) 0%, transparent 45%),
+    radial-gradient(circle at 35% 65%, rgba(249, 203, 40, 0.28) 0%, transparent 45%);
+  filter: blur(64px);
+  transform: translateZ(0);
+}
+
+/* Hairline elevation system */
+.hairline-card {
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.04);
+}
+
+.hairline-card-hover {
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hairline-card-hover:hover {
+  border-color: rgba(23, 23, 23, 0.28);
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.04), 0px 8px 16px -4px rgba(0, 0, 0, 0.04);
+}
+
+.dark .hairline-card-hover:hover {
+  border-color: rgba(237, 237, 237, 0.3);
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+/* Subtle scrollbars */
 .subtle-scrollbar::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 .subtle-scrollbar::-webkit-scrollbar-track {
   background: transparent;
 }
 .subtle-scrollbar::-webkit-scrollbar-thumb {
-  background: color-mix(in oklch, var(--foreground) 15%, transparent);
+  background: var(--border);
   border-radius: 9999px;
 }
 .subtle-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: color-mix(in oklch, var(--foreground) 25%, transparent);
+  background: var(--muted-foreground);
 }
-
-.architect-grid {
-  background-image: radial-gradient(color-mix(in oklch, var(--foreground) 9%, transparent) 1px, transparent 1px);
-  background-size: 24px 24px;
-}
-
-@keyframes scanner-sweep {
-  0% { transform: translateY(0); opacity: 0; }
-  20% { opacity: 1; }
-  80% { opacity: 1; }
-  100% { transform: translateY(110px); opacity: 0; }
-}
-
-.animate-scanner {
-  animation: scanner-sweep 3.2s ease-in-out infinite;
-}
-
-@keyframes gentle-float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-3px); }
-}
-
-.animate-float {
-  animation: gentle-float 6s ease-in-out infinite;
-}
-

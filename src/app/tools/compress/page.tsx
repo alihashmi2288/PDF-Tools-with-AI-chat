@@ -114,13 +114,13 @@ export default function CompressPage() {
                     <div className="p-6 border border-border/70 rounded-xl bg-card space-y-5 shadow-xs">
                         <div className="flex items-center justify-between text-xs">
                             <div className="space-y-0.5">
-                                <p className="font-semibold text-foreground">Stream & Object Deduplication</p>
+                                <p className="font-semibold text-foreground">Smart Quality Optimization</p>
                                 <p className="text-[11px] text-muted-foreground">
-                                    Client-side structural optimization without downsampling text fidelity.
+                                    Shrinks file size safely while keeping all text and images crystal clear.
                                 </p>
                             </div>
                             <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-secondary text-muted-foreground">
-                                Lossless
+                                High Quality
                             </span>
                         </div>
 
@@ -132,7 +132,7 @@ export default function CompressPage() {
                             {isCompressing ? (
                                 <>
                                     <Loader2 className="h-4 w-4 animate-spin" />
-                                    Optimizing File Streams...
+                                    Optimizing PDF...
                                 </>
                             ) : (
                                 <>

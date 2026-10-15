@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { 
-    FileText, 
     Github, 
     ChevronDown, 
     Menu, 
@@ -14,7 +13,6 @@ import {
     Minimize2, 
     SlidersHorizontal, 
     ScanText, 
-    ImagePlus, 
     FileSpreadsheet, 
     FileCode, 
     ShieldCheck,
@@ -34,7 +32,19 @@ import {
     GraduationCap,
     BookOpen,
     Presentation,
-    Image as ImageIcon
+    Image as ImageIcon,
+    Trash2,
+    ArrowUpDown,
+    Moon,
+    Maximize2,
+    Tag,
+    Bookmark,
+    Globe,
+    Shapes,
+    Award,
+    Tablet,
+    Code,
+    FileText
 } from 'lucide-react';
 import { ModeToggle } from '@/components/mode-toggle';
 import {
@@ -53,18 +63,18 @@ export function Navbar() {
     const pathname = usePathname();
 
     const navLinks = [
-        { href: "/", label: "Home" },
+        { href: "/", label: "Overview" },
         { href: "/tools/view", label: "PDF Reader", icon: BookOpen },
-        { href: "/tools/edit", label: "PDF Editor", icon: SlidersHorizontal },
-        { href: "/chat/workspace", label: "Multi-PDF Workspace", icon: FolderGit2, badge: "AI" },
+        { href: "/tools/edit", label: "Canvas Editor", icon: SlidersHorizontal },
+        { href: "/chat/workspace", label: "Workspace", icon: FolderGit2, badge: "AI" },
         { href: "/chat", label: "AI Chat", icon: Sparkles },
     ];
 
     return (
-        <header className="sticky top-0 z-50 w-full border-b border-border/60 bg-background/85 backdrop-blur-xl">
+        <header className="sticky top-0 z-50 w-full border-b border-border bg-background/85 backdrop-blur-md">
             <div className="max-w-7xl mx-auto px-4 md:px-6 flex h-14 items-center justify-between">
                 <div className="flex items-center gap-6 lg:gap-8">
-                    {/* Mobile Menu */}
+                    {/* Mobile Menu Trigger */}
                     <Sheet open={isOpen} onOpenChange={setIsOpen}>
                         <SheetTrigger asChild className="md:hidden">
                             <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-foreground">
@@ -72,16 +82,16 @@ export function Navbar() {
                                 <span className="sr-only">Toggle navigation</span>
                             </Button>
                         </SheetTrigger>
-                        <SheetContent side="left" className="w-[320px] p-6 bg-background/95 backdrop-blur-xl overflow-y-auto">
+                        <SheetContent side="left" className="w-[320px] p-6 bg-card border-r border-border overflow-y-auto subtle-scrollbar">
                             <SheetTitle className="sr-only">Navigation</SheetTitle>
-                            <div className="flex flex-col gap-5">
+                            <div className="flex flex-col gap-6">
                                 <Link href="/" className="flex items-center gap-2.5" onClick={() => setIsOpen(false)}>
-                                    <div className="h-8 w-8 rounded-lg bg-foreground text-background flex items-center justify-center font-bold text-sm">
-                                        P
+                                    <div className="h-7 w-7 rounded-[6px] bg-foreground text-background flex items-center justify-center font-bold text-xs">
+                                        ▲
                                     </div>
                                     <div className="flex flex-col">
-                                        <span className="font-semibold text-sm tracking-tight">PDF AI Master</span>
-                                        <span className="text-[10px] text-muted-foreground font-mono">Fast &amp; 100% Private</span>
+                                        <span className="font-semibold text-sm tracking-tight text-foreground">PDF AI Master</span>
+                                        <span className="type-mono-eyebrow text-[10px] text-muted-foreground">Fast &amp; 100% Private</span>
                                     </div>
                                 </Link>
 
@@ -92,85 +102,61 @@ export function Navbar() {
                                             href={link.href} 
                                             onClick={() => setIsOpen(false)}
                                             className={cn(
-                                                "px-3 py-2 text-sm rounded-md transition-colors flex items-center justify-between",
+                                                "px-3 py-2 text-xs rounded-[6px] transition-colors flex items-center justify-between",
                                                 pathname === link.href 
                                                     ? "bg-secondary text-foreground font-medium" 
-                                                    : "text-muted-foreground hover:text-foreground"
+                                                    : "text-muted-foreground hover:text-foreground hover:bg-secondary/50"
                                             )}
                                         >
                                             <div className="flex items-center gap-2">
-                                                {link.icon && <link.icon className="h-3.5 w-3.5 text-blue-500" />}
+                                                {link.icon && <link.icon className="h-3.5 w-3.5 text-foreground/70" />}
                                                 <span>{link.label}</span>
                                             </div>
                                             {link.badge && (
-                                                <span className="text-[10px] px-1.5 py-0.5 rounded bg-blue-500/10 text-blue-600 dark:text-blue-400 font-bold">
+                                                <span className="type-mono-eyebrow text-[9px] px-1.5 py-0.5 rounded-[4px] bg-foreground/10 text-foreground">
                                                     {link.badge}
                                                 </span>
                                             )}
                                         </Link>
                                     ))}
 
-                                    {/* Mobile AI Superpowers */}
-                                    <div className="pt-3 border-t border-border/40 flex flex-col gap-1.5">
-                                        <span className="text-xs font-bold text-blue-600 dark:text-blue-400 px-3 flex items-center gap-1.5">
-                                            <Sparkles className="h-3.5 w-3.5" />
-                                            <span>AI Superpowers</span>
+                                    {/* Mobile Categories */}
+                                    <div className="pt-4 border-t border-border flex flex-col gap-1">
+                                        <span className="type-mono-eyebrow text-[11px] text-muted-foreground px-3 py-1">
+                                            AI Superpowers
                                         </span>
-                                        <div className="pl-3 flex flex-col gap-0.5">
-                                            <Link href="/chat/workspace" className="text-sm text-muted-foreground hover:text-foreground py-1" onClick={() => setIsOpen(false)}>Multi-PDF Workspace</Link>
-                                            <Link href="/tools/contract-scanner" className="text-sm text-muted-foreground hover:text-foreground py-1" onClick={() => setIsOpen(false)}>Contract Redline &amp; Risk Scanner</Link>
-                                            <Link href="/tools/invoice-extractor" className="text-sm text-muted-foreground hover:text-foreground py-1" onClick={() => setIsOpen(false)}>Invoice &amp; Table Extractor</Link>
-                                            <Link href="/tools/translate" className="text-sm text-muted-foreground hover:text-foreground py-1" onClick={() => setIsOpen(false)}>Full-Document Translator</Link>
-                                            <Link href="/tools/study-ai" className="text-sm text-muted-foreground hover:text-foreground py-1" onClick={() => setIsOpen(false)}>Flashcards &amp; Quiz Generator</Link>
-                                        </div>
+                                        <Link href="/chat/workspace" className="text-xs text-muted-foreground hover:text-foreground py-1 px-3" onClick={() => setIsOpen(false)}>Multi-PDF Workspace</Link>
+                                        <Link href="/tools/contract-scanner" className="text-xs text-muted-foreground hover:text-foreground py-1 px-3" onClick={() => setIsOpen(false)}>Contract Redliner</Link>
+                                        <Link href="/tools/invoice-extractor" className="text-xs text-muted-foreground hover:text-foreground py-1 px-3" onClick={() => setIsOpen(false)}>Invoice Extractor</Link>
+                                        <Link href="/tools/translate" className="text-xs text-muted-foreground hover:text-foreground py-1 px-3" onClick={() => setIsOpen(false)}>Document Translator</Link>
+                                        <Link href="/tools/study-ai" className="text-xs text-muted-foreground hover:text-foreground py-1 px-3" onClick={() => setIsOpen(false)}>Flashcards &amp; Quiz</Link>
                                     </div>
 
-                                    {/* Mobile Sign & Security */}
-                                    <div className="pt-3 border-t border-border/40 flex flex-col gap-1.5">
-                                        <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400 px-3 flex items-center gap-1.5">
-                                            <ShieldCheck className="h-3.5 w-3.5" />
-                                            <span>Sign &amp; Security</span>
+                                    <div className="pt-3 border-t border-border flex flex-col gap-1">
+                                        <span className="type-mono-eyebrow text-[11px] text-muted-foreground px-3 py-1">
+                                            Sign &amp; Security
                                         </span>
-                                        <div className="pl-3 flex flex-col gap-0.5">
-                                            <Link href="/tools/sign" className="text-sm text-muted-foreground hover:text-foreground py-1" onClick={() => setIsOpen(false)}>e-Sign PDF</Link>
-                                            <Link href="/tools/protect" className="text-sm text-muted-foreground hover:text-foreground py-1" onClick={() => setIsOpen(false)}>Protect PDF (AES-256)</Link>
-                                            <Link href="/tools/unlock" className="text-sm text-muted-foreground hover:text-foreground py-1" onClick={() => setIsOpen(false)}>Unlock PDF</Link>
-                                            <Link href="/tools/form-filler" className="text-sm text-muted-foreground hover:text-foreground py-1" onClick={() => setIsOpen(false)}>Interactive Form Filler</Link>
-                                        </div>
+                                        <Link href="/tools/sign" className="text-xs text-muted-foreground hover:text-foreground py-1 px-3" onClick={() => setIsOpen(false)}>e-Sign PDF</Link>
+                                        <Link href="/tools/flatten-pdf" className="text-xs text-muted-foreground hover:text-foreground py-1 px-3" onClick={() => setIsOpen(false)}>Flatten PDF (Lock)</Link>
+                                        <Link href="/tools/protect" className="text-xs text-muted-foreground hover:text-foreground py-1 px-3" onClick={() => setIsOpen(false)}>Protect (AES-256)</Link>
+                                        <Link href="/tools/unlock" className="text-xs text-muted-foreground hover:text-foreground py-1 px-3" onClick={() => setIsOpen(false)}>Unlock PDF</Link>
+                                        <Link href="/tools/form-filler" className="text-xs text-muted-foreground hover:text-foreground py-1 px-3" onClick={() => setIsOpen(false)}>Fill PDF Forms</Link>
+                                        <Link href="/tools/pdf-to-pdfa" className="text-xs text-muted-foreground hover:text-foreground py-1 px-3" onClick={() => setIsOpen(false)}>PDF/A Archival (ISO)</Link>
                                     </div>
 
-                                    {/* Mobile Reverse Converters */}
-                                    <div className="pt-3 border-t border-border/40 flex flex-col gap-1.5">
-                                        <span className="text-xs font-bold text-foreground px-3">
-                                            PDF Converters
+                                    <div className="pt-3 border-t border-border flex flex-col gap-1">
+                                        <span className="type-mono-eyebrow text-[11px] text-muted-foreground px-3 py-1">
+                                            Page Utilities
                                         </span>
-                                        <div className="pl-3 flex flex-col gap-0.5">
-                                            <Link href="/tools/pdf-to-docx" className="text-sm text-muted-foreground hover:text-foreground py-1" onClick={() => setIsOpen(false)}>PDF to Word (.docx)</Link>
-                                            <Link href="/tools/pdf-to-xlsx" className="text-sm text-muted-foreground hover:text-foreground py-1" onClick={() => setIsOpen(false)}>PDF to Excel (.xlsx)</Link>
-                                            <Link href="/tools/pdf-to-pptx" className="text-sm text-muted-foreground hover:text-foreground py-1" onClick={() => setIsOpen(false)}>PDF to PowerPoint (.pptx)</Link>
-                                            <Link href="/tools/pdf-to-images" className="text-sm text-muted-foreground hover:text-foreground py-1" onClick={() => setIsOpen(false)}>PDF to JPG &amp; PNG</Link>
-                                        </div>
+                                        <Link href="/tools/delete-pages" className="text-xs text-muted-foreground hover:text-foreground py-1 px-3" onClick={() => setIsOpen(false)}>Delete Pages</Link>
+                                        <Link href="/tools/rearrange-pages" className="text-xs text-muted-foreground hover:text-foreground py-1 px-3" onClick={() => setIsOpen(false)}>Rearrange Pages</Link>
+                                        <Link href="/tools/extract-pages" className="text-xs text-muted-foreground hover:text-foreground py-1 px-3" onClick={() => setIsOpen(false)}>Extract Pages</Link>
+                                        <Link href="/tools/merge" className="text-xs text-muted-foreground hover:text-foreground py-1 px-3" onClick={() => setIsOpen(false)}>Merge Documents</Link>
+                                        <Link href="/tools/split" className="text-xs text-muted-foreground hover:text-foreground py-1 px-3" onClick={() => setIsOpen(false)}>Split PDF</Link>
+                                        <Link href="/tools/compress" className="text-xs text-muted-foreground hover:text-foreground py-1 px-3" onClick={() => setIsOpen(false)}>Compress PDF</Link>
                                     </div>
 
-                                    {/* Mobile Page Organize */}
-                                    <div className="pt-3 border-t border-border/40 flex flex-col gap-1.5">
-                                        <span className="text-xs font-bold text-foreground px-3">
-                                            View, Edit &amp; Organize
-                                        </span>
-                                        <div className="pl-3 flex flex-col gap-0.5">
-                                            <Link href="/tools/view" className="text-sm font-medium text-blue-600 dark:text-blue-400 py-1" onClick={() => setIsOpen(false)}>PDF Reader &amp; AI</Link>
-                                            <Link href="/tools/edit" className="text-sm font-medium text-blue-600 dark:text-blue-400 py-1" onClick={() => setIsOpen(false)}>PDF Editor</Link>
-                                            <Link href="/tools/rotate" className="text-sm text-muted-foreground hover:text-foreground py-1" onClick={() => setIsOpen(false)}>Rotate Pages</Link>
-                                            <Link href="/tools/crop" className="text-sm text-muted-foreground hover:text-foreground py-1" onClick={() => setIsOpen(false)}>Crop PDF</Link>
-                                            <Link href="/tools/page-numbers" className="text-sm text-muted-foreground hover:text-foreground py-1" onClick={() => setIsOpen(false)}>Add Page Numbers</Link>
-                                            <Link href="/tools/watermark" className="text-sm text-muted-foreground hover:text-foreground py-1" onClick={() => setIsOpen(false)}>Custom Watermarks</Link>
-                                            <Link href="/tools/merge" className="text-sm text-muted-foreground hover:text-foreground py-1" onClick={() => setIsOpen(false)}>Merge PDFs</Link>
-                                            <Link href="/tools/split" className="text-sm text-muted-foreground hover:text-foreground py-1" onClick={() => setIsOpen(false)}>Split PDF</Link>
-                                            <Link href="/tools/compress" className="text-sm text-muted-foreground hover:text-foreground py-1" onClick={() => setIsOpen(false)}>Compress PDF</Link>
-                                        </div>
-                                    </div>
-
-                                    <Link href="/about" className="text-sm text-muted-foreground hover:text-foreground pt-4 px-3" onClick={() => setIsOpen(false)}>
+                                    <Link href="/about" className="text-xs text-muted-foreground hover:text-foreground pt-4 px-3" onClick={() => setIsOpen(false)}>
                                         About Developer
                                     </Link>
                                 </nav>
@@ -178,23 +164,23 @@ export function Navbar() {
                         </SheetContent>
                     </Sheet>
 
-                    {/* Logo & Brand */}
+                    {/* Vercel-Style Brand Logo */}
                     <Link href="/" className="flex items-center gap-2.5 group">
-                        <div className="h-7 w-7 rounded-md bg-foreground text-background flex items-center justify-center font-bold text-xs tracking-wider shadow-xs transition-transform group-hover:scale-105">
-                            P
+                        <div className="h-7 w-7 rounded-[6px] bg-[#171717] dark:bg-white text-white dark:text-black flex items-center justify-center font-bold text-xs tracking-wider transition-transform group-hover:scale-105">
+                            ▲
                         </div>
                         <div className="flex items-center gap-2">
                             <span className="font-semibold text-sm tracking-tight text-foreground">
                                 PDF AI Master
                             </span>
-                            <span className="hidden sm:inline-block text-[10px] font-mono font-medium px-1.5 py-0.5 rounded bg-secondary text-muted-foreground border border-border/60">
-                                v2.0
+                            <span className="hidden sm:inline-block type-mono-eyebrow text-[10px] px-1.5 py-0.5 rounded-[4px] bg-secondary text-muted-foreground border border-border">
+                                Private
                             </span>
                         </div>
                     </Link>
 
-                    {/* Desktop Navigation */}
-                    <nav className="hidden md:flex items-center space-x-1 text-xs font-medium">
+                    {/* Desktop Navigation Links */}
+                    <nav className="hidden md:flex items-center space-x-1 text-xs">
                         {navLinks.map((link) => {
                             const isActive = pathname === link.href;
                             const Icon = link.icon;
@@ -203,16 +189,16 @@ export function Navbar() {
                                     key={link.href}
                                     href={link.href}
                                     className={cn(
-                                        "px-3 py-1.5 rounded-md transition-colors flex items-center gap-1.5",
+                                        "px-3 py-1.5 rounded-full transition-colors flex items-center gap-1.5 text-xs font-normal",
                                         isActive
-                                            ? "text-foreground bg-secondary font-semibold"
-                                            : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                                            ? "text-foreground bg-secondary font-medium"
+                                            : "text-muted-foreground hover:text-foreground hover:bg-secondary/60"
                                     )}
                                 >
-                                    {Icon && <Icon className="h-3.5 w-3.5 text-blue-500" />}
+                                    {Icon && <Icon className="h-3.5 w-3.5 opacity-70" />}
                                     <span>{link.label}</span>
                                     {link.badge && (
-                                        <span className="text-[9px] px-1 py-0.2 rounded bg-blue-500/15 text-blue-600 dark:text-blue-400 font-bold ml-0.5">
+                                        <span className="type-mono-eyebrow text-[9px] px-1 py-0.2 rounded bg-foreground/10 text-foreground font-semibold ml-0.5">
                                             {link.badge}
                                         </span>
                                     )}
@@ -222,47 +208,47 @@ export function Navbar() {
 
                         {/* Mega Dropdown for PDF Tools */}
                         <DropdownMenu>
-                            <DropdownMenuTrigger className="px-3 py-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors flex items-center gap-1 outline-none data-[state=open]:text-foreground data-[state=open]:bg-secondary cursor-pointer">
-                                <Layers className="h-3.5 w-3.5" />
-                                <span>PDF Tools</span>
+                            <DropdownMenuTrigger className="px-3 py-1.5 rounded-full text-xs text-muted-foreground hover:text-foreground hover:bg-secondary/60 transition-colors flex items-center gap-1 outline-none data-[state=open]:text-foreground data-[state=open]:bg-secondary cursor-pointer">
+                                <Layers className="h-3.5 w-3.5 opacity-70" />
+                                <span>Tools</span>
                                 <ChevronDown className="h-3 w-3 opacity-60 ml-0.5" />
                             </DropdownMenuTrigger>
-                            <DropdownMenuContent align="start" className="w-[720px] p-4 grid grid-cols-4 gap-4 bg-popover/95 backdrop-blur-xl border-border/70 shadow-xl">
+                            <DropdownMenuContent align="start" className="w-[740px] p-5 grid grid-cols-4 gap-4 bg-card border border-border shadow-md rounded-xl">
                                 
                                 {/* Col 1: AI Superpowers */}
-                                <div className="space-y-1">
-                                    <DropdownMenuLabel className="text-[10px] font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider px-2 py-1 flex items-center gap-1">
-                                        <Sparkles className="h-3 w-3" />
+                                <div className="space-y-1.5">
+                                    <DropdownMenuLabel className="type-mono-eyebrow text-[10px] text-muted-foreground px-2 py-1 flex items-center gap-1">
+                                        <Sparkles className="h-3 w-3 text-foreground" />
                                         <span>AI Superpowers</span>
                                     </DropdownMenuLabel>
                                     <div className="space-y-0.5">
                                         <DropdownMenuItem asChild>
-                                            <Link href="/chat/workspace" className="flex items-center gap-2 px-2 py-1.5 text-xs rounded-md cursor-pointer">
-                                                <FolderGit2 className="h-3.5 w-3.5 text-blue-500" />
+                                            <Link href="/chat/workspace" className="flex items-center gap-2 px-2 py-1.5 text-xs rounded-[6px] hover:bg-secondary cursor-pointer">
+                                                <FolderGit2 className="h-3.5 w-3.5 text-muted-foreground" />
                                                 <span>Multi-PDF Workspace</span>
                                             </Link>
                                         </DropdownMenuItem>
                                         <DropdownMenuItem asChild>
-                                            <Link href="/tools/contract-scanner" className="flex items-center gap-2 px-2 py-1.5 text-xs rounded-md cursor-pointer">
-                                                <Scale className="h-3.5 w-3.5 text-red-500" />
+                                            <Link href="/tools/contract-scanner" className="flex items-center gap-2 px-2 py-1.5 text-xs rounded-[6px] hover:bg-secondary cursor-pointer">
+                                                <Scale className="h-3.5 w-3.5 text-muted-foreground" />
                                                 <span>Contract Redliner</span>
                                             </Link>
                                         </DropdownMenuItem>
                                         <DropdownMenuItem asChild>
-                                            <Link href="/tools/invoice-extractor" className="flex items-center gap-2 px-2 py-1.5 text-xs rounded-md cursor-pointer">
-                                                <ReceiptText className="h-3.5 w-3.5 text-emerald-500" />
+                                            <Link href="/tools/invoice-extractor" className="flex items-center gap-2 px-2 py-1.5 text-xs rounded-[6px] hover:bg-secondary cursor-pointer">
+                                                <ReceiptText className="h-3.5 w-3.5 text-muted-foreground" />
                                                 <span>Invoice Extractor</span>
                                             </Link>
                                         </DropdownMenuItem>
                                         <DropdownMenuItem asChild>
-                                            <Link href="/tools/translate" className="flex items-center gap-2 px-2 py-1.5 text-xs rounded-md cursor-pointer">
-                                                <Languages className="h-3.5 w-3.5 text-cyan-500" />
+                                            <Link href="/tools/translate" className="flex items-center gap-2 px-2 py-1.5 text-xs rounded-[6px] hover:bg-secondary cursor-pointer">
+                                                <Languages className="h-3.5 w-3.5 text-muted-foreground" />
                                                 <span>Document Translator</span>
                                             </Link>
                                         </DropdownMenuItem>
                                         <DropdownMenuItem asChild>
-                                            <Link href="/tools/study-ai" className="flex items-center gap-2 px-2 py-1.5 text-xs rounded-md cursor-pointer">
-                                                <GraduationCap className="h-3.5 w-3.5 text-violet-500" />
+                                            <Link href="/tools/study-ai" className="flex items-center gap-2 px-2 py-1.5 text-xs rounded-[6px] hover:bg-secondary cursor-pointer">
+                                                <GraduationCap className="h-3.5 w-3.5 text-muted-foreground" />
                                                 <span>Flashcards &amp; Quiz</span>
                                             </Link>
                                         </DropdownMenuItem>
@@ -270,124 +256,136 @@ export function Navbar() {
                                 </div>
 
                                 {/* Col 2: Sign & Security */}
-                                <div className="space-y-1 border-l border-border/40 pl-3">
-                                    <DropdownMenuLabel className="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider px-2 py-1 flex items-center gap-1">
-                                        <ShieldCheck className="h-3 w-3" />
+                                <div className="space-y-1.5 border-l border-border pl-3">
+                                    <DropdownMenuLabel className="type-mono-eyebrow text-[10px] text-muted-foreground px-2 py-1 flex items-center gap-1">
+                                        <ShieldCheck className="h-3 w-3 text-foreground" />
                                         <span>Sign &amp; Security</span>
                                     </DropdownMenuLabel>
                                     <div className="space-y-0.5">
                                         <DropdownMenuItem asChild>
-                                            <Link href="/tools/sign" className="flex items-center gap-2 px-2 py-1.5 text-xs rounded-md cursor-pointer font-medium">
-                                                <PenTool className="h-3.5 w-3.5 text-emerald-500" />
+                                            <Link href="/tools/sign" className="flex items-center gap-2 px-2 py-1.5 text-xs rounded-[6px] hover:bg-secondary cursor-pointer font-medium">
+                                                <PenTool className="h-3.5 w-3.5 text-muted-foreground" />
                                                 <span>e-Sign PDF</span>
                                             </Link>
                                         </DropdownMenuItem>
                                         <DropdownMenuItem asChild>
-                                            <Link href="/tools/protect" className="flex items-center gap-2 px-2 py-1.5 text-xs rounded-md cursor-pointer">
-                                                <Lock className="h-3.5 w-3.5 text-emerald-500" />
+                                            <Link href="/tools/flatten-pdf" className="flex items-center gap-2 px-2 py-1.5 text-xs rounded-[6px] hover:bg-secondary cursor-pointer">
+                                                <Lock className="h-3.5 w-3.5 text-muted-foreground" />
+                                                <span>Flatten PDF (Lock)</span>
+                                            </Link>
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem asChild>
+                                            <Link href="/tools/pdf-to-pdfa" className="flex items-center gap-2 px-2 py-1.5 text-xs rounded-[6px] hover:bg-secondary cursor-pointer">
+                                                <Award className="h-3.5 w-3.5 text-muted-foreground" />
+                                                <span>PDF/A Archival</span>
+                                            </Link>
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem asChild>
+                                            <Link href="/tools/protect" className="flex items-center gap-2 px-2 py-1.5 text-xs rounded-[6px] hover:bg-secondary cursor-pointer">
+                                                <Lock className="h-3.5 w-3.5 text-muted-foreground" />
                                                 <span>Protect (AES-256)</span>
                                             </Link>
                                         </DropdownMenuItem>
                                         <DropdownMenuItem asChild>
-                                            <Link href="/tools/unlock" className="flex items-center gap-2 px-2 py-1.5 text-xs rounded-md cursor-pointer">
-                                                <Unlock className="h-3.5 w-3.5 text-amber-500" />
+                                            <Link href="/tools/unlock" className="flex items-center gap-2 px-2 py-1.5 text-xs rounded-[6px] hover:bg-secondary cursor-pointer">
+                                                <Unlock className="h-3.5 w-3.5 text-muted-foreground" />
                                                 <span>Unlock PDF</span>
                                             </Link>
                                         </DropdownMenuItem>
                                         <DropdownMenuItem asChild>
-                                            <Link href="/tools/form-filler" className="flex items-center gap-2 px-2 py-1.5 text-xs rounded-md cursor-pointer">
-                                                <FileEdit className="h-3.5 w-3.5 text-teal-500" />
+                                            <Link href="/tools/form-filler" className="flex items-center gap-2 px-2 py-1.5 text-xs rounded-[6px] hover:bg-secondary cursor-pointer">
+                                                <FileEdit className="h-3.5 w-3.5 text-muted-foreground" />
                                                 <span>Fill PDF Forms</span>
                                             </Link>
                                         </DropdownMenuItem>
                                     </div>
                                 </div>
 
-                                {/* Col 3: Reverse Converters */}
-                                <div className="space-y-1 border-l border-border/40 pl-3">
-                                    <DropdownMenuLabel className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider px-2 py-1">
-                                        Convert From PDF
+                                {/* Col 3: Converters */}
+                                <div className="space-y-1.5 border-l border-border pl-3">
+                                    <DropdownMenuLabel className="type-mono-eyebrow text-[10px] text-muted-foreground px-2 py-1">
+                                        Converters
                                     </DropdownMenuLabel>
                                     <div className="space-y-0.5">
                                         <DropdownMenuItem asChild>
-                                            <Link href="/tools/pdf-to-docx" className="flex items-center gap-2 px-2 py-1.5 text-xs rounded-md cursor-pointer font-medium">
-                                                <FileText className="h-3.5 w-3.5 text-blue-500" />
-                                                <span>PDF to Word (.docx)</span>
+                                            <Link href="/tools/pdf-to-txt" className="flex items-center gap-2 px-2 py-1.5 text-xs rounded-[6px] hover:bg-secondary cursor-pointer">
+                                                <FileText className="h-3.5 w-3.5 text-muted-foreground" />
+                                                <span>PDF to TXT</span>
                                             </Link>
                                         </DropdownMenuItem>
                                         <DropdownMenuItem asChild>
-                                            <Link href="/tools/pdf-to-xlsx" className="flex items-center gap-2 px-2 py-1.5 text-xs rounded-md cursor-pointer font-medium">
-                                                <FileSpreadsheet className="h-3.5 w-3.5 text-emerald-500" />
-                                                <span>PDF to Excel (.xlsx)</span>
+                                            <Link href="/tools/html-to-pdf" className="flex items-center gap-2 px-2 py-1.5 text-xs rounded-[6px] hover:bg-secondary cursor-pointer">
+                                                <Code className="h-3.5 w-3.5 text-muted-foreground" />
+                                                <span>HTML to PDF</span>
                                             </Link>
                                         </DropdownMenuItem>
                                         <DropdownMenuItem asChild>
-                                            <Link href="/tools/pdf-to-pptx" className="flex items-center gap-2 px-2 py-1.5 text-xs rounded-md cursor-pointer font-medium">
-                                                <Presentation className="h-3.5 w-3.5 text-orange-500" />
-                                                <span>PDF to PPTX</span>
+                                            <Link href="/tools/pdf-to-html" className="flex items-center gap-2 px-2 py-1.5 text-xs rounded-[6px] hover:bg-secondary cursor-pointer">
+                                                <Globe className="h-3.5 w-3.5 text-muted-foreground" />
+                                                <span>PDF to HTML</span>
                                             </Link>
                                         </DropdownMenuItem>
                                         <DropdownMenuItem asChild>
-                                            <Link href="/tools/pdf-to-images" className="flex items-center gap-2 px-2 py-1.5 text-xs rounded-md cursor-pointer font-medium">
-                                                <ImageIcon className="h-3.5 w-3.5 text-purple-500" />
-                                                <span>PDF to JPG &amp; PNG</span>
+                                            <Link href="/tools/pptx-to-pdf" className="flex items-center gap-2 px-2 py-1.5 text-xs rounded-[6px] hover:bg-secondary cursor-pointer">
+                                                <Presentation className="h-3.5 w-3.5 text-muted-foreground" />
+                                                <span>PowerPoint to PDF</span>
+                                            </Link>
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem asChild>
+                                            <Link href="/tools/epub-to-pdf" className="flex items-center gap-2 px-2 py-1.5 text-xs rounded-[6px] hover:bg-secondary cursor-pointer">
+                                                <BookOpen className="h-3.5 w-3.5 text-muted-foreground" />
+                                                <span>EPUB to PDF</span>
+                                            </Link>
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem asChild>
+                                            <Link href="/tools/svg-pdf" className="flex items-center gap-2 px-2 py-1.5 text-xs rounded-[6px] hover:bg-secondary cursor-pointer">
+                                                <Shapes className="h-3.5 w-3.5 text-muted-foreground" />
+                                                <span>SVG Vector</span>
                                             </Link>
                                         </DropdownMenuItem>
                                     </div>
                                 </div>
 
-                                {/* Col 4: Organize & Edit */}
-                                <div className="space-y-1 border-l border-border/40 pl-3">
-                                    <DropdownMenuLabel className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider px-2 py-1">
-                                        Organize &amp; Edit
+                                {/* Col 4: Page Utilities */}
+                                <div className="space-y-1.5 border-l border-border pl-3">
+                                    <DropdownMenuLabel className="type-mono-eyebrow text-[10px] text-muted-foreground px-2 py-1">
+                                        Page Utilities
                                     </DropdownMenuLabel>
                                     <div className="space-y-0.5">
                                         <DropdownMenuItem asChild>
-                                            <Link href="/tools/view" className="flex items-center gap-2 px-2 py-1.5 text-xs rounded-md cursor-pointer font-medium text-blue-600 dark:text-blue-400">
-                                                <BookOpen className="h-3.5 w-3.5 text-blue-500" />
-                                                <span>PDF Reader &amp; AI</span>
+                                            <Link href="/tools/delete-pages" className="flex items-center gap-2 px-2 py-1.5 text-xs rounded-[6px] hover:bg-secondary cursor-pointer">
+                                                <Trash2 className="h-3.5 w-3.5 text-muted-foreground" />
+                                                <span>Delete Pages</span>
                                             </Link>
                                         </DropdownMenuItem>
                                         <DropdownMenuItem asChild>
-                                            <Link href="/tools/edit" className="flex items-center gap-2 px-2 py-1.5 text-xs rounded-md cursor-pointer font-medium text-blue-600 dark:text-blue-400">
-                                                <SlidersHorizontal className="h-3.5 w-3.5 text-blue-500" />
-                                                <span>PDF Editor</span>
+                                            <Link href="/tools/rearrange-pages" className="flex items-center gap-2 px-2 py-1.5 text-xs rounded-[6px] hover:bg-secondary cursor-pointer">
+                                                <ArrowUpDown className="h-3.5 w-3.5 text-muted-foreground" />
+                                                <span>Rearrange Pages</span>
                                             </Link>
                                         </DropdownMenuItem>
                                         <DropdownMenuItem asChild>
-                                            <Link href="/tools/rotate" className="flex items-center gap-2 px-2 py-1.5 text-xs rounded-md cursor-pointer">
-                                                <RotateCw className="h-3.5 w-3.5 text-blue-500" />
-                                                <span>Rotate Pages</span>
+                                            <Link href="/tools/extract-pages" className="flex items-center gap-2 px-2 py-1.5 text-xs rounded-[6px] hover:bg-secondary cursor-pointer">
+                                                <Scissors className="h-3.5 w-3.5 text-muted-foreground" />
+                                                <span>Extract Pages</span>
                                             </Link>
                                         </DropdownMenuItem>
                                         <DropdownMenuItem asChild>
-                                            <Link href="/tools/crop" className="flex items-center gap-2 px-2 py-1.5 text-xs rounded-md cursor-pointer">
-                                                <Crop className="h-3.5 w-3.5 text-teal-500" />
-                                                <span>Crop PDF</span>
-                                            </Link>
-                                        </DropdownMenuItem>
-                                        <DropdownMenuItem asChild>
-                                            <Link href="/tools/page-numbers" className="flex items-center gap-2 px-2 py-1.5 text-xs rounded-md cursor-pointer">
-                                                <Hash className="h-3.5 w-3.5 text-indigo-500" />
-                                                <span>Page Numbers</span>
-                                            </Link>
-                                        </DropdownMenuItem>
-                                        <DropdownMenuItem asChild>
-                                            <Link href="/tools/watermark" className="flex items-center gap-2 px-2 py-1.5 text-xs rounded-md cursor-pointer">
-                                                <Stamp className="h-3.5 w-3.5 text-rose-500" />
-                                                <span>Watermarks</span>
-                                            </Link>
-                                        </DropdownMenuItem>
-                                        <DropdownMenuItem asChild>
-                                            <Link href="/tools/merge" className="flex items-center gap-2 px-2 py-1.5 text-xs rounded-md cursor-pointer">
+                                            <Link href="/tools/merge" className="flex items-center gap-2 px-2 py-1.5 text-xs rounded-[6px] hover:bg-secondary cursor-pointer">
                                                 <Combine className="h-3.5 w-3.5 text-muted-foreground" />
                                                 <span>Merge Documents</span>
                                             </Link>
                                         </DropdownMenuItem>
                                         <DropdownMenuItem asChild>
-                                            <Link href="/tools/split" className="flex items-center gap-2 px-2 py-1.5 text-xs rounded-md cursor-pointer">
+                                            <Link href="/tools/split" className="flex items-center gap-2 px-2 py-1.5 text-xs rounded-[6px] hover:bg-secondary cursor-pointer">
                                                 <Scissors className="h-3.5 w-3.5 text-muted-foreground" />
-                                                <span>Split Pages</span>
+                                                <span>Split PDF</span>
+                                            </Link>
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem asChild>
+                                            <Link href="/tools/compress" className="flex items-center gap-2 px-2 py-1.5 text-xs rounded-[6px] hover:bg-secondary cursor-pointer">
+                                                <Minimize2 className="h-3.5 w-3.5 text-muted-foreground" />
+                                                <span>Compress PDF</span>
                                             </Link>
                                         </DropdownMenuItem>
                                     </div>
@@ -398,27 +396,27 @@ export function Navbar() {
 
                         <Link
                             href="/about"
-                            className="px-3 py-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors"
+                            className="px-3 py-1.5 rounded-full text-xs text-muted-foreground hover:text-foreground hover:bg-secondary/60 transition-colors"
                         >
                             About
                         </Link>
                     </nav>
                 </div>
 
-                {/* Right controls */}
-                <div className="flex items-center gap-3">
-                    <div className="hidden lg:flex items-center gap-1.5 text-[11px] font-medium text-emerald-600 dark:text-emerald-400 px-2.5 py-1 rounded-full border border-emerald-500/20 bg-emerald-500/10">
-                        <ShieldCheck className="h-3.5 w-3.5 text-emerald-500" />
-                        <span>100% Private (On-Device)</span>
+                {/* Right app chrome controls: 6px buttons */}
+                <div className="flex items-center gap-2">
+                    <div className="hidden lg:flex items-center gap-1.5 type-mono-eyebrow text-[11px] text-muted-foreground px-2.5 py-1 rounded-[6px] border border-border bg-card">
+                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                        <span>100% Private</span>
                     </div>
 
                     <Link 
                         href="https://github.com/alihashmi2288" 
                         target="_blank" 
                         rel="noreferrer"
-                        className="h-8 w-8 inline-flex items-center justify-center rounded-md border border-border/50 text-muted-foreground hover:text-foreground hover:bg-muted/60 transition-colors"
+                        className="h-8 w-8 inline-flex items-center justify-center rounded-[6px] border border-border text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
                     >
-                        <Github className="h-4 w-4" />
+                        <Github className="h-3.5 w-3.5" />
                         <span className="sr-only">GitHub</span>
                     </Link>
 

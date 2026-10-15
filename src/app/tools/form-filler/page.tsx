@@ -113,7 +113,7 @@ export default function FormFillerPage() {
                     </h1>
                 </div>
                 <p className="text-xs sm:text-sm text-muted-foreground">
-                    Automatically detect and fill AcroForm inputs, checkboxes, dropdowns, and radio buttons in government, tax, or employment forms.
+                    Easily fill out interactive PDF forms, checkboxes, dropdown menus, and text fields on tax, government, or employment documents.
                 </p>
             </div>
 
@@ -173,15 +173,15 @@ export default function FormFillerPage() {
                     {isInspecting ? (
                         <div className="flex flex-col items-center justify-center p-12 text-center text-xs text-muted-foreground gap-2">
                             <Loader2 className="h-6 w-6 animate-spin text-emerald-500" />
-                            <span>Parsing AcroForm field tree...</span>
+                            <span>Finding fillable form fields...</span>
                         </div>
                     ) : fields.length === 0 ? (
                         <div className="p-8 text-center space-y-3">
                             <p className="text-sm font-semibold text-foreground">
-                                No interactive AcroForm fields were detected in this document.
+                                No interactive form fields were found in this document.
                             </p>
                             <p className="text-xs text-muted-foreground max-w-md mx-auto">
-                                This PDF might be a flat scan without interactive form controls. You can use our Smart Editor to draw text, or try our sample form.
+                                This PDF might be a flat scan without fillable fields. You can use our Smart Editor to add text, or try our sample form.
                             </p>
                             <Button
                                 variant="outline"
