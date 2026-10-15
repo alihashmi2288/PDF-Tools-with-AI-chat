@@ -8,17 +8,17 @@ export function Footer() {
                 <div className="flex flex-col sm:flex-row items-center gap-3 text-center sm:text-left">
                     <span className="font-semibold text-foreground tracking-tight">PDF AI Master</span>
                     <span className="hidden sm:inline text-border">•</span>
-                    <span>High-precision document engineering & client-side AI</span>
+                    <span>Simple, fast, and 100% private PDF tools</span>
                 </div>
 
                 <div className="flex items-center gap-6">
                     <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground/80">
                         <Lock className="h-3 w-3 text-emerald-500" />
-                        <span>Zero Data Uploads</span>
+                        <span>Files Never Leave Your Device</span>
                     </div>
                     <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground/80">
-                        <Cpu className="h-3 w-3 text-blue-500" />
-                        <span>WASM & WebWorker Powered</span>
+                        <ShieldCheck className="h-3 w-3 text-blue-500" />
+                        <span>No Account Needed • Always Free</span>
                     </div>
                 </div>
 

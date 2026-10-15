@@ -19,8 +19,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "PDF AI Master – Precision Document Workstation & AI",
-  description: "Next-generation client-side PDF utility suite. Chat with documents, merge, split, compress, OCR, and convert with 100% privacy.",
+  title: "PDF AI Master – Fast, Simple & 100% Private PDF Tools",
+  description: "Chat with documents, merge, split, compress, edit, and convert PDFs directly on your device. Free, instant, and completely private.",
 };
 
 export default function RootLayout({
