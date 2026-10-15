@@ -30,6 +30,7 @@ import {
     ReceiptText,
     Languages,
     GraduationCap,
+    BookOpen,
     Presentation,
     Image as ImageIcon
 } from "lucide-react";
@@ -75,7 +76,8 @@ const toolCategories = [
             { href: "/tools/merge", label: "Merge Documents", icon: Combine },
             { href: "/tools/split", label: "Split Pages", icon: Scissors },
             { href: "/tools/compress", label: "Compress File Size", icon: Minimize2 },
-            { href: "/tools/edit", label: "Smart Editor", icon: SlidersHorizontal },
+            { href: "/tools/view", label: "PDF Reader & AI", icon: BookOpen },
+            { href: "/tools/edit", label: "PDF Editor", icon: SlidersHorizontal },
             { href: "/tools/ocr", label: "OCR Text Scanner", icon: ScanText },
         ]
     },

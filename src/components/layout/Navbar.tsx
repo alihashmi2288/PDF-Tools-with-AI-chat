@@ -32,6 +32,7 @@ import {
     ReceiptText,
     Languages,
     GraduationCap,
+    BookOpen,
     Presentation,
     Image as ImageIcon
 } from 'lucide-react';
@@ -53,8 +54,9 @@ export function Navbar() {
 
     const navLinks = [
         { href: "/", label: "Home" },
+        { href: "/tools/view", label: "PDF Reader", icon: BookOpen },
+        { href: "/tools/edit", label: "PDF Editor", icon: SlidersHorizontal },
         { href: "/chat/workspace", label: "Multi-PDF Workspace", icon: FolderGit2, badge: "AI" },
-        { href: "/documents", label: "Viewer & Editor" },
         { href: "/chat", label: "AI Chat", icon: Sparkles },
     ];
 
@@ -153,9 +155,11 @@ export function Navbar() {
                                     {/* Mobile Page Organize */}
                                     <div className="pt-3 border-t border-border/40 flex flex-col gap-1.5">
                                         <span className="text-xs font-bold text-foreground px-3">
-                                            Page Operations
+                                            View, Edit &amp; Organize
                                         </span>
                                         <div className="pl-3 flex flex-col gap-0.5">
+                                            <Link href="/tools/view" className="text-sm font-medium text-blue-600 dark:text-blue-400 py-1" onClick={() => setIsOpen(false)}>PDF Reader &amp; AI</Link>
+                                            <Link href="/tools/edit" className="text-sm font-medium text-blue-600 dark:text-blue-400 py-1" onClick={() => setIsOpen(false)}>PDF Editor</Link>
                                             <Link href="/tools/rotate" className="text-sm text-muted-foreground hover:text-foreground py-1" onClick={() => setIsOpen(false)}>Rotate Pages</Link>
                                             <Link href="/tools/crop" className="text-sm text-muted-foreground hover:text-foreground py-1" onClick={() => setIsOpen(false)}>Crop PDF</Link>
                                             <Link href="/tools/page-numbers" className="text-sm text-muted-foreground hover:text-foreground py-1" onClick={() => setIsOpen(false)}>Add Page Numbers</Link>
@@ -335,9 +339,21 @@ export function Navbar() {
                                 {/* Col 4: Organize & Edit */}
                                 <div className="space-y-1 border-l border-border/40 pl-3">
                                     <DropdownMenuLabel className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider px-2 py-1">
-                                        Organize &amp; Stamp
+                                        Organize &amp; Edit
                                     </DropdownMenuLabel>
                                     <div className="space-y-0.5">
+                                        <DropdownMenuItem asChild>
+                                            <Link href="/tools/view" className="flex items-center gap-2 px-2 py-1.5 text-xs rounded-md cursor-pointer font-medium text-blue-600 dark:text-blue-400">
+                                                <BookOpen className="h-3.5 w-3.5 text-blue-500" />
+                                                <span>PDF Reader &amp; AI</span>
+                                            </Link>
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem asChild>
+                                            <Link href="/tools/edit" className="flex items-center gap-2 px-2 py-1.5 text-xs rounded-md cursor-pointer font-medium text-blue-600 dark:text-blue-400">
+                                                <SlidersHorizontal className="h-3.5 w-3.5 text-blue-500" />
+                                                <span>PDF Editor</span>
+                                            </Link>
+                                        </DropdownMenuItem>
                                         <DropdownMenuItem asChild>
                                             <Link href="/tools/rotate" className="flex items-center gap-2 px-2 py-1.5 text-xs rounded-md cursor-pointer">
                                                 <RotateCw className="h-3.5 w-3.5 text-blue-500" />

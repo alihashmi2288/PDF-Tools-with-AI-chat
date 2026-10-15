@@ -3,8 +3,10 @@
 import dynamic from "next/dynamic";
 import { PDFUploader } from "@/components/pdf/PDFUploader";
 import { Button } from "@/components/ui/button";
-import { FileText, SlidersHorizontal, ShieldCheck } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useGlobalToolContext } from "@/context/GlobalToolContext";
+import { usePDFContext } from "@/context/PDFContext";
+import { BookOpen, FileText, SlidersHorizontal } from "lucide-react";
 
 const PDFEditor = dynamic(() => import("@/components/pdf/PDFEditor").then(mod => mod.PDFEditor), {
     ssr: false,
@@ -16,11 +18,20 @@ const PDFEditor = dynamic(() => import("@/components/pdf/PDFEditor").then(mod =>
 });
 
 export default function EditPage() {
+    const router = useRouter();
     const { edit, setEdit } = useGlobalToolContext();
+    const { setFile: setPdfContextFile } = usePDFContext();
     const { file } = edit;
 
     const handleFileSelect = (newFile: File) => {
         setEdit({ file: newFile });
+    };
+
+    const handleOpenInReader = () => {
+        if (file) {
+            setPdfContextFile(file);
+            router.push("/tools/view");
+        }
     };
 
     return (
@@ -66,14 +77,27 @@ export default function EditPage() {
                             </div>
                         </div>
 
-                        <Button 
-                            variant="ghost" 
-                            size="sm" 
-                            className="h-7 text-xs text-muted-foreground hover:text-foreground"
-                            onClick={() => setEdit({ file: null })}
-                        >
-                            Change File
-                        </Button>
+                        <div className="flex items-center gap-2">
+                            <Button 
+                                variant="outline" 
+                                size="sm" 
+                                className="h-8 text-xs gap-1.5 border-border/70 text-foreground hover:bg-secondary font-medium"
+                                onClick={handleOpenInReader}
+                                title="Open document in reader with AI Assistant"
+                            >
+                                <BookOpen className="h-3.5 w-3.5 text-blue-500" />
+                                <span>Read with AI</span>
+                            </Button>
+
+                            <Button 
+                                variant="ghost" 
+                                size="sm" 
+                                className="h-8 text-xs text-muted-foreground hover:text-foreground"
+                                onClick={() => setEdit({ file: null })}
+                            >
+                                Change File
+                            </Button>
+                        </div>
                     </div>
 
                     <div className="border border-border/70 rounded-xl bg-card p-4 shadow-xs">

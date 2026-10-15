@@ -377,10 +377,20 @@ export default function Home() {
                         variant="outline"
                         size="sm"
                         className="h-9 text-xs justify-start px-3 gap-2 cursor-pointer"
-                        onClick={() => routeToFileAction("/documents")}
+                        onClick={() => routeToFileAction("/tools/view")}
                       >
                         <Eye className="h-3.5 w-3.5 shrink-0" />
-                        <span className="truncate">View &amp; Edit</span>
+                        <span className="truncate">View in Reader</span>
+                      </Button>
+
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="h-9 text-xs justify-start px-3 gap-2 cursor-pointer"
+                        onClick={() => routeToFileAction("/tools/edit")}
+                      >
+                        <SlidersHorizontal className="h-3.5 w-3.5 shrink-0" />
+                        <span className="truncate">Edit Canvas</span>
                       </Button>
 
                       <Button
@@ -1215,10 +1225,10 @@ export default function Home() {
                 <span>Chat with a Document</span>
               </Button>
             </Link>
-            <Link href="/documents">
+            <Link href="/tools/view">
               <Button size="default" variant="outline" className="text-xs sm:text-sm font-semibold cursor-pointer gap-2">
                 <Eye className="h-3.5 w-3.5" />
-                <span>Open Document Viewer</span>
+                <span>Open PDF Reader</span>
               </Button>
             </Link>
           </div>
