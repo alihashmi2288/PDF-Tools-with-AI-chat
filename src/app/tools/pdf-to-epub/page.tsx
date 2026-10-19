@@ -37,7 +37,7 @@ export default function PdfToEpubPage() {
         try {
             const epubBytes = await convertPdfToEpub(file, {
                 title: bookTitle || file.name.replace(/\.[^/.]+$/, ''),
-                author: authorName || 'PDF Master AI',
+                author: authorName || 'PDFKit',
             });
 
             const blob = new Blob([epubBytes as any], { type: 'application/epub+zip' });

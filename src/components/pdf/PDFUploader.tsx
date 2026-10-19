@@ -40,38 +40,38 @@ export function PDFUploader({
         <div
             {...getRootProps()}
             className={cn(
-                "relative group flex flex-col items-center justify-center w-full min-h-[200px] rounded-xl border border-dashed transition-all duration-200 cursor-pointer p-6 text-center bg-card shadow-xs",
+                "relative group flex flex-col items-center justify-center w-full min-h-[190px] rounded-[14px] border border-dashed transition-all duration-200 cursor-pointer p-6 sm:p-8 text-center bg-surface-1 shadow-xs paper-empty-sheet",
                 isDragActive
-                    ? "border-foreground bg-secondary/80 ring-1 ring-foreground/20"
-                    : "border-border hover:border-foreground/40 hover:bg-secondary/40",
+                    ? "border-primary bg-surface-2 ring-2 ring-primary/30"
+                    : "border-hairline-strong hover:border-hairline-tertiary hover:bg-surface-2/60",
                 className
             )}
         >
             <input {...getInputProps()} />
 
             <div className="flex flex-col items-center justify-center space-y-3 pointer-events-none">
-                <div className="h-10 w-10 rounded-[6px] bg-secondary flex items-center justify-center border border-border group-hover:scale-105 transition-transform">
+                <div className="h-11 w-11 rounded-[9px] bg-surface-2 flex items-center justify-center border border-hairline group-hover:scale-105 transition-transform shadow-xs">
                     {isDragActive ? (
-                        <FileText className="h-4 w-4 text-foreground" />
+                        <FileText className="h-5 w-5 text-primary" />
                     ) : (
-                        <Upload className="h-4 w-4 text-foreground" />
+                        <Upload className="h-5 w-5 text-ink" />
                     )}
                 </div>
 
                 <div className="space-y-1">
-                    <p className="font-semibold text-xs sm:text-sm text-foreground">
+                    <p className="font-semibold text-xs sm:text-sm text-ink">
                         {isDragActive ? "Release document to process" : title}
                     </p>
-                    <p className="text-xs text-muted-foreground max-w-sm">
+                    <p className="text-xs text-ink-subtle max-w-sm">
                         {subtitle}
                     </p>
                 </div>
 
                 <div className="flex items-center gap-2 pt-1">
-                    <span className="type-mono-eyebrow text-[9px] px-2 py-0.5 rounded-[4px] bg-secondary text-muted-foreground border border-border">
+                    <span className="paper-citation-pill text-[9px] py-0.5 px-2">
                         100% Private
                     </span>
-                    <span className="type-mono-eyebrow text-[9px] text-muted-foreground">
+                    <span className="type-mono-eyebrow text-[9px] text-ink-tertiary">
                         Never leaves your device
                     </span>
                 </div>

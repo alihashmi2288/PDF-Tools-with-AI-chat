@@ -28,12 +28,12 @@ export async function convertPdfToPdfA(
 
     const now = new Date();
     const title = options.title || pdfDoc.getTitle() || 'Archived Document';
-    const author = options.author || pdfDoc.getAuthor() || 'PDF Master AI Archival System';
+    const author = options.author || pdfDoc.getAuthor() || 'PDFKit Archival System';
 
     pdfDoc.setTitle(title);
     pdfDoc.setAuthor(author);
-    pdfDoc.setProducer('PDF Master AI — ISO 19005-1 PDF/A-1b Compliant Engine');
-    pdfDoc.setCreator('PDF Master AI');
+    pdfDoc.setProducer('PDFKit — ISO 19005-1 PDF/A-1b Compliant Engine');
+    pdfDoc.setCreator('PDFKit');
     pdfDoc.setCreationDate(now);
     pdfDoc.setModificationDate(now);
 
@@ -52,7 +52,7 @@ export async function convertPdfToPdfA(
       <dc:date><rdf:Seq><rdf:li>${now.toISOString()}</rdf:li></rdf:Seq></dc:date>
     </rdf:Description>
     <rdf:Description rdf:about="" xmlns:pdf="http://ns.adobe.com/pdf/1.3/">
-      <pdf:Producer>PDF Master AI ISO 19005-1 Archival Engine</pdf:Producer>
+      <pdf:Producer>PDFKit ISO 19005-1 Archival Engine</pdf:Producer>
     </rdf:Description>
     <rdf:Description rdf:about="" xmlns:xmp="http://ns.adobe.com/xap/1.0/">
       <xmp:CreateDate>${now.toISOString()}</xmp:CreateDate>

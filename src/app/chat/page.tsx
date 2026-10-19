@@ -33,23 +33,23 @@ export default function ChatPage() {
     return (
         <div className="max-w-4xl py-2 space-y-6">
             {/* Header */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-border pb-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-hairline pb-4">
                 <div className="space-y-1">
-                    <div className="flex items-center gap-2">
-                        <div className="h-6 w-6 rounded-[6px] bg-secondary flex items-center justify-center border border-border">
-                            <Sparkles className="h-3.5 w-3.5 text-foreground" />
+                    <div className="flex items-center gap-2.5">
+                        <div className="h-7 w-7 rounded-[8px] bg-primary/15 flex items-center justify-center border border-primary/25">
+                            <Sparkles className="h-4 w-4 text-primary" />
                         </div>
-                        <h1 className="type-heading-md text-foreground">
+                        <h1 className="type-headline text-ink">
                             Document Chat Assistant
                         </h1>
                     </div>
-                    <p className="text-xs text-muted-foreground">
+                    <p className="text-xs text-ink-subtle">
                         Converse directly with loaded document contents, summarize sections, and extract key metrics.
                     </p>
                 </div>
 
                 <div className="flex items-center gap-2">
-                    <span className="type-mono-eyebrow text-[10px] text-muted-foreground px-2 py-1 rounded-[4px] bg-card border border-border">
+                    <span className="type-mono-eyebrow text-[10px] text-ink-muted px-2.5 py-1 rounded-full bg-surface-2 border border-hairline">
                         {file ? "DOCUMENT CONTEXT ACTIVE" : "GENERAL CONSOLE"}
                     </span>
                 </div>
@@ -57,12 +57,12 @@ export default function ChatPage() {
 
             {/* Document Ribbon / Upload Area */}
             {!file ? (
-                <div className="p-4 border border-border rounded-xl bg-card space-y-3 shadow-xs">
+                <div className="p-4 border border-hairline rounded-[12px] bg-surface-1 space-y-3 shadow-xs">
                     <div className="flex items-center justify-between">
-                        <span className="type-mono-eyebrow text-[10px] text-foreground font-semibold">
+                        <span className="type-eyebrow text-[11px] text-ink font-semibold uppercase tracking-[0.4px]">
                           Attach Document To Ask Questions
                         </span>
-                        <span className="type-mono-eyebrow text-[10px] text-muted-foreground">
+                        <span className="type-mono-eyebrow text-[10px] text-ink-subtle">
                           Optional
                         </span>
                     </div>
@@ -74,17 +74,22 @@ export default function ChatPage() {
                     />
                 </div>
             ) : (
-                <div className="flex items-center justify-between p-3.5 border border-border rounded-xl bg-card shadow-xs">
+                <div className="paper-sheet paper-sheet-stacked flex items-center justify-between p-3.5 border border-paper-border shadow-xs">
                     <div className="flex items-center gap-3">
-                        <div className="h-8 w-8 rounded-[6px] bg-secondary flex items-center justify-center border border-border">
-                            <FileText className="h-4 w-4 text-foreground" />
+                        <div className="h-9 w-9 rounded-[8px] bg-surface-2 flex items-center justify-center border border-hairline shadow-xs">
+                            <FileText className="h-4.5 w-4.5 text-primary" />
                         </div>
                         <div>
-                            <p className="text-xs font-semibold text-foreground truncate max-w-xs sm:max-w-md">
-                                {file.name}
-                            </p>
-                            <p className="type-mono-eyebrow text-[10px] text-muted-foreground">
-                                {(file.size / 1024).toFixed(1)} KB • Ready for questions
+                            <div className="flex items-center gap-2">
+                                <p className="text-xs font-semibold text-ink truncate max-w-xs sm:max-w-md">
+                                    {file.name}
+                                </p>
+                                <span className="paper-citation-pill text-[9px] py-0 px-1.5">
+                                    Active Context
+                                </span>
+                            </div>
+                            <p className="type-mono-eyebrow text-[10px] text-ink-subtle mt-0.5">
+                                {(file.size / 1024).toFixed(1)} KB • Extracted in memory • Ready for citations
                             </p>
                         </div>
                     </div>
@@ -92,7 +97,7 @@ export default function ChatPage() {
                     <Button 
                         variant="ghost" 
                         size="sm" 
-                        className="h-7 text-xs text-muted-foreground hover:text-foreground"
+                        className="h-7 text-xs text-ink-subtle hover:text-ink cursor-pointer"
                         onClick={clearFile}
                     >
                         <X className="h-3.5 w-3.5 mr-1" />

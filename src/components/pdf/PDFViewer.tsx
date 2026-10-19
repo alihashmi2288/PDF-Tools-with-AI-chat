@@ -13,8 +13,10 @@ import {
     Download, 
     Printer,
     FileText,
-    Minimize2
+    Minimize2,
+    Loader2
 } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
@@ -121,46 +123,50 @@ export function PDFViewer({ file }: PDFViewerProps) {
 
     if (!file) {
         return (
-            <div className="flex flex-col items-center justify-center p-12 text-center text-muted-foreground space-y-2">
-                <FileText className="h-10 w-10 stroke-[1.5] text-muted-foreground/60" />
-                <p className="text-sm font-medium">No document loaded</p>
-                <p className="text-xs">Upload a PDF to view and analyze its contents.</p>
+            <div className="paper-empty-sheet flex flex-col items-center justify-center p-12 text-center m-6 space-y-3">
+                <div className="h-12 w-12 rounded-[10px] bg-surface-2 border border-hairline flex items-center justify-center shadow-xs">
+                    <FileText className="h-6 w-6 stroke-[1.5] text-ink-subtle" />
+                </div>
+                <div className="space-y-1">
+                    <p className="text-sm font-semibold text-ink">No document loaded</p>
+                    <p className="text-xs text-ink-subtle max-w-xs">Upload or drop a PDF to read, zoom, and inspect pages in the precision viewer.</p>
+                </div>
             </div>
         );
     }
 
     return (
-        <div ref={viewerContainerRef} className="flex flex-col h-full w-full bg-muted/20">
-            {/* Top Toolbar */}
-            <div className="flex items-center justify-between flex-wrap gap-2 p-2 border-b border-border/60 bg-background/80 backdrop-blur-xs shrink-0 select-none">
+        <div ref={viewerContainerRef} className="flex flex-col h-full w-full bg-surface-1">
+            {/* Top Toolbar: Apple QuickLook Floating Bar */}
+            <div className="flex items-center justify-between flex-wrap gap-2 p-2 border-b border-hairline bg-surface-1/80 backdrop-blur-xl shrink-0 select-none">
                 {/* Page Navigation */}
                 <div className="flex items-center gap-1.5">
                     <Button
                         variant="ghost"
                         size="icon"
-                        className="h-7 w-7 text-muted-foreground hover:text-foreground"
+                        className="h-7 w-7 text-ink-subtle hover:text-ink hover:bg-surface-2"
                         disabled={pageNumber <= 1}
                         onClick={previousPage}
                         title="Previous page (Left arrow)"
                     >
                         <ChevronLeft className="h-4 w-4" />
                     </Button>
-                    <div className="flex items-center gap-1 text-xs font-mono text-muted-foreground">
+                    <div className="flex items-center gap-1 text-xs font-mono text-ink-subtle">
                         <input
                             type="text"
                             value={pageInput}
                             onChange={(e) => setPageInput(e.target.value)}
                             onKeyDown={handlePageInputSubmit}
                             onBlur={() => setPageInput(pageNumber.toString())}
-                            className="w-10 h-6 text-center text-xs font-mono rounded bg-secondary/70 border border-border/60 text-foreground focus:outline-none focus:ring-1 focus:ring-primary"
+                            className="w-10 h-6 text-center text-xs font-mono rounded-[6px] bg-surface-2 border border-hairline text-ink focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/30"
                         />
                         <span>/</span>
-                        <span className="tabular-nums">{numPages || 1}</span>
+                        <span className="tabular-nums text-ink">{numPages || 1}</span>
                     </div>
                     <Button
                         variant="ghost"
                         size="icon"
-                        className="h-7 w-7 text-muted-foreground hover:text-foreground"
+                        className="h-7 w-7 text-ink-subtle hover:text-ink hover:bg-surface-2"
                         disabled={pageNumber >= numPages}
                         onClick={nextPage}
                         title="Next page (Right arrow)"
@@ -174,7 +180,7 @@ export function PDFViewer({ file }: PDFViewerProps) {
                     <Button 
                         variant="ghost" 
                         size="icon" 
-                        className="h-7 w-7 text-muted-foreground hover:text-foreground" 
+                        className="h-7 w-7 text-ink-subtle hover:text-ink hover:bg-surface-2" 
                         onClick={zoomOut}
                         title="Zoom out"
                     >
@@ -183,26 +189,26 @@ export function PDFViewer({ file }: PDFViewerProps) {
                     <button 
                         onClick={resetZoom}
                         title="Reset to 100%"
-                        className="text-xs font-mono px-1.5 py-0.5 rounded hover:bg-secondary text-muted-foreground hover:text-foreground tabular-nums transition-colors"
+                        className="text-xs font-mono px-1.5 py-0.5 rounded-[4px] hover:bg-surface-2 text-ink-subtle hover:text-ink tabular-nums transition-colors"
                     >
                         {Math.round(scale * 100)}%
                     </button>
                     <Button 
                         variant="ghost" 
                         size="icon" 
-                        className="h-7 w-7 text-muted-foreground hover:text-foreground" 
+                        className="h-7 w-7 text-ink-subtle hover:text-ink hover:bg-surface-2" 
                         onClick={zoomIn}
                         title="Zoom in"
                     >
                         <ZoomIn className="h-3.5 w-3.5" />
                     </Button>
 
-                    <div className="w-px h-4 bg-border/60 mx-1" />
+                    <div className="w-px h-4 bg-hairline mx-1" />
 
                     <Button 
                         variant="ghost" 
                         size="icon" 
-                        className="h-7 w-7 text-muted-foreground hover:text-foreground" 
+                        className="h-7 w-7 text-ink-subtle hover:text-ink hover:bg-surface-2" 
                         onClick={rotateClockwise}
                         title="Rotate view clockwise (90°)"
                     >
@@ -212,7 +218,7 @@ export function PDFViewer({ file }: PDFViewerProps) {
                     <Button 
                         variant="ghost" 
                         size="icon" 
-                        className="h-7 w-7 text-muted-foreground hover:text-foreground" 
+                        className="h-7 w-7 text-ink-subtle hover:text-ink hover:bg-surface-2" 
                         onClick={toggleFullscreen}
                         title="Toggle full screen reading mode"
                     >
@@ -225,7 +231,7 @@ export function PDFViewer({ file }: PDFViewerProps) {
                     <Button 
                         variant="ghost" 
                         size="icon" 
-                        className="h-7 w-7 text-muted-foreground hover:text-foreground" 
+                        className="h-7 w-7 text-ink-subtle hover:text-ink hover:bg-surface-2" 
                         onClick={handlePrint}
                         title="Print document"
                     >
@@ -234,7 +240,7 @@ export function PDFViewer({ file }: PDFViewerProps) {
                     <Button 
                         variant="ghost" 
                         size="icon" 
-                        className="h-7 w-7 text-muted-foreground hover:text-foreground" 
+                        className="h-7 w-7 text-ink-subtle hover:text-ink hover:bg-surface-2" 
                         onClick={handleDownload}
                         title="Download PDF"
                     >
@@ -243,18 +249,22 @@ export function PDFViewer({ file }: PDFViewerProps) {
                 </div>
             </div>
 
-            {/* Document Render Canvas */}
-            <div className="flex-1 overflow-auto flex items-center justify-center p-4 sm:p-6 bg-muted/30">
-                <div className="border border-border/70 rounded-lg overflow-hidden shadow-xl bg-white dark:bg-card transition-transform duration-150">
+            {/* Document Render Canvas: Paper Desk Mat & Tactile Sheet */}
+            <div className="flex-1 overflow-auto flex flex-col items-center justify-center p-4 sm:p-8 paper-desk-mat relative subtle-scrollbar">
+                <div className={cn(
+                    "paper-sheet transition-transform duration-150 relative my-auto",
+                    numPages > 1 ? "paper-sheet-stacked" : ""
+                )}>
                     <Document
                         file={file}
                         onLoadSuccess={onDocumentLoadSuccess}
                         loading={
-                            <div className="p-12 text-center text-xs font-mono text-muted-foreground">
-                                Rendering document pages...
+                            <div className="p-16 text-center text-xs font-mono text-ink-subtle flex flex-col items-center gap-2.5">
+                                <Loader2 className="h-5 w-5 animate-spin text-primary" />
+                                <span>Rendering high-fidelity document sheet...</span>
                             </div>
                         }
-                        className="max-w-full"
+                        className="max-w-full rounded-[8px] overflow-hidden"
                     >
                         <Page
                             pageNumber={pageNumber}
@@ -262,10 +272,27 @@ export function PDFViewer({ file }: PDFViewerProps) {
                             rotate={rotation}
                             renderTextLayer={true}
                             renderAnnotationLayer={true}
-                            className="shadow-xs"
+                            className="shadow-xs rounded-[8px] overflow-hidden"
                         />
                     </Document>
                 </div>
+
+                {/* Document Sheet Status Badge */}
+                {numPages > 0 && (
+                    <div className="sticky bottom-3 mt-4 z-10 pointer-events-none">
+                        <div className="px-3.5 py-1 rounded-full bg-surface-1/90 backdrop-blur-md border border-hairline text-ink-subtle text-[11px] font-mono shadow-xs flex items-center gap-2">
+                            <span className="text-ink font-medium">Sheet {pageNumber} of {numPages}</span>
+                            <span className="text-hairline-strong">•</span>
+                            <span>{Math.round(scale * 100)}% zoom</span>
+                            {rotation !== 0 && (
+                                <>
+                                    <span className="text-hairline-strong">•</span>
+                                    <span>{rotation}°</span>
+                                </>
+                            )}
+                        </div>
+                    </div>
+                )}
             </div>
         </div>
     );

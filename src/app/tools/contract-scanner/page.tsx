@@ -111,24 +111,24 @@ export default function ContractScannerPage() {
     };
 
     return (
-        <div className="max-w-4xl mx-auto py-4 space-y-6">
+        <div className="max-w-4xl mx-auto py-6 space-y-6">
             {/* Header */}
-            <div className="space-y-1.5 border-b border-border/60 pb-4">
-                <div className="flex items-center gap-2">
-                    <div className="h-8 w-8 rounded-lg bg-red-500/10 text-red-600 dark:text-red-400 flex items-center justify-center border border-red-500/20">
+            <div className="space-y-1.5 border-b border-hairline pb-5">
+                <div className="flex items-center gap-2.5">
+                    <div className="h-8 w-8 rounded-[8px] bg-primary/10 text-primary flex items-center justify-center border border-primary/20">
                         <Scale className="h-4 w-4" />
                     </div>
-                    <h1 className="text-2xl font-bold tracking-tight text-foreground">
+                    <h1 className="type-headline text-ink">
                         AI Contract Redliner &amp; Risk Scanner
                     </h1>
                 </div>
-                <p className="text-xs sm:text-sm text-muted-foreground">
+                <p className="type-subhead text-ink-subtle">
                     Compare two PDF contract versions side-by-side or scan a single agreement to detect added liabilities, altered numbers, and trap clauses.
                 </p>
             </div>
 
             {/* Mode Selector */}
-            <div className="flex gap-2 p-1 bg-secondary/30 rounded-xl border border-border/60 max-w-md">
+            <div className="filter-toggle-container inline-flex p-1 bg-surface-1 border border-hairline rounded-full max-w-md">
                 <button
                     type="button"
                     onClick={() => {
@@ -136,10 +136,10 @@ export default function ContractScannerPage() {
                         setScanResult(null);
                     }}
                     className={cn(
-                        "flex-1 py-1.5 text-xs font-semibold rounded-lg transition-all flex items-center justify-center gap-1.5 cursor-pointer",
+                        "filter-toggle-pill flex-1 py-1.5 px-4 text-xs font-medium rounded-full transition-all flex items-center justify-center gap-1.5 cursor-pointer",
                         mode === 'compare'
-                            ? "bg-foreground text-background shadow-xs"
-                            : "text-muted-foreground hover:text-foreground"
+                            ? "filter-toggle-pill-active"
+                            : "text-ink-subtle hover:text-ink"
                     )}
                 >
                     <GitCompare className="h-3.5 w-3.5" />
@@ -152,10 +152,10 @@ export default function ContractScannerPage() {
                         setScanResult(null);
                     }}
                     className={cn(
-                        "flex-1 py-1.5 text-xs font-semibold rounded-lg transition-all flex items-center justify-center gap-1.5 cursor-pointer",
+                        "filter-toggle-pill flex-1 py-1.5 px-4 text-xs font-medium rounded-full transition-all flex items-center justify-center gap-1.5 cursor-pointer",
                         mode === 'audit'
-                            ? "bg-foreground text-background shadow-xs"
-                            : "text-muted-foreground hover:text-foreground"
+                            ? "filter-toggle-pill-active"
+                            : "text-ink-subtle hover:text-ink"
                     )}
                 >
                     <ShieldAlert className="h-3.5 w-3.5" />
@@ -165,9 +165,9 @@ export default function ContractScannerPage() {
 
             {/* Upload Grids */}
             <div className={cn("grid gap-4", mode === 'compare' ? "grid-cols-1 sm:grid-cols-2" : "grid-cols-1")}>
-                <div className="p-4 rounded-xl border border-border/70 bg-card space-y-3">
-                    <span className="text-xs font-bold text-foreground flex items-center gap-1.5">
-                        <span className="h-2 w-2 rounded-full bg-blue-500" />
+                <div className="hairline-card p-5 rounded-[12px] bg-surface-1 space-y-3">
+                    <span className="type-eyebrow text-ink flex items-center gap-2">
+                        <span className="h-2 w-2 rounded-full bg-primary" />
                         <span>{mode === 'compare' ? "1. Original Contract (Base)" : "Contract Agreement"}</span>
                     </span>
                     {!originalFile ? (
@@ -178,14 +178,14 @@ export default function ContractScannerPage() {
                             className="min-h-[140px] py-4"
                         />
                     ) : (
-                        <div className="p-3 rounded-lg border border-border/60 bg-secondary/20 flex items-center justify-between text-xs">
-                            <span className="font-semibold text-foreground truncate max-w-[220px]">
+                        <div className="p-3 rounded-[8px] border border-hairline bg-surface-2 flex items-center justify-between text-xs">
+                            <span className="font-medium text-ink truncate max-w-[220px]">
                                 {originalFile.name}
                             </span>
                             <Button
                                 variant="ghost"
                                 size="sm"
-                                className="h-6 text-[10px]"
+                                className="h-6 text-[11px] rounded-[6px]"
                                 onClick={() => setOriginalFile(null)}
                             >
                                 Change
@@ -195,9 +195,9 @@ export default function ContractScannerPage() {
                 </div>
 
                 {mode === 'compare' && (
-                    <div className="p-4 rounded-xl border border-border/70 bg-card space-y-3">
-                        <span className="text-xs font-bold text-foreground flex items-center gap-1.5">
-                            <span className="h-2 w-2 rounded-full bg-amber-500" />
+                    <div className="hairline-card p-5 rounded-[12px] bg-surface-1 space-y-3">
+                        <span className="type-eyebrow text-ink flex items-center gap-2">
+                            <span className="h-2 w-2 rounded-full bg-[#f2994a]" />
                             <span>2. Counterparty / Revised Version</span>
                         </span>
                         {!revisedFile ? (
@@ -208,14 +208,14 @@ export default function ContractScannerPage() {
                                 className="min-h-[140px] py-4"
                             />
                         ) : (
-                            <div className="p-3 rounded-lg border border-border/60 bg-secondary/20 flex items-center justify-between text-xs">
-                                <span className="font-semibold text-foreground truncate max-w-[220px]">
+                            <div className="p-3 rounded-[8px] border border-hairline bg-surface-2 flex items-center justify-between text-xs">
+                                <span className="font-medium text-ink truncate max-w-[220px]">
                                     {revisedFile.name}
                                 </span>
                                 <Button
                                     variant="ghost"
                                     size="sm"
-                                    className="h-6 text-[10px]"
+                                    className="h-6 text-[11px] rounded-[6px]"
                                     onClick={() => setRevisedFile(null)}
                                 >
                                     Change
@@ -227,11 +227,11 @@ export default function ContractScannerPage() {
             </div>
 
             {/* Scan Action */}
-            <div className="flex justify-center">
+            <div className="flex justify-center pt-2">
                 <Button
                     onClick={handleScan}
                     disabled={isScanning || !originalFile || (mode === 'compare' && !revisedFile)}
-                    className="h-10 px-8 text-xs font-semibold gap-2 cursor-pointer bg-red-600 hover:bg-red-700 text-white"
+                    className="button-primary h-10 px-8 text-xs font-medium gap-2 cursor-pointer rounded-[8px]"
                 >
                     {isScanning ? (
                         <>
@@ -249,44 +249,44 @@ export default function ContractScannerPage() {
 
             {/* Results Presentation */}
             {scanResult && (
-                <div className="space-y-6 pt-2">
+                <div className="space-y-6 pt-4">
                     {/* Score Ribbon */}
-                    <div className="p-5 rounded-2xl border border-border/70 bg-card space-y-4 shadow-xs">
-                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-border/40 pb-4">
+                    <div className="hairline-card p-5 rounded-[12px] bg-surface-1 space-y-4">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-hairline pb-4">
                             <div className="flex items-center gap-4">
                                 <div
                                     className={cn(
-                                        "h-14 w-14 rounded-2xl flex flex-col items-center justify-center font-bold text-lg border",
+                                        "h-14 w-14 rounded-[10px] flex flex-col items-center justify-center font-bold text-lg border",
                                         scanResult.overallRiskScore > 60
-                                            ? "bg-red-500/10 text-red-600 border-red-500/30"
+                                            ? "bg-[#eb5757]/10 text-[#eb5757] border-[#eb5757]/30"
                                             : scanResult.overallRiskScore > 30
-                                            ? "bg-amber-500/10 text-amber-600 border-amber-500/30"
-                                            : "bg-emerald-500/10 text-emerald-600 border-emerald-500/30"
+                                            ? "bg-[#f2994a]/10 text-[#f2994a] border-[#f2994a]/30"
+                                            : "bg-[#16a34a]/10 text-[#16a34a] border-[#16a34a]/30"
                                     )}
                                 >
                                     <span>{scanResult.overallRiskScore}</span>
-                                    <span className="text-[9px] font-mono -mt-1">/100</span>
+                                    <span className="text-[10px] font-mono -mt-1 opacity-70">/100</span>
                                 </div>
 
                                 <div>
                                     <div className="flex items-center gap-2">
-                                        <h2 className="text-base font-bold text-foreground">
+                                        <h2 className="type-card-title text-ink">
                                             {scanResult.riskLevel} Risk Assessment
                                         </h2>
                                         <span
                                             className={cn(
-                                                "text-[10px] font-semibold px-2 py-0.5 rounded uppercase",
+                                                "status-badge text-[10px] uppercase font-mono tracking-wider",
                                                 scanResult.riskLevel === 'High'
-                                                    ? "bg-red-500/15 text-red-600"
+                                                    ? "bg-[#eb5757]/15 text-[#eb5757] border-[#eb5757]/30"
                                                     : scanResult.riskLevel === 'Medium'
-                                                    ? "bg-amber-500/15 text-amber-600"
-                                                    : "bg-emerald-500/15 text-emerald-600"
+                                                    ? "bg-[#f2994a]/15 text-[#f2994a] border-[#f2994a]/30"
+                                                    : "bg-[#16a34a]/15 text-[#16a34a] border-[#16a34a]/30"
                                             )}
                                         >
                                             {scanResult.riskLevel} Risk
                                         </span>
                                     </div>
-                                    <p className="text-xs text-muted-foreground mt-0.5">
+                                    <p className="type-caption text-ink-subtle mt-0.5">
                                         {scanResult.flaggedClauses.length} critical clauses flagged for review
                                     </p>
                                 </div>
@@ -296,41 +296,48 @@ export default function ContractScannerPage() {
                                 variant="outline"
                                 size="sm"
                                 onClick={downloadReportMarkdown}
-                                className="h-8 text-xs gap-1.5 cursor-pointer self-start sm:self-auto"
+                                className="button-secondary h-8 text-xs gap-1.5 cursor-pointer self-start sm:self-auto rounded-[8px]"
                             >
                                 <Download className="h-3.5 w-3.5" />
                                 <span>Export Audit Report</span>
                             </Button>
                         </div>
 
-                        <div className="text-xs text-foreground leading-relaxed bg-secondary/20 p-3 rounded-xl border border-border/50">
-                            <span className="font-semibold block mb-1">Executive Summary:</span>
-                            {scanResult.executiveSummary}
+                        <div className="paper-sheet p-4 text-xs text-ink leading-relaxed border border-paper-border">
+                            <span className="type-eyebrow text-ink font-semibold block mb-1">Executive Summary:</span>
+                            <p className="paper-prose text-xs text-ink-muted leading-relaxed">
+                                {scanResult.executiveSummary}
+                            </p>
                         </div>
                     </div>
 
                     {/* Flagged Clauses Accordion/Cards */}
                     <div className="space-y-4">
-                        <h3 className="text-sm font-bold text-foreground">
-                            Flagged Clauses &amp; Counter-Proposals
-                        </h3>
+                        <div className="flex items-center justify-between border-b border-hairline pb-2">
+                            <h3 className="type-card-title text-ink">
+                                Flagged Clauses &amp; Counter-Proposals
+                            </h3>
+                            <span className="type-mono-eyebrow text-[10px] text-ink-subtle">
+                                {scanResult.flaggedClauses.length} Issues Identified
+                            </span>
+                        </div>
 
                         <div className="space-y-3">
                             {scanResult.flaggedClauses.map((clause, idx) => (
                                 <div
                                     key={idx}
-                                    className="p-4 rounded-xl border border-border/70 bg-card space-y-3 shadow-xs"
+                                    className="paper-sheet p-4.5 rounded-[10px] space-y-3 border border-paper-border shadow-xs"
                                 >
                                     <div className="flex items-center justify-between">
-                                        <span className="font-bold text-xs text-foreground flex items-center gap-2">
+                                        <span className="font-semibold text-xs text-ink flex items-center gap-2">
                                             <span
                                                 className={cn(
                                                     "h-2 w-2 rounded-full",
                                                     clause.severity === 'high'
-                                                        ? "bg-red-500"
+                                                        ? "bg-[#eb5757]"
                                                         : clause.severity === 'medium'
-                                                        ? "bg-amber-500"
-                                                        : "bg-blue-500"
+                                                        ? "bg-[#f2994a]"
+                                                        : "bg-primary"
                                                 )}
                                             />
                                             <span>{clause.title}</span>
@@ -338,55 +345,55 @@ export default function ContractScannerPage() {
 
                                         <span
                                             className={cn(
-                                                "text-[10px] font-bold uppercase px-2 py-0.5 rounded",
+                                                "status-badge text-[10px] font-mono uppercase px-2 py-0.5",
                                                 clause.severity === 'high'
-                                                    ? "bg-red-500/10 text-red-600 border border-red-500/20"
+                                                    ? "bg-[#eb5757]/10 text-[#eb5757] border-[#eb5757]/20"
                                                     : clause.severity === 'medium'
-                                                    ? "bg-amber-500/10 text-amber-600 border border-amber-500/20"
-                                                    : "bg-blue-500/10 text-blue-600 border border-blue-500/20"
+                                                    ? "bg-[#f2994a]/10 text-[#f2994a] border-[#f2994a]/20"
+                                                    : "bg-primary/10 text-primary border-primary/20"
                                             )}
                                         >
                                             {clause.severity}
                                         </span>
                                     </div>
 
-                                    {/* Snippets Comparison */}
+                                    {/* Snippets Comparison: Paper Document Excerpts */}
                                     {clause.revisedSnippet ? (
-                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
-                                            <div className="p-2.5 rounded-lg bg-secondary/30 border border-border/50">
-                                                <span className="text-[10px] font-bold text-muted-foreground uppercase block mb-1">
-                                                    Original:
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs">
+                                            <div className="p-3 rounded-[6px] bg-surface-2/60 border-l-2 border-hairline-strong border border-hairline">
+                                                <span className="type-eyebrow text-ink-subtle block mb-1 text-[10px]">
+                                                    Original Contract Excerpt:
                                                 </span>
-                                                <p className="italic text-muted-foreground">{clause.originalSnippet}</p>
+                                                <p className="text-ink-subtle text-xs italic leading-relaxed">&ldquo;{clause.originalSnippet}&rdquo;</p>
                                             </div>
-                                            <div className="p-2.5 rounded-lg bg-red-500/5 border border-red-500/20">
-                                                <span className="text-[10px] font-bold text-red-600 uppercase block mb-1">
+                                            <div className="p-3 rounded-[6px] bg-[#eb5757]/5 border-l-2 border-[#eb5757] border border-[#eb5757]/20">
+                                                <span className="type-eyebrow text-[#eb5757] block mb-1 text-[10px]">
                                                     Counterparty Revision:
                                                 </span>
-                                                <p className="text-foreground">{clause.revisedSnippet}</p>
+                                                <p className="text-ink text-xs leading-relaxed">&ldquo;{clause.revisedSnippet}&rdquo;</p>
                                             </div>
                                         </div>
                                     ) : (
                                         clause.originalSnippet && (
-                                            <div className="p-2.5 rounded-lg bg-secondary/30 border border-border/50 text-xs italic text-muted-foreground">
-                                                {clause.originalSnippet}
+                                            <div className="p-3 rounded-[6px] bg-surface-2/60 border-l-2 border-hairline-strong border border-hairline text-xs italic text-ink-subtle leading-relaxed">
+                                                &ldquo;{clause.originalSnippet}&rdquo;
                                             </div>
                                         )
                                     )}
 
                                     {/* Risk Explanation & Recommendation */}
-                                    <div className="space-y-1.5 pt-1 text-xs">
-                                        <p className="text-foreground leading-relaxed">
-                                            <strong className="text-red-600 dark:text-red-400">Risk Assessment: </strong>
+                                    <div className="space-y-2 pt-1 text-xs">
+                                        <p className="text-ink leading-relaxed">
+                                            <strong className="text-[#eb5757]">Risk Assessment: </strong>
                                             {clause.riskExplanation}
                                         </p>
 
                                         {clause.counterRecommendation && (
-                                            <div className="p-2.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-800 dark:text-emerald-300">
-                                                <strong className="block text-[11px] font-bold text-emerald-700 dark:text-emerald-400 mb-0.5">
+                                            <div className="p-3 rounded-[6px] bg-[#16a34a]/10 border-l-2 border-[#16a34a] border border-[#16a34a]/20 text-ink">
+                                                <strong className="block type-eyebrow text-[#16a34a] mb-1 text-[10px]">
                                                     Recommended Counter-Clause:
                                                 </strong>
-                                                <code className="text-xs font-mono select-all">
+                                                <code className="text-xs font-mono select-all text-ink block whitespace-pre-wrap leading-relaxed">
                                                     {clause.counterRecommendation}
                                                 </code>
                                             </div>

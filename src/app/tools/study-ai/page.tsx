@@ -235,16 +235,16 @@ export default function StudyAiPage() {
                     {studyData && (
                         <div className="space-y-5">
                             {/* Tabs Ribbon */}
-                            <div className="flex items-center justify-between border-b border-border/60 pb-2">
-                                <div className="flex gap-2">
+                            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-hairline pb-3">
+                                <div className="flex flex-wrap gap-1.5 p-1 rounded-full bg-surface-1 border border-hairline max-w-fit">
                                     <button
                                         type="button"
                                         onClick={() => setActiveTab('flashcards')}
                                         className={cn(
-                                            "px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer",
+                                            "px-3 py-1 rounded-full text-xs font-medium transition-all cursor-pointer",
                                             activeTab === 'flashcards'
-                                                ? "bg-violet-600 text-white"
-                                                : "text-muted-foreground hover:text-foreground hover:bg-secondary/50"
+                                                ? "bg-surface-2 text-ink border border-hairline shadow-xs font-semibold"
+                                                : "text-ink-subtle hover:text-ink hover:bg-surface-2/50"
                                         )}
                                     >
                                         Flashcards ({studyData.flashcards.length})
@@ -253,22 +253,22 @@ export default function StudyAiPage() {
                                         type="button"
                                         onClick={() => setActiveTab('quiz')}
                                         className={cn(
-                                            "px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer",
+                                            "px-3 py-1 rounded-full text-xs font-medium transition-all cursor-pointer",
                                             activeTab === 'quiz'
-                                                ? "bg-violet-600 text-white"
-                                                : "text-muted-foreground hover:text-foreground hover:bg-secondary/50"
+                                                ? "bg-surface-2 text-ink border border-hairline shadow-xs font-semibold"
+                                                : "text-ink-subtle hover:text-ink hover:bg-surface-2/50"
                                         )}
                                     >
-                                        Multiple Choice Quiz ({studyData.quiz.length})
+                                        Practice Quiz ({studyData.quiz.length})
                                     </button>
                                     <button
                                         type="button"
                                         onClick={() => setActiveTab('guide')}
                                         className={cn(
-                                            "px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer",
+                                            "px-3 py-1 rounded-full text-xs font-medium transition-all cursor-pointer",
                                             activeTab === 'guide'
-                                                ? "bg-violet-600 text-white"
-                                                : "text-muted-foreground hover:text-foreground hover:bg-secondary/50"
+                                                ? "bg-surface-2 text-ink border border-hairline shadow-xs font-semibold"
+                                                : "text-ink-subtle hover:text-ink hover:bg-surface-2/50"
                                         )}
                                     >
                                         Study Summary
@@ -280,7 +280,7 @@ export default function StudyAiPage() {
                                         variant="outline"
                                         size="sm"
                                         onClick={downloadAnkiDeck}
-                                        className="h-8 text-xs gap-1.5 cursor-pointer border-violet-500/30 text-violet-600 dark:text-violet-400 hover:bg-violet-500/10"
+                                        className="button-secondary h-8 text-xs gap-1.5 cursor-pointer rounded-[8px]"
                                     >
                                         <Download className="h-3.5 w-3.5" />
                                         <span>Export to Anki (.tsv)</span>
@@ -289,7 +289,7 @@ export default function StudyAiPage() {
                                     <Button
                                         size="sm"
                                         onClick={downloadStudyGuideTxt}
-                                        className="h-8 text-xs gap-1.5 cursor-pointer bg-violet-600 hover:bg-violet-700 text-white"
+                                        className="button-primary h-8 text-xs gap-1.5 cursor-pointer rounded-[8px]"
                                     >
                                         <BookOpen className="h-3.5 w-3.5" />
                                         <span>Download Guide</span>
@@ -297,43 +297,43 @@ export default function StudyAiPage() {
                                 </div>
                             </div>
 
-                            {/* Tab 1: Interactive 3D Flip Flashcards */}
+                            {/* Tab 1: Interactive 3D Flip Flashcards (Paper Index Card) */}
                             {activeTab === 'flashcards' && currentCard && (
                                 <div className="space-y-4 max-w-xl mx-auto">
-                                    <div className="flex items-center justify-between text-xs text-muted-foreground">
-                                        <span>
+                                    <div className="flex items-center justify-between text-xs text-ink-subtle">
+                                        <span className="font-mono">
                                             Card {currentCardIndex + 1} of {studyData.flashcards.length}
                                         </span>
-                                        <span className="font-semibold text-violet-600 dark:text-violet-400">
+                                        <span className="paper-citation-pill text-[10px]">
                                             {currentCard.concept || "Concept"}
                                         </span>
                                     </div>
 
-                                    {/* Flashcard Box with Flip on Click */}
+                                    {/* Flashcard Box with Flip on Click: Paper Index Card Styling */}
                                     <div
                                         onClick={() => setIsFlipped(!isFlipped)}
                                         className={cn(
-                                            "min-h-[260px] p-8 rounded-2xl border-2 transition-all duration-300 flex flex-col justify-between cursor-pointer text-center shadow-md select-none group",
+                                            "paper-sheet paper-sheet-stacked min-h-[260px] p-8 rounded-[12px] border border-paper-border transition-all duration-300 flex flex-col justify-between cursor-pointer text-center select-none shadow-md group",
                                             isFlipped
-                                                ? "border-violet-500/50 bg-violet-500/5 hover:border-violet-500"
-                                                : "border-border/80 bg-card hover:border-foreground/30 hover:bg-secondary/20"
+                                                ? "border-primary/40 bg-surface-2"
+                                                : "hover:border-hairline-strong"
                                         )}
                                     >
-                                        <div className="text-[10px] uppercase tracking-wider font-bold text-muted-foreground flex items-center justify-center gap-1.5">
+                                        <div className="text-[10px] uppercase tracking-wider font-mono font-medium text-ink-subtle flex items-center justify-center gap-1.5">
                                             <RotateCcw className="h-3 w-3" />
                                             <span>{isFlipped ? "Answer & Key Takeaway" : "Click card to flip"}</span>
                                         </div>
 
                                         <div className="my-auto py-4">
                                             <p className={cn(
-                                                "font-semibold text-foreground leading-relaxed",
-                                                isFlipped ? "text-base font-normal" : "text-lg font-bold"
+                                                "leading-relaxed",
+                                                isFlipped ? "text-sm text-ink-muted font-normal" : "text-base font-semibold text-ink"
                                             )}>
                                                 {isFlipped ? currentCard.back : currentCard.front}
                                             </p>
                                         </div>
 
-                                        <p className="text-[11px] text-muted-foreground group-hover:text-foreground transition-colors">
+                                        <p className="text-[11px] text-ink-subtle group-hover:text-ink transition-colors">
                                             {isFlipped ? "Click again to view question" : "Tap anywhere to reveal answer"}
                                         </p>
                                     </div>
@@ -380,7 +380,7 @@ export default function StudyAiPage() {
                                 </div>
                             )}
 
-                            {/* Tab 2: Interactive Multiple-Choice Quiz */}
+                            {/* Tab 2: Interactive Multiple-Choice Quiz (Paper Exam Cards) */}
                             {activeTab === 'quiz' && (
                                 <div className="space-y-4">
                                     {studyData.quiz.map((q, qIdx) => {
@@ -390,13 +390,13 @@ export default function StudyAiPage() {
                                         return (
                                             <div
                                                 key={q.id}
-                                                className="p-5 rounded-xl border border-border/70 bg-card space-y-3 shadow-xs"
+                                                className="paper-sheet p-5 rounded-[12px] border border-paper-border space-y-3.5 shadow-xs"
                                             >
-                                                <div className="flex items-start gap-2">
-                                                    <span className="h-5 w-5 rounded-md bg-secondary text-foreground flex items-center justify-center font-bold text-[11px] shrink-0 mt-0.5">
+                                                <div className="flex items-start gap-2.5">
+                                                    <span className="h-5 w-5 rounded-[6px] bg-surface-2 text-ink border border-hairline flex items-center justify-center font-mono font-bold text-[10px] shrink-0 mt-0.5">
                                                         {qIdx + 1}
                                                     </span>
-                                                    <h3 className="font-semibold text-xs sm:text-sm text-foreground">
+                                                    <h3 className="font-semibold text-xs sm:text-sm text-ink leading-snug">
                                                         {q.question}
                                                     </h3>
                                                 </div>
@@ -406,12 +406,12 @@ export default function StudyAiPage() {
                                                         const isThisSelected = selected === optIdx;
                                                         const isThisCorrect = q.correctIndex === optIdx;
 
-                                                        let btnStyle = "border-border/70 bg-secondary/30 text-foreground hover:bg-secondary/60";
+                                                        let btnStyle = "border-hairline bg-surface-2/60 text-ink hover:bg-surface-2 hover:border-hairline-strong";
                                                         if (isRevealed) {
                                                             if (isThisCorrect) {
-                                                                btnStyle = "border-emerald-500 bg-emerald-500/15 text-emerald-800 dark:text-emerald-300 font-bold";
+                                                                btnStyle = "border-[#16a34a] bg-[#16a34a]/15 text-[#16a34a] font-semibold";
                                                             } else if (isThisSelected && !isThisCorrect) {
-                                                                btnStyle = "border-red-500 bg-red-500/15 text-red-800 dark:text-red-300 line-through";
+                                                                btnStyle = "border-[#eb5757] bg-[#eb5757]/15 text-[#eb5757] line-through";
                                                             }
                                                         }
 
@@ -421,11 +421,11 @@ export default function StudyAiPage() {
                                                                 type="button"
                                                                 onClick={() => handleSelectOption(q.id, optIdx)}
                                                                 className={cn(
-                                                                    "p-3 rounded-lg border text-left text-xs transition-all cursor-pointer flex items-center gap-2",
+                                                                    "p-3 rounded-[8px] border text-left text-xs transition-all cursor-pointer flex items-center gap-2",
                                                                     btnStyle
                                                                 )}
                                                             >
-                                                                <span className="font-mono text-muted-foreground font-bold">
+                                                                <span className="font-mono text-ink-subtle font-bold text-[11px]">
                                                                     {String.fromCharCode(65 + optIdx)}.
                                                                 </span>
                                                                 <span className="flex-1">{opt}</span>
@@ -435,9 +435,9 @@ export default function StudyAiPage() {
                                                 </div>
 
                                                 {isRevealed && (
-                                                    <div className="p-3 rounded-lg bg-secondary/40 border border-border/50 text-xs leading-relaxed text-muted-foreground mt-2">
-                                                        <strong className="text-foreground block mb-0.5">
-                                                            {selected === q.correctIndex ? "✓ Correct!" : "✗ Incorrect"}
+                                                    <div className="p-3 rounded-[8px] bg-surface-2/80 border border-hairline text-xs leading-relaxed text-ink-subtle mt-2 border-l-2 border-l-primary">
+                                                        <strong className="text-ink block mb-0.5 font-semibold">
+                                                            {selected === q.correctIndex ? "✓ Correct Answer" : "✗ Incorrect"}
                                                         </strong>
                                                         {q.explanation}
                                                     </div>
@@ -448,25 +448,35 @@ export default function StudyAiPage() {
                                 </div>
                             )}
 
-                            {/* Tab 3: Study Summary */}
+                            {/* Tab 3: Study Summary (Paper Editorial Prose) */}
                             {activeTab === 'guide' && (
-                                <div className="p-6 rounded-2xl border border-border/70 bg-card space-y-5 shadow-xs text-xs">
-                                    <div className="space-y-1">
-                                        <h2 className="text-base font-bold text-foreground">
+                                <div className="paper-sheet p-6 rounded-[12px] border border-paper-border space-y-5 shadow-xs text-xs">
+                                    <div className="space-y-1.5 border-b border-hairline pb-4">
+                                        <div className="flex items-center gap-2">
+                                            <span className="paper-citation-pill text-[9px]">
+                                                Document Synthesis
+                                            </span>
+                                            <span className="type-mono-eyebrow text-[10px] text-ink-subtle">
+                                                Generated from source
+                                            </span>
+                                        </div>
+                                        <h2 className="type-card-title text-ink font-semibold">
                                             {studyData.title || "Executive Study Guide"}
                                         </h2>
-                                        <p className="text-muted-foreground leading-relaxed">
+                                        <p className="paper-prose text-xs text-ink-muted leading-relaxed">
                                             {studyData.summary}
                                         </p>
                                     </div>
 
-                                    <div className="space-y-2 pt-2 border-t border-border/40">
-                                        <h3 className="font-bold text-xs text-foreground">
+                                    <div className="space-y-3 pt-1">
+                                        <h3 className="font-semibold text-xs text-ink uppercase tracking-wider font-mono">
                                             Core Concepts &amp; Key Takeaways:
                                         </h3>
-                                        <ul className="space-y-2 list-disc pl-4 text-foreground/90 leading-relaxed">
+                                        <ul className="paper-prose space-y-2 list-disc pl-5 text-ink-muted leading-relaxed">
                                             {studyData.studyGuideKeyPoints.map((pt, idx) => (
-                                                <li key={idx}>{pt}</li>
+                                                <li key={idx} className="pl-1">
+                                                    <span className="text-ink">{pt}</span>
+                                                </li>
                                             ))}
                                         </ul>
                                     </div>

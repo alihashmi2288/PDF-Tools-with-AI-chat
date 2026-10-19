@@ -1,0 +1,166 @@
+'use client';
+
+import React from 'react';
+import { cn } from '@/lib/utils';
+
+interface PDFKitLogoProps extends React.SVGProps<SVGSVGElement> {
+  size?: number;
+  className?: string;
+  showText?: boolean;
+  textClassName?: string;
+}
+
+export function PDFKitLogo({
+  size = 28,
+  className,
+  showText = false,
+  textClassName,
+  ...props
+}: PDFKitLogoProps) {
+  const uniqueId = React.useId().replace(/:/g, '');
+
+  const icon = (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 32 32"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={cn("flex-shrink-0 transition-transform group-hover:scale-105", className)}
+      {...props}
+    >
+      <defs>
+        {/* Background squircle gradient */}
+        <linearGradient
+          id={`bg-grad-${uniqueId}`}
+          x1="0%"
+          y1="0%"
+          x2="100%"
+          y2="100%"
+        >
+          <stop offset="0%" stopColor="#1e293b" />
+          <stop offset="100%" stopColor="#0f172a" />
+        </linearGradient>
+
+        {/* Primary vibrant blue-cyan gradient */}
+        <linearGradient
+          id={`primary-grad-${uniqueId}`}
+          x1="0%"
+          y1="0%"
+          x2="100%"
+          y2="100%"
+        >
+          <stop offset="0%" stopColor="#38bdf8" />
+          <stop offset="45%" stopColor="#3b82f6" />
+          <stop offset="100%" stopColor="#1d4ed8" />
+        </linearGradient>
+
+        {/* Fold sheet highlight gradient */}
+        <linearGradient
+          id={`fold-grad-${uniqueId}`}
+          x1="0%"
+          y1="100%"
+          x2="100%"
+          y2="0%"
+        >
+          <stop offset="0%" stopColor="#60a5fa" stopOpacity="0.95" />
+          <stop offset="100%" stopColor="#93c5fd" stopOpacity="0.8" />
+        </linearGradient>
+
+        {/* Depth shadow for layer separation */}
+        <linearGradient
+          id={`depth-grad-${uniqueId}`}
+          x1="0%"
+          y1="0%"
+          x2="100%"
+          y2="100%"
+        >
+          <stop offset="0%" stopColor="#1e3a8a" stopOpacity="0.8" />
+          <stop offset="100%" stopColor="#0f172a" stopOpacity="0.9" />
+        </linearGradient>
+
+        {/* Outer border highlight */}
+        <linearGradient
+          id={`border-grad-${uniqueId}`}
+          x1="0%"
+          y1="0%"
+          x2="0%"
+          y2="100%"
+        >
+          <stop offset="0%" stopColor="#ffffff" stopOpacity="0.25" />
+          <stop offset="100%" stopColor="#ffffff" stopOpacity="0.04" />
+        </linearGradient>
+      </defs>
+
+      {/* Squircle base enclosure */}
+      <rect
+        x="1"
+        y="1"
+        width="30"
+        height="30"
+        rx="8"
+        fill={`url(#bg-grad-${uniqueId})`}
+        stroke={`url(#border-grad-${uniqueId})`}
+        strokeWidth="1"
+      />
+
+      {/* Subtle bottom glow inside squircle */}
+      <circle cx="16" cy="18" r="9" fill="#3b82f6" fillOpacity="0.15" filter="blur(4px)" />
+
+      {/* Document Spine / Left Pillar of "P" */}
+      <path
+        d="M8.5 7.75C8.5 7.05964 9.05964 6.5 9.75 6.5H13C13.8284 6.5 14.5 7.17157 14.5 8V23.75C14.5 24.4404 13.9404 25 13.25 25H9.75C9.05964 25 8.5 24.4404 8.5 23.75V7.75Z"
+        fill={`url(#primary-grad-${uniqueId})`}
+      />
+
+      {/* Upper Loop of "P" / Document Sheet */}
+      <path
+        d="M13.5 6.5H18.5C21.8137 6.5 24.5 9.18629 24.5 12.5C24.5 15.8137 21.8137 18.5 18.5 18.5H13.5V6.5Z"
+        fill={`url(#primary-grad-${uniqueId})`}
+      />
+
+      {/* Inner Cutout of the "P" loop */}
+      <path
+        d="M14.5 10.25H18C19.2426 10.25 20.25 11.2574 20.25 12.5C20.25 13.7426 19.2426 14.75 18 14.75H14.5V10.25Z"
+        fill="#0f172a"
+      />
+
+      {/* Layered Document Fold / Dynamic Toolkit Splay */}
+      <path
+        d="M12 18.5L18.5 12C19.3284 11.1716 20.6716 11.1716 21.5 12L24.2 14.7C24.39 14.01 24.5 13.27 24.5 12.5C24.5 9.18629 21.8137 6.5 18.5 6.5H13.5V18.5H12Z"
+        fill={`url(#fold-grad-${uniqueId})`}
+        fillOpacity="0.35"
+      />
+
+      {/* Crisp 45-degree Precision Kit Fold (Tool notch) */}
+      <path
+        d="M10 18.5L16.2 24.7C16.65 25.15 17.5 24.83 17.5 24.2V18.5H10Z"
+        fill={`url(#fold-grad-${uniqueId})`}
+      />
+
+      {/* Micro specular highlight on spine */}
+      <path
+        d="M9.5 8C9.5 7.44772 9.94772 7 10.5 7H11.5V24H10.5C9.94772 24 9.5 23.5523 9.5 23V8Z"
+        fill="#ffffff"
+        fillOpacity="0.25"
+      />
+    </svg>
+  );
+
+  if (!showText) {
+    return icon;
+  }
+
+  return (
+    <div className="flex items-center gap-2.5 group">
+      {icon}
+      <div className="flex items-center gap-1.5">
+        <span className={cn("font-bold text-sm tracking-tight text-ink", textClassName)}>
+          <span className="text-primary font-black">PDF</span>Kit
+        </span>
+      </div>
+    </div>
+  );
+}
+
+export default PDFKitLogo;

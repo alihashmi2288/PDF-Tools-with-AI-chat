@@ -134,17 +134,17 @@ export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>) {
     })).filter(category => category.items.length > 0);
 
     return (
-        <aside className={cn("w-64 shrink-0 hidden md:block border-r border-border py-6 pr-4", className)}>
+        <aside className={cn("w-64 shrink-0 hidden md:block border-r border-hairline py-6 pr-4", className)}>
             <div className="space-y-4 sticky top-18">
-                {/* Search Filter with 6px radius */}
+                {/* Search Filter with 8px radius */}
                 <div className="relative px-2">
-                    <Search className="absolute left-4.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground pointer-events-none" />
+                    <Search className="absolute left-4.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-ink-subtle pointer-events-none" />
                     <input
                         type="text"
                         placeholder="Filter tools..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        className="w-full h-8 pl-8 pr-3 text-xs rounded-[6px] bg-card border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-foreground/30 transition-all shadow-xs"
+                        className="w-full h-8.5 pl-8 pr-3 text-xs rounded-[8px] bg-surface-1 border border-hairline text-ink placeholder:text-ink-subtle focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/30 transition-all"
                     />
                 </div>
 
@@ -152,7 +152,7 @@ export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>) {
                 <div className="space-y-5 max-h-[calc(100vh-10rem)] overflow-y-auto subtle-scrollbar pr-1">
                     {filteredCategories.map((category) => (
                         <div key={category.title} className="space-y-1">
-                            <p className="px-3 type-mono-eyebrow text-[10px] text-muted-foreground">
+                            <p className="px-3 type-eyebrow text-[10px] text-ink-subtle uppercase tracking-[0.4px]">
                                 {category.title}
                             </p>
                             <div className="space-y-0.5">
@@ -164,16 +164,16 @@ export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>) {
                                             key={item.href}
                                             href={item.href}
                                             className={cn(
-                                                "flex items-center justify-between px-3 py-1.5 text-xs rounded-[6px] transition-all group",
+                                                "flex items-center justify-between px-3 py-1.5 text-xs rounded-[8px] transition-all group",
                                                 isActive
-                                                    ? "bg-[#171717] text-white dark:bg-white dark:text-black font-medium shadow-xs"
-                                                    : "text-muted-foreground hover:text-foreground hover:bg-secondary/70"
+                                                    ? "bg-primary/10 text-primary dark:bg-primary/20 font-medium"
+                                                    : "text-ink-subtle hover:text-ink hover:bg-surface-2"
                                             )}
                                         >
                                             <div className="flex items-center gap-2.5 truncate">
                                                 <Icon className={cn(
                                                     "h-3.5 w-3.5 shrink-0 transition-opacity",
-                                                    isActive ? "text-inherit" : "opacity-60 group-hover:opacity-100"
+                                                    isActive ? "text-primary" : "opacity-60 group-hover:opacity-100"
                                                 )} />
                                                 <span className="truncate">{item.label}</span>
                                             </div>
@@ -181,8 +181,8 @@ export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>) {
                                                 <span className={cn(
                                                     "type-mono-eyebrow text-[9px] px-1.5 py-0.5 rounded-[4px] border",
                                                     isActive 
-                                                        ? "border-current text-inherit bg-transparent" 
-                                                        : "border-border bg-card text-muted-foreground"
+                                                        ? "border-primary/30 text-primary bg-primary/10" 
+                                                        : "border-hairline bg-surface-2 text-ink-muted"
                                                 )}>
                                                     {item.badge}
                                                 </span>
@@ -196,10 +196,10 @@ export function Sidebar({ className }: React.HTMLAttributes<HTMLDivElement>) {
                 </div>
 
                 {/* Privacy Guarantee Footnote */}
-                <div className="px-3 pt-3 border-t border-border">
-                    <div className="flex items-center gap-2 type-mono-eyebrow text-[10px] text-muted-foreground">
-                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 shrink-0" />
-                        <span>100% Private • Stays on your device</span>
+                <div className="px-3 pt-3 border-t border-hairline">
+                    <div className="flex items-center gap-2 type-mono-eyebrow text-[10px] text-ink-subtle">
+                        <span className="h-1.5 w-1.5 rounded-full bg-[#16a34a] shrink-0" />
+                        <span>100% Private • Stays on device</span>
                     </div>
                 </div>
             </div>

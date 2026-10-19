@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "skills": {
+    "paper": {
+      "source": "bergside/awesome-design-skills",
+      "sourceType": "github",
+      "skillPath": "skills/paper/SKILL.md",
+      "computedHash": "019abe33bec62946368c3ad6722f6ff76bd4b311619a270117731a7d4e666019"
+    },
+    "premium": {
+      "source": "bergside/awesome-design-skills",
+      "sourceType": "github",
+      "skillPath": "skills/premium/SKILL.md",
+      "computedHash": "8833c597e5524ee238572c7c74458a7c83c550166aaeea82dbd0d8f2f8f40f36"
+    }
+  }
+}

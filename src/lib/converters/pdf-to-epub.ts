@@ -15,7 +15,7 @@ export async function convertPdfToEpub(
     const pdf = await loadingTask.promise;
 
     const bookTitle = options.title || (file instanceof File ? file.name.replace(/\.[^/.]+$/, '') : 'Converted eBook');
-    const author = options.author || 'PDF Master AI';
+    const author = options.author || 'PDFKit';
     const bookId = 'urn:uuid:' + Math.random().toString(36).substring(2, 15);
 
     const zip = new JSZip();

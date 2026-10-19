@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { usePDFContext } from "@/context/PDFContext";
 import { extractTextFromPDF } from "@/lib/pdf-utils";
 import { PDFDocument, rgb, StandardFonts } from "pdf-lib";
+import { PDFKitLogo } from "@/components/ui/PDFKitLogo";
 import {
   FileText,
   Sparkles,
@@ -118,64 +119,61 @@ export default function Home() {
   };
 
   const onDrop = async (acceptedFiles: File[]) => {
-    if (acceptedFiles.length === 0) return;
-    await handleLoadedFile(acceptedFiles[0]);
+    if (acceptedFiles.length > 0) {
+      await handleLoadedFile(acceptedFiles[0]);
+    }
   };
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
-    multiple: false,
+    multiple: false
   });
 
   const loadSampleDocument = async () => {
     setIsProcessing(true);
     try {
       const pdfDoc = await PDFDocument.create();
-      const page = pdfDoc.addPage([595, 842]);
+      const page = pdfDoc.addPage([600, 750]);
       const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
       const fontBold = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
 
-      page.drawText("RESIDENTIAL LEASE AGREEMENT & SUMMARY", {
+      page.drawText("STANDARD RESIDENTIAL LEASE AGREEMENT", {
         x: 50,
-        y: 780,
-        size: 15,
+        y: 700,
+        size: 14,
         font: fontBold,
-        color: rgb(0.09, 0.09, 0.09),
+        color: rgb(0.1, 0.1, 0.1),
       });
 
-      page.drawText("Property: 742 Evergreen Terrace, Apt 4B • Term: 12 Months", {
+      page.drawText("Property Address: 428 Elm Street, Apt 3B, Austin, TX 78701", {
         x: 50,
-        y: 755,
-        size: 9.5,
+        y: 675,
+        size: 10,
         font: font,
         color: rgb(0.3, 0.3, 0.3),
       });
 
-      const sampleLines = [
-        "1. RENT & PAYMENT TERMS",
-        "Monthly rent is $1,450, payable on the 1st calendar day of each month.",
-        "A grace period of 5 business days applies before a $25 late fee is assessed.",
-        "",
-        "2. SECURITY DEPOSIT",
-        "Tenant has paid a deposit of $1,450. The deposit will be returned within 21 days",
-        "following inspection at move-out, minus any verified repair costs.",
-        "",
-        "3. PET POLICY & PERMITS",
-        "Up to two small pets (cats or dogs under 40 lbs) are permitted.",
-        "An additional monthly pet fee of $25 per animal is added to base rent.",
-        "",
-        "4. TERMINATION & RENEWAL",
-        "Either party may terminate or request renewal with 30 days prior written notice."
+      const bodyLines = [
+        "1. TERM: This agreement begins on September 1, 2024 and ends August 31, 2025.",
+        "2. MONTHLY RENT: Tenant agrees to pay $1,450 on or before the 1st day of each month.",
+        "3. SECURITY DEPOSIT: A deposit of $1,450 is required upon signing. Refunded within 21 days",
+        "   following move-out inspection, minus deductions for damages beyond reasonable wear.",
+        "4. PET POLICY: Small pets (under 40 lbs) are permitted with a $25 monthly pet fee.",
+        "   Maximum of two (2) pets allowed per unit.",
+        "5. UTILITIES: Landlord covers water and trash. Tenant is responsible for electric and internet.",
+        "6. NOTICE TO VACATE: Tenant must provide at least 30 days written notice before lease expiration.",
+        "7. QUIET HOURS: Observed from 10:00 PM to 7:00 AM daily.",
+        "8. REPAIRS: Landlord agrees to address emergency maintenance within 24 hours of notification."
       ];
 
-      let yPos = 710;
-      for (const line of sampleLines) {
+      let yPos = 630;
+      for (const line of bodyLines) {
         page.drawText(line, {
           x: 50,
           y: yPos,
-          size: line.startsWith("1.") || line.startsWith("2.") || line.startsWith("3.") || line.startsWith("4.") ? 11 : 10,
-          font: line.startsWith("1.") || line.startsWith("2.") || line.startsWith("3.") || line.startsWith("4.") ? fontBold : font,
-          color: rgb(0.09, 0.09, 0.09),
+          size: 10,
+          font: line.includes(":") ? fontBold : font,
+          color: rgb(0.2, 0.2, 0.2),
         });
         yPos -= 22;
       }
@@ -219,7 +217,7 @@ export default function Home() {
     },
     {
       q: "Do I need to sign up, create an account, or pay?",
-      a: "No. PDF AI Master is completely free. There are no signups, no credit cards, no monthly subscriptions, and no hidden file size limits."
+      a: "No. PDFKit is completely free. There are no signups, no credit cards, no monthly subscriptions, and no hidden file size limits."
     },
     {
       q: "What files can I convert to PDF?",
@@ -228,48 +226,43 @@ export default function Home() {
   ];
 
   return (
-    <div className="relative min-h-screen bg-background text-foreground flex flex-col items-center overflow-hidden">
+    <div className="relative min-h-screen bg-canvas text-ink flex flex-col items-center">
       
-      {/* Soft Multi-Stop Hero Mesh Gradient */}
-      <div className="hero-mesh-canvas">
-        <div className="hero-mesh-gradient" />
-      </div>
-
       <div className="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6 py-12 md:py-20 space-y-24">
         
         {/* ========================================================================= */}
-        {/* 1. HERO SECTION: Human-Friendly, High-Converting Marketing Copy */}
+        {/* 1. HERO SECTION: Linear Marketing Style with Lavender Accent */}
         {/* ========================================================================= */}
         <section className="space-y-6 text-center max-w-3xl mx-auto pt-4">
-          {/* Trust & Privacy Pill */}
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs bg-card border border-border text-muted-foreground shadow-xs">
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-            <span className="type-mono-eyebrow text-[11px] text-foreground font-semibold">
+          {/* Trust & Privacy Pill (Apple status-badge) */}
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs bg-surface-1 border border-hairline text-ink-muted shadow-xs">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#16a34a]" />
+            <span className="type-eyebrow text-[11px] text-ink font-semibold uppercase tracking-[0.4px]">
               100% Private &amp; Secure
             </span>
-            <span className="text-border">•</span>
-            <span className="type-mono-eyebrow text-[11px] text-muted-foreground">
+            <span className="text-hairline-strong">•</span>
+            <span className="type-eyebrow text-[11px] text-ink-subtle uppercase tracking-[0.4px]">
               Files Never Leave Your Device
             </span>
           </div>
 
           {/* Punchy, Clear Value Headline */}
           <div className="space-y-4">
-            <h1 className="type-display-xl text-foreground">
+            <h1 className="type-display-xl text-ink">
               Everything you need for PDFs. Fast, simple, and 100% private.
             </h1>
-            <p className="text-sm sm:text-base text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+            <p className="type-subhead text-ink-subtle max-w-2xl mx-auto leading-relaxed">
               Chat with your documents, merge pages, shrink file sizes, edit, and convert in seconds. No signups, no credit cards, and completely private on your device.
             </p>
           </div>
 
-          {/* Marketing Pill CTAs */}
+          {/* Linear Button CTAs (8px rectangular corners) */}
           <div className="pt-2 flex flex-wrap items-center justify-center gap-3">
             <button
               type="button"
               onClick={loadSampleDocument}
               disabled={isProcessing}
-              className="h-10 px-6 rounded-[100px] bg-[#171717] dark:bg-white text-white dark:text-black hover:bg-[#2e2e2e] dark:hover:bg-[#ededed] font-medium text-xs sm:text-sm inline-flex items-center gap-2 cursor-pointer transition-all shadow-xs active:scale-[0.98]"
+              className="h-9 px-5 rounded-[8px] bg-primary text-white hover:bg-primary-hover active:bg-primary-focus font-medium text-xs sm:text-sm inline-flex items-center gap-2 cursor-pointer transition-all shadow-xs active:scale-[0.98]"
             >
               <Zap className="h-3.5 w-3.5" />
               <span>Try Sample Document</span>
@@ -278,7 +271,7 @@ export default function Home() {
             <Link href="/chat/workspace">
               <button
                 type="button"
-                className="h-10 px-6 rounded-[100px] bg-card text-foreground border border-border hover:border-foreground/30 font-medium text-xs sm:text-sm inline-flex items-center gap-2 cursor-pointer transition-all shadow-xs active:scale-[0.98]"
+                className="h-9 px-5 rounded-[8px] bg-surface-1 text-ink border border-hairline hover:bg-surface-2 hover:border-hairline-strong font-medium text-xs sm:text-sm inline-flex items-center gap-2 cursor-pointer transition-all shadow-xs active:scale-[0.98]"
               >
                 <FolderGit2 className="h-3.5 w-3.5 opacity-70" />
                 <span>Multi-Document Workspace</span>
@@ -288,40 +281,40 @@ export default function Home() {
         </section>
 
         {/* ========================================================================= */}
-        {/* 2. SPEC STRIP: Simple, Honest Customer Benefits */}
+        {/* 2. SPEC STRIP: Clean Hairline Dividers & Linear Eyebrows */}
         {/* ========================================================================= */}
-        <div className="border-y border-border py-4 grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+        <div className="border-y border-hairline py-4 grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
           <div className="space-y-0.5">
-            <span className="type-mono-eyebrow text-[10px] text-muted-foreground">PRIVACY</span>
-            <p className="text-xs font-semibold text-foreground">Stays on Your Device</p>
+            <span className="type-eyebrow text-[10px] text-ink-tertiary uppercase tracking-[0.4px]">PRIVACY</span>
+            <p className="text-xs font-semibold text-ink">Stays on Your Device</p>
           </div>
           <div className="space-y-0.5">
-            <span className="type-mono-eyebrow text-[10px] text-muted-foreground">ZERO UPLOADS</span>
-            <p className="text-xs font-semibold text-foreground">Nothing Saved Online</p>
+            <span className="type-eyebrow text-[10px] text-ink-tertiary uppercase tracking-[0.4px]">ZERO UPLOADS</span>
+            <p className="text-xs font-semibold text-ink">Nothing Saved Online</p>
           </div>
           <div className="space-y-0.5">
-            <span className="type-mono-eyebrow text-[10px] text-muted-foreground">ALL-IN-ONE</span>
-            <p className="text-xs font-semibold text-foreground">44+ Free Tools</p>
+            <span className="type-eyebrow text-[10px] text-ink-tertiary uppercase tracking-[0.4px]">ALL-IN-ONE</span>
+            <p className="text-xs font-semibold text-ink">44+ Free Tools</p>
           </div>
           <div className="space-y-0.5">
-            <span className="type-mono-eyebrow text-[10px] text-muted-foreground">ALWAYS FREE</span>
-            <p className="text-xs font-semibold text-foreground">No Signup Needed</p>
+            <span className="type-eyebrow text-[10px] text-ink-tertiary uppercase tracking-[0.4px]">ALWAYS FREE</span>
+            <p className="text-xs font-semibold text-ink">No Signup Needed</p>
           </div>
         </div>
 
         {/* ========================================================================= */}
-        {/* 3. INTERACTIVE DOCUMENT DROPZONE (Start Immediately) */}
+        {/* 3. INTERACTIVE DOCUMENT DROPZONE (Linear Product UI Frame) */}
         {/* ========================================================================= */}
         <section className="max-w-3xl mx-auto w-full">
-          <div className="hairline-card p-5 sm:p-7 space-y-4">
+          <div className="linear-product-panel p-5 sm:p-7 space-y-4">
             
             {/* Header Bar */}
-            <div className="flex items-center justify-between border-b border-border pb-3">
+            <div className="flex items-center justify-between border-b border-hairline pb-3">
               <div className="flex items-center gap-2 text-xs">
-                <FileCheck className="h-4 w-4 text-foreground" />
-                <span className="font-semibold text-foreground">Document Workspace</span>
-                <span className="text-border">•</span>
-                <span className="type-mono-eyebrow text-[10px] text-muted-foreground">Free &amp; Confidential</span>
+                <FileCheck className="h-4 w-4 text-primary" />
+                <span className="font-semibold text-ink">Document Workspace</span>
+                <span className="text-hairline-strong">•</span>
+                <span className="type-mono-eyebrow text-[10px] text-ink-subtle">Free &amp; Confidential</span>
               </div>
 
               {!droppedFile && (
@@ -329,9 +322,9 @@ export default function Home() {
                   type="button"
                   onClick={loadSampleDocument}
                   disabled={isProcessing}
-                  className="text-xs px-2.5 py-1 rounded-[6px] font-medium transition-colors bg-secondary hover:bg-muted text-foreground flex items-center gap-1.5 border border-border cursor-pointer shadow-xs"
+                  className="text-xs px-2.5 py-1 rounded-[6px] font-medium transition-colors bg-surface-2 hover:bg-surface-3 text-ink flex items-center gap-1.5 border border-hairline cursor-pointer shadow-xs"
                 >
-                  <Zap className="h-3 w-3" />
+                  <Zap className="h-3 w-3 text-primary" />
                   <span>Try Sample Lease</span>
                 </button>
               )}
@@ -342,36 +335,36 @@ export default function Home() {
               <div
                 {...getRootProps()}
                 className={cn(
-                  "relative group rounded-[8px] border border-dashed transition-all duration-200 p-8 sm:p-10 cursor-pointer text-center bg-secondary/30 flex flex-col items-center justify-center min-h-[190px]",
+                  "relative group rounded-[12px] border border-dashed transition-all duration-200 p-8 sm:p-10 cursor-pointer text-center bg-surface-2/40 flex flex-col items-center justify-center min-h-[190px]",
                   isDragActive
-                    ? "border-foreground bg-secondary/80 ring-1 ring-foreground/20"
-                    : "border-border hover:border-foreground/40 hover:bg-secondary/60"
+                    ? "border-primary bg-surface-2 ring-2 ring-primary/30"
+                    : "border-hairline hover:border-hairline-strong hover:bg-surface-2/70"
                 )}
               >
                 <input {...getInputProps()} />
 
-                <div className="w-10 h-10 rounded-[6px] bg-card border border-border shadow-xs flex flex-col items-center justify-center mb-3 group-hover:scale-105 transition-transform">
-                  <Upload className="h-4 w-4 text-foreground" />
+                <div className="w-10 h-10 rounded-[8px] bg-surface-1 border border-hairline shadow-xs flex flex-col items-center justify-center mb-3 group-hover:scale-105 transition-transform">
+                  <Upload className="h-4 w-4 text-ink" />
                 </div>
 
                 <div className="space-y-1 pointer-events-none">
-                  <p className="font-semibold text-xs sm:text-sm text-foreground">
-                    Drop any document here, or <span className="underline decoration-border underline-offset-4">browse your files</span>
+                  <p className="font-semibold text-xs sm:text-sm text-ink">
+                    Drop any document here, or <span className="underline decoration-hairline-strong underline-offset-4">browse your files</span>
                   </p>
-                  <p className="text-xs text-muted-foreground max-w-sm mx-auto">
+                  <p className="text-xs text-ink-subtle max-w-sm mx-auto">
                     Works with PDF, Word, Excel, PowerPoint, Text notes, and Photos
                   </p>
                 </div>
 
                 <div className="pt-4 flex items-center gap-2">
-                  <span className="text-xs text-muted-foreground">Don&apos;t have a file ready?</span>
+                  <span className="text-xs text-ink-subtle">Don&apos;t have a file ready?</span>
                   <button
                     type="button"
                     onClick={(e) => {
                       e.stopPropagation();
                       loadSampleDocument();
                     }}
-                    className="text-xs font-semibold text-foreground underline hover:opacity-80 transition-opacity flex items-center gap-1 cursor-pointer"
+                    className="text-xs font-semibold text-primary hover:text-primary-hover transition-colors flex items-center gap-1 cursor-pointer"
                   >
                     <Zap className="h-3 w-3" />
                     Load a sample lease agreement
@@ -380,25 +373,25 @@ export default function Home() {
               </div>
             ) : (
               /* Active Loaded File State */
-              <div className="space-y-4 p-4 rounded-[8px] border border-border bg-secondary/30">
+              <div className="space-y-4 p-4 rounded-[12px] border border-hairline bg-surface-2/50">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                   <div className="flex items-center gap-3">
-                    <div className="h-9 w-8 rounded-[6px] bg-card border border-border shadow-xs flex flex-col justify-between p-1.5 shrink-0">
-                      <div className="w-3 h-0.5 rounded-full bg-foreground/40" />
-                      <div className="w-full h-0.5 rounded-full bg-foreground/20" />
-                      <div className="w-4 h-0.5 rounded-full bg-foreground/30" />
+                    <div className="h-9 w-8 rounded-[6px] bg-surface-1 border border-hairline shadow-xs flex flex-col justify-between p-1.5 shrink-0">
+                      <div className="w-3 h-0.5 rounded-full bg-primary" />
+                      <div className="w-full h-0.5 rounded-full bg-ink/20" />
+                      <div className="w-4 h-0.5 rounded-full bg-ink/30" />
                     </div>
 
                     <div>
                       <div className="flex items-center gap-2">
-                        <p className="font-semibold text-xs sm:text-sm text-foreground truncate max-w-xs sm:max-w-md">
+                        <p className="font-semibold text-xs sm:text-sm text-ink truncate max-w-xs sm:max-w-md">
                           {droppedFile.name}
                         </p>
-                        <span className="type-mono-eyebrow text-[9px] px-1.5 py-0.5 rounded-[4px] bg-foreground/10 text-foreground border border-border">
+                        <span className="type-mono-eyebrow text-[9px] px-1.5 py-0.5 rounded-[4px] bg-primary/15 text-primary-hover border border-primary/25">
                           Ready
                         </span>
                       </div>
-                      <p className="type-mono-eyebrow text-[10px] text-muted-foreground mt-0.5">
+                      <p className="type-mono-eyebrow text-[10px] text-ink-subtle mt-0.5">
                         {formatFileSize(droppedFile.size)} • Stored safely on your computer
                       </p>
                     </div>
@@ -407,7 +400,7 @@ export default function Home() {
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="h-7 text-xs text-muted-foreground hover:text-foreground self-start sm:self-auto cursor-pointer"
+                    className="h-7 text-xs text-ink-subtle hover:text-ink self-start sm:self-auto cursor-pointer"
                     onClick={clearDroppedFile}
                   >
                     <X className="h-3.5 w-3.5 mr-1" />
@@ -416,8 +409,8 @@ export default function Home() {
                 </div>
 
                 {/* Immediate Action Buttons */}
-                <div className="pt-2 border-t border-border">
-                  <p className="type-mono-eyebrow text-[10px] text-muted-foreground mb-2">
+                <div className="pt-2 border-t border-hairline">
+                  <p className="type-mono-eyebrow text-[10px] text-ink-subtle mb-2">
                     Choose what to do with this file:
                   </p>
 
@@ -425,7 +418,7 @@ export default function Home() {
                     <button
                       type="button"
                       onClick={() => routeToFileAction("/chat")}
-                      className="h-8 px-3 rounded-[6px] bg-[#171717] dark:bg-white text-white dark:text-black font-medium text-xs flex items-center justify-start gap-2 shadow-xs cursor-pointer hover:opacity-90 transition-opacity"
+                      className="h-8.5 px-3 rounded-[8px] bg-primary text-white hover:bg-primary-hover active:bg-primary-focus font-medium text-xs flex items-center justify-start gap-2 shadow-xs cursor-pointer transition-colors"
                     >
                       <Sparkles className="h-3.5 w-3.5" />
                       <span className="truncate">Ask AI Questions</span>
@@ -434,7 +427,7 @@ export default function Home() {
                     <button
                       type="button"
                       onClick={() => routeToFileAction("/tools/view")}
-                      className="h-8 px-3 rounded-[6px] bg-card text-foreground border border-border font-medium text-xs flex items-center justify-start gap-2 shadow-xs cursor-pointer hover:bg-secondary transition-colors"
+                      className="h-8.5 px-3 rounded-[8px] bg-surface-1 text-ink border border-hairline font-medium text-xs flex items-center justify-start gap-2 shadow-xs cursor-pointer hover:bg-surface-2 hover:border-hairline-strong transition-colors"
                     >
                       <Eye className="h-3.5 w-3.5 opacity-70" />
                       <span className="truncate">View in Reader</span>
@@ -443,7 +436,7 @@ export default function Home() {
                     <button
                       type="button"
                       onClick={() => routeToFileAction("/tools/edit")}
-                      className="h-8 px-3 rounded-[6px] bg-card text-foreground border border-border font-medium text-xs flex items-center justify-start gap-2 shadow-xs cursor-pointer hover:bg-secondary transition-colors"
+                      className="h-8.5 px-3 rounded-[8px] bg-surface-1 text-ink border border-hairline font-medium text-xs flex items-center justify-start gap-2 shadow-xs cursor-pointer hover:bg-surface-2 hover:border-hairline-strong transition-colors"
                     >
                       <SlidersHorizontal className="h-3.5 w-3.5 opacity-70" />
                       <span className="truncate">Edit Canvas</span>
@@ -452,7 +445,7 @@ export default function Home() {
                     <button
                       type="button"
                       onClick={() => routeToFileAction("/tools/compress")}
-                      className="h-8 px-3 rounded-[6px] bg-card text-foreground border border-border font-medium text-xs flex items-center justify-start gap-2 shadow-xs cursor-pointer hover:bg-secondary transition-colors"
+                      className="h-8.5 px-3 rounded-[8px] bg-surface-1 text-ink border border-hairline font-medium text-xs flex items-center justify-start gap-2 shadow-xs cursor-pointer hover:bg-surface-2 hover:border-hairline-strong transition-colors"
                     >
                       <Minimize2 className="h-3.5 w-3.5 opacity-70" />
                       <span className="truncate">Shrink File Size</span>
@@ -463,9 +456,9 @@ export default function Home() {
             )}
 
             {/* Privacy Assurance Footer */}
-            <div className="flex items-center justify-between text-[11px] text-muted-foreground pt-1 border-t border-border">
+            <div className="flex items-center justify-between text-[11px] text-ink-subtle pt-1 border-t border-hairline">
               <span className="flex items-center gap-1.5">
-                <Lock className="h-3 w-3 text-emerald-500" />
+                <Lock className="h-3 w-3 text-[#16a34a]" />
                 <span>Your file stays completely private in your browser. Nothing is saved online.</span>
               </span>
               <span className="type-mono-eyebrow text-[10px] hidden sm:inline">100% Free &amp; Private</span>
@@ -479,19 +472,19 @@ export default function Home() {
         {/* ========================================================================= */}
         <section className="space-y-8">
           <div className="text-center max-w-xl mx-auto space-y-2">
-            <span className="type-mono-eyebrow text-[11px] text-muted-foreground">
+            <span className="type-eyebrow text-[11px] text-ink-subtle uppercase tracking-[0.4px]">
               ALL-IN-ONE TOOLBOX
             </span>
-            <h2 className="type-heading-lg text-foreground">
+            <h2 className="type-headline text-ink">
               What would you like to do?
             </h2>
-            <p className="text-xs sm:text-sm text-muted-foreground">
+            <p className="text-xs sm:text-sm text-ink-subtle">
               44+ simple, private tools to organize, convert, sign, and understand documents on your device.
             </p>
           </div>
 
-          {/* Category Tabs */}
-          <div className="flex flex-wrap items-center justify-center gap-2">
+          {/* Category Tabs (Apple Segmented Pill Switch) */}
+          <div className="flex flex-wrap items-center justify-center gap-1.5 p-1 rounded-full bg-surface-1 border border-hairline max-w-fit mx-auto shadow-xs">
             {[
               { id: "all", label: "All Tools" },
               { id: "ai", label: "AI Superpowers" },
@@ -504,10 +497,10 @@ export default function Home() {
                 type="button"
                 onClick={() => setActiveCategory(tab.id as any)}
                 className={cn(
-                  "h-8 px-4 text-xs font-medium rounded-[64px] border transition-all cursor-pointer",
+                  "h-8 px-4 text-xs font-medium rounded-full transition-all cursor-pointer",
                   activeCategory === tab.id
-                    ? "bg-[#171717] dark:bg-white text-white dark:text-black border-transparent shadow-xs"
-                    : "bg-card text-muted-foreground border-border hover:text-foreground hover:border-foreground/30"
+                    ? "bg-primary text-white font-medium shadow-xs"
+                    : "text-ink-subtle hover:text-ink hover:bg-surface-2"
                 )}
               >
                 {tab.label}
@@ -518,11 +511,11 @@ export default function Home() {
           {/* Category A: High-Value AI Tools */}
           {(activeCategory === "all" || activeCategory === "ai") && (
             <div className="space-y-3">
-              <div className="flex items-center justify-between border-b border-border pb-2">
-                <span className="type-mono-eyebrow text-[11px] text-foreground font-semibold">
+              <div className="flex items-center justify-between border-b border-hairline pb-2">
+                <span className="type-eyebrow text-[11px] text-ink font-semibold tracking-[0.4px] uppercase">
                   AI Intelligence &amp; Multi-Document Workspace
                 </span>
-                <span className="type-mono-eyebrow text-[10px] text-muted-foreground">Smart Document Analysis</span>
+                <span className="type-mono-eyebrow text-[10px] text-ink-subtle">Smart Document Analysis</span>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
@@ -532,23 +525,23 @@ export default function Home() {
                 >
                   <div className="space-y-2.5">
                     <div className="flex items-center justify-between">
-                      <div className="h-8 w-8 rounded-[6px] bg-secondary flex items-center justify-center border border-border">
-                        <FolderGit2 className="h-4 w-4 text-foreground" />
+                      <div className="h-8 w-8 rounded-[8px] bg-surface-2 flex items-center justify-center border border-hairline">
+                        <FolderGit2 className="h-4 w-4 text-primary" />
                       </div>
-                      <span className="type-mono-eyebrow text-[9px] px-2 py-0.5 rounded-[4px] bg-secondary border border-border text-foreground font-medium">
+                      <span className="type-mono-eyebrow text-[9px] px-2 py-0.5 rounded-[4px] bg-surface-2 border border-hairline text-ink-muted font-medium">
                         Popular
                       </span>
                     </div>
                     <div>
-                      <h3 className="font-semibold text-sm text-foreground group-hover:text-link transition-colors">
+                      <h3 className="font-semibold text-sm text-ink group-hover:text-primary transition-colors">
                         Multi-Document Workspace
                       </h3>
-                      <p className="text-xs text-muted-foreground leading-relaxed mt-1">
+                      <p className="text-xs text-ink-subtle leading-relaxed mt-1">
                         Upload several PDFs together to ask questions, compare differences, and get verified answers across all files.
                       </p>
                     </div>
                   </div>
-                  <div className="pt-4 flex items-center text-xs font-medium text-foreground gap-1 group-hover:translate-x-1 transition-transform">
+                  <div className="pt-4 flex items-center text-xs font-medium text-ink gap-1 group-hover:translate-x-1 group-hover:text-primary transition-all">
                     <span>Open workspace</span>
                     <ArrowRight className="h-3 w-3" />
                   </div>
@@ -560,23 +553,23 @@ export default function Home() {
                 >
                   <div className="space-y-2.5">
                     <div className="flex items-center justify-between">
-                      <div className="h-8 w-8 rounded-[6px] bg-secondary flex items-center justify-center border border-border">
-                        <Scale className="h-4 w-4 text-foreground" />
+                      <div className="h-8 w-8 rounded-[8px] bg-surface-2 flex items-center justify-center border border-hairline">
+                        <Scale className="h-4 w-4 text-primary" />
                       </div>
-                      <span className="type-mono-eyebrow text-[9px] px-2 py-0.5 rounded-[4px] bg-secondary border border-border text-foreground">
+                      <span className="type-mono-eyebrow text-[9px] px-2 py-0.5 rounded-[4px] bg-surface-2 border border-hairline text-ink-muted">
                         High Value
                       </span>
                     </div>
                     <div>
-                      <h3 className="font-semibold text-sm text-foreground group-hover:text-link transition-colors">
+                      <h3 className="font-semibold text-sm text-ink group-hover:text-primary transition-colors">
                         Contract Reviewer &amp; Scanner
                       </h3>
-                      <p className="text-xs text-muted-foreground leading-relaxed mt-1">
+                      <p className="text-xs text-ink-subtle leading-relaxed mt-1">
                         Compare two contract versions side-by-side to catch added risks, altered numbers, and trap clauses.
                       </p>
                     </div>
                   </div>
-                  <div className="pt-4 flex items-center text-xs font-medium text-foreground gap-1 group-hover:translate-x-1 transition-transform">
+                  <div className="pt-4 flex items-center text-xs font-medium text-ink gap-1 group-hover:translate-x-1 group-hover:text-primary transition-all">
                     <span>Review contract</span>
                     <ArrowRight className="h-3 w-3" />
                   </div>
@@ -588,23 +581,23 @@ export default function Home() {
                 >
                   <div className="space-y-2.5">
                     <div className="flex items-center justify-between">
-                      <div className="h-8 w-8 rounded-[6px] bg-secondary flex items-center justify-center border border-border">
-                        <ReceiptText className="h-4 w-4 text-foreground" />
+                      <div className="h-8 w-8 rounded-[8px] bg-surface-2 flex items-center justify-center border border-hairline">
+                        <ReceiptText className="h-4 w-4 text-primary" />
                       </div>
-                      <span className="type-mono-eyebrow text-[9px] px-2 py-0.5 rounded-[4px] bg-secondary border border-border text-foreground">
+                      <span className="type-mono-eyebrow text-[9px] px-2 py-0.5 rounded-[4px] bg-surface-2 border border-hairline text-ink-muted">
                         Finance
                       </span>
                     </div>
                     <div>
-                      <h3 className="font-semibold text-sm text-foreground group-hover:text-link transition-colors">
+                      <h3 className="font-semibold text-sm text-ink group-hover:text-primary transition-colors">
                         Invoice &amp; Table Extractor
                       </h3>
-                      <p className="text-xs text-muted-foreground leading-relaxed mt-1">
+                      <p className="text-xs text-ink-subtle leading-relaxed mt-1">
                         Scan bills, receipts, and invoices to pull structured tables and line items straight into Excel.
                       </p>
                     </div>
                   </div>
-                  <div className="pt-4 flex items-center text-xs font-medium text-foreground gap-1 group-hover:translate-x-1 transition-transform">
+                  <div className="pt-4 flex items-center text-xs font-medium text-ink gap-1 group-hover:translate-x-1 group-hover:text-primary transition-all">
                     <span>Extract tables</span>
                     <ArrowRight className="h-3 w-3" />
                   </div>
@@ -615,19 +608,21 @@ export default function Home() {
                   className="hairline-card p-5 hairline-card-hover flex flex-col justify-between group"
                 >
                   <div className="space-y-2.5">
-                    <div className="h-8 w-8 rounded-[6px] bg-secondary flex items-center justify-center border border-border">
-                      <Languages className="h-4 w-4 text-foreground" />
+                    <div className="flex items-center justify-between">
+                      <div className="h-8 w-8 rounded-[8px] bg-surface-2 flex items-center justify-center border border-hairline">
+                        <Languages className="h-4 w-4 text-primary" />
+                      </div>
                     </div>
                     <div>
-                      <h3 className="font-semibold text-sm text-foreground group-hover:text-link transition-colors">
+                      <h3 className="font-semibold text-sm text-ink group-hover:text-primary transition-colors">
                         Document Translator
                       </h3>
-                      <p className="text-xs text-muted-foreground leading-relaxed mt-1">
+                      <p className="text-xs text-ink-subtle leading-relaxed mt-1">
                         Translate documents into Spanish, French, German, Arabic, Urdu, or Chinese with a side-by-side view.
                       </p>
                     </div>
                   </div>
-                  <div className="pt-4 flex items-center text-xs font-medium text-foreground gap-1 group-hover:translate-x-1 transition-transform">
+                  <div className="pt-4 flex items-center text-xs font-medium text-ink gap-1 group-hover:translate-x-1 group-hover:text-primary transition-all">
                     <span>Translate document</span>
                     <ArrowRight className="h-3 w-3" />
                   </div>
@@ -638,19 +633,21 @@ export default function Home() {
                   className="hairline-card p-5 hairline-card-hover flex flex-col justify-between group"
                 >
                   <div className="space-y-2.5">
-                    <div className="h-8 w-8 rounded-[6px] bg-secondary flex items-center justify-center border border-border">
-                      <GraduationCap className="h-4 w-4 text-foreground" />
+                    <div className="flex items-center justify-between">
+                      <div className="h-8 w-8 rounded-[8px] bg-surface-2 flex items-center justify-center border border-hairline">
+                        <GraduationCap className="h-4 w-4 text-primary" />
+                      </div>
                     </div>
                     <div>
-                      <h3 className="font-semibold text-sm text-foreground group-hover:text-link transition-colors">
+                      <h3 className="font-semibold text-sm text-ink group-hover:text-primary transition-colors">
                         Flashcards &amp; Practice Quizzes
                       </h3>
-                      <p className="text-xs text-muted-foreground leading-relaxed mt-1">
+                      <p className="text-xs text-ink-subtle leading-relaxed mt-1">
                         Turn textbook chapters and lecture slides into interactive study cards and practice tests in seconds.
                       </p>
                     </div>
                   </div>
-                  <div className="pt-4 flex items-center text-xs font-medium text-foreground gap-1 group-hover:translate-x-1 transition-transform">
+                  <div className="pt-4 flex items-center text-xs font-medium text-ink gap-1 group-hover:translate-x-1 group-hover:text-primary transition-all">
                     <span>Create study materials</span>
                     <ArrowRight className="h-3 w-3" />
                   </div>
@@ -661,19 +658,21 @@ export default function Home() {
                   className="hairline-card p-5 hairline-card-hover flex flex-col justify-between group"
                 >
                   <div className="space-y-2.5">
-                    <div className="h-8 w-8 rounded-[6px] bg-secondary flex items-center justify-center border border-border">
-                      <Sparkles className="h-4 w-4 text-foreground" />
+                    <div className="flex items-center justify-between">
+                      <div className="h-8 w-8 rounded-[8px] bg-surface-2 flex items-center justify-center border border-hairline">
+                        <Sparkles className="h-4 w-4 text-primary" />
+                      </div>
                     </div>
                     <div>
-                      <h3 className="font-semibold text-sm text-foreground group-hover:text-link transition-colors">
+                      <h3 className="font-semibold text-sm text-ink group-hover:text-primary transition-colors">
                         Chat with Any PDF
                       </h3>
-                      <p className="text-xs text-muted-foreground leading-relaxed mt-1">
+                      <p className="text-xs text-ink-subtle leading-relaxed mt-1">
                         Ask questions about any document and receive clear, accurate answers and summaries in plain language.
                       </p>
                     </div>
                   </div>
-                  <div className="pt-4 flex items-center text-xs font-medium text-foreground gap-1 group-hover:translate-x-1 transition-transform">
+                  <div className="pt-4 flex items-center text-xs font-medium text-ink gap-1 group-hover:translate-x-1 group-hover:text-primary transition-all">
                     <span>Start chatting</span>
                     <ArrowRight className="h-3 w-3" />
                   </div>
@@ -685,11 +684,11 @@ export default function Home() {
           {/* Category B: Sign & Security */}
           {(activeCategory === "all" || activeCategory === "security") && (
             <div className="space-y-3">
-              <div className="flex items-center justify-between border-b border-border pb-2">
-                <span className="type-mono-eyebrow text-[11px] text-foreground font-semibold">
+              <div className="flex items-center justify-between border-b border-hairline pb-2">
+                <span className="type-eyebrow text-[11px] text-ink font-semibold tracking-[0.4px] uppercase">
                   Signatures, Security &amp; Protection
                 </span>
-                <span className="type-mono-eyebrow text-[10px] text-muted-foreground">Simple &amp; Legally Sound</span>
+                <span className="type-mono-eyebrow text-[10px] text-ink-subtle">Simple &amp; Legally Sound</span>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-6 gap-3">
@@ -698,17 +697,17 @@ export default function Home() {
                   className="hairline-card p-4 hairline-card-hover flex flex-col justify-between group"
                 >
                   <div className="space-y-2">
-                    <div className="h-7 w-7 rounded-[6px] bg-secondary flex items-center justify-center border border-border">
-                      <PenTool className="h-3.5 w-3.5 text-foreground" />
+                    <div className="h-7 w-7 rounded-[8px] bg-surface-2 flex items-center justify-center border border-hairline">
+                      <PenTool className="h-3.5 w-3.5 text-ink" />
                     </div>
-                    <h4 className="font-semibold text-xs text-foreground group-hover:text-link transition-colors">
+                    <h4 className="font-semibold text-xs text-ink group-hover:text-primary transition-colors">
                       e-Sign PDF
                     </h4>
-                    <p className="text-[11px] text-muted-foreground leading-relaxed">
+                    <p className="text-[11px] text-ink-subtle leading-relaxed">
                       Draw, type, or upload your signature to sign documents.
                     </p>
                   </div>
-                  <div className="pt-3 flex items-center text-[11px] font-medium text-foreground gap-1">
+                  <div className="pt-3 flex items-center text-[11px] font-medium text-ink gap-1 group-hover:text-primary transition-colors">
                     <span>Sign</span>
                     <ArrowRight className="h-3 w-3" />
                   </div>
@@ -719,17 +718,17 @@ export default function Home() {
                   className="hairline-card p-4 hairline-card-hover flex flex-col justify-between group"
                 >
                   <div className="space-y-2">
-                    <div className="h-7 w-7 rounded-[6px] bg-secondary flex items-center justify-center border border-border">
-                      <Lock className="h-3.5 w-3.5 text-foreground" />
+                    <div className="h-7 w-7 rounded-[8px] bg-surface-2 flex items-center justify-center border border-hairline">
+                      <Lock className="h-3.5 w-3.5 text-ink" />
                     </div>
-                    <h4 className="font-semibold text-xs text-foreground group-hover:text-link transition-colors">
+                    <h4 className="font-semibold text-xs text-ink group-hover:text-primary transition-colors">
                       Flatten PDF (Lock)
                     </h4>
-                    <p className="text-[11px] text-muted-foreground leading-relaxed">
+                    <p className="text-[11px] text-ink-subtle leading-relaxed">
                       Lock form fields and stamps so no one can edit them.
                     </p>
                   </div>
-                  <div className="pt-3 flex items-center text-[11px] font-medium text-foreground gap-1">
+                  <div className="pt-3 flex items-center text-[11px] font-medium text-ink gap-1 group-hover:text-primary transition-colors">
                     <span>Lock PDF</span>
                     <ArrowRight className="h-3 w-3" />
                   </div>
@@ -740,17 +739,17 @@ export default function Home() {
                   className="hairline-card p-4 hairline-card-hover flex flex-col justify-between group"
                 >
                   <div className="space-y-2">
-                    <div className="h-7 w-7 rounded-[6px] bg-secondary flex items-center justify-center border border-border">
-                      <Award className="h-3.5 w-3.5 text-foreground" />
+                    <div className="h-7 w-7 rounded-[8px] bg-surface-2 flex items-center justify-center border border-hairline">
+                      <Award className="h-3.5 w-3.5 text-ink" />
                     </div>
-                    <h4 className="font-semibold text-xs text-foreground group-hover:text-link transition-colors">
+                    <h4 className="font-semibold text-xs text-ink group-hover:text-primary transition-colors">
                       PDF/A Archival
                     </h4>
-                    <p className="text-[11px] text-muted-foreground leading-relaxed">
+                    <p className="text-[11px] text-ink-subtle leading-relaxed">
                       Convert for permanent government &amp; legal archives.
                     </p>
                   </div>
-                  <div className="pt-3 flex items-center text-[11px] font-medium text-foreground gap-1">
+                  <div className="pt-3 flex items-center text-[11px] font-medium text-ink gap-1 group-hover:text-primary transition-colors">
                     <span>Archive</span>
                     <ArrowRight className="h-3 w-3" />
                   </div>
@@ -761,17 +760,17 @@ export default function Home() {
                   className="hairline-card p-4 hairline-card-hover flex flex-col justify-between group"
                 >
                   <div className="space-y-2">
-                    <div className="h-7 w-7 rounded-[6px] bg-secondary flex items-center justify-center border border-border">
-                      <Lock className="h-3.5 w-3.5 text-foreground" />
+                    <div className="h-7 w-7 rounded-[8px] bg-surface-2 flex items-center justify-center border border-hairline">
+                      <Lock className="h-3.5 w-3.5 text-ink" />
                     </div>
-                    <h4 className="font-semibold text-xs text-foreground group-hover:text-link transition-colors">
+                    <h4 className="font-semibold text-xs text-ink group-hover:text-primary transition-colors">
                       Password Protect
                     </h4>
-                    <p className="text-[11px] text-muted-foreground leading-relaxed">
+                    <p className="text-[11px] text-ink-subtle leading-relaxed">
                       Lock your PDF with strong password encryption.
                     </p>
                   </div>
-                  <div className="pt-3 flex items-center text-[11px] font-medium text-foreground gap-1">
+                  <div className="pt-3 flex items-center text-[11px] font-medium text-ink gap-1 group-hover:text-primary transition-colors">
                     <span>Protect</span>
                     <ArrowRight className="h-3 w-3" />
                   </div>
@@ -782,17 +781,17 @@ export default function Home() {
                   className="hairline-card p-4 hairline-card-hover flex flex-col justify-between group"
                 >
                   <div className="space-y-2">
-                    <div className="h-7 w-7 rounded-[6px] bg-secondary flex items-center justify-center border border-border">
-                      <Unlock className="h-3.5 w-3.5 text-foreground" />
+                    <div className="h-7 w-7 rounded-[8px] bg-surface-2 flex items-center justify-center border border-hairline">
+                      <Unlock className="h-3.5 w-3.5 text-ink" />
                     </div>
-                    <h4 className="font-semibold text-xs text-foreground group-hover:text-link transition-colors">
+                    <h4 className="font-semibold text-xs text-ink group-hover:text-primary transition-colors">
                       Unlock PDF
                     </h4>
-                    <p className="text-[11px] text-muted-foreground leading-relaxed">
+                    <p className="text-[11px] text-ink-subtle leading-relaxed">
                       Remove password restrictions and edit permissions.
                     </p>
                   </div>
-                  <div className="pt-3 flex items-center text-[11px] font-medium text-foreground gap-1">
+                  <div className="pt-3 flex items-center text-[11px] font-medium text-ink gap-1 group-hover:text-primary transition-colors">
                     <span>Unlock</span>
                     <ArrowRight className="h-3 w-3" />
                   </div>
@@ -803,17 +802,17 @@ export default function Home() {
                   className="hairline-card p-4 hairline-card-hover flex flex-col justify-between group"
                 >
                   <div className="space-y-2">
-                    <div className="h-7 w-7 rounded-[6px] bg-secondary flex items-center justify-center border border-border">
-                      <FileEdit className="h-3.5 w-3.5 text-foreground" />
+                    <div className="h-7 w-7 rounded-[8px] bg-surface-2 flex items-center justify-center border border-hairline">
+                      <FileEdit className="h-3.5 w-3.5 text-ink" />
                     </div>
-                    <h4 className="font-semibold text-xs text-foreground group-hover:text-link transition-colors">
+                    <h4 className="font-semibold text-xs text-ink group-hover:text-primary transition-colors">
                       Fill PDF Forms
                     </h4>
-                    <p className="text-[11px] text-muted-foreground leading-relaxed">
+                    <p className="text-[11px] text-ink-subtle leading-relaxed">
                       Fill out forms and tax documents online easily.
                     </p>
                   </div>
-                  <div className="pt-3 flex items-center text-[11px] font-medium text-foreground gap-1">
+                  <div className="pt-3 flex items-center text-[11px] font-medium text-ink gap-1 group-hover:text-primary transition-colors">
                     <span>Fill forms</span>
                     <ArrowRight className="h-3 w-3" />
                   </div>
@@ -825,11 +824,11 @@ export default function Home() {
           {/* Category C: Page Organization */}
           {(activeCategory === "all" || activeCategory === "organize") && (
             <div className="space-y-3">
-              <div className="flex items-center justify-between border-b border-border pb-2">
-                <span className="type-mono-eyebrow text-[11px] text-foreground font-semibold">
+              <div className="flex items-center justify-between border-b border-hairline pb-2">
+                <span className="type-eyebrow text-[11px] text-ink font-semibold tracking-[0.4px] uppercase">
                   Organize &amp; Edit Pages
                 </span>
-                <span className="type-mono-eyebrow text-[10px] text-muted-foreground">Fast Everyday Tools</span>
+                <span className="type-mono-eyebrow text-[10px] text-ink-subtle">Fast Everyday Tools</span>
               </div>
 
               <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2.5">
@@ -854,8 +853,8 @@ export default function Home() {
                     href={item.href}
                     className="hairline-card p-3 hairline-card-hover flex flex-col items-center text-center gap-2 group"
                   >
-                    <item.icon className="h-4 w-4 text-muted-foreground group-hover:text-foreground transition-colors" />
-                    <span className="text-xs font-medium text-foreground">{item.label}</span>
+                    <item.icon className="h-4 w-4 text-ink-subtle group-hover:text-primary transition-colors" />
+                    <span className="text-xs font-medium text-ink">{item.label}</span>
                   </Link>
                 ))}
               </div>
@@ -865,11 +864,11 @@ export default function Home() {
           {/* Category D: File Converters */}
           {(activeCategory === "all" || activeCategory === "convert") && (
             <div className="space-y-3">
-              <div className="flex items-center justify-between border-b border-border pb-2">
-                <span className="type-mono-eyebrow text-[11px] text-foreground font-semibold">
+              <div className="flex items-center justify-between border-b border-hairline pb-2">
+                <span className="type-eyebrow text-[11px] text-ink font-semibold tracking-[0.4px] uppercase">
                   Convert Between PDF &amp; Other Formats
                 </span>
-                <span className="type-mono-eyebrow text-[10px] text-muted-foreground">High Fidelity Output</span>
+                <span className="type-mono-eyebrow text-[10px] text-ink-subtle">High Fidelity Output</span>
               </div>
 
               <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-2.5">
@@ -892,8 +891,8 @@ export default function Home() {
                     href={item.href}
                     className="hairline-card p-3 hairline-card-hover flex items-center gap-2.5 group"
                   >
-                    <item.icon className="h-4 w-4 text-muted-foreground group-hover:text-foreground shrink-0" />
-                    <span className="text-xs font-medium text-foreground truncate">{item.label}</span>
+                    <item.icon className="h-4 w-4 text-ink-subtle group-hover:text-primary shrink-0 transition-colors" />
+                    <span className="text-xs font-medium text-ink truncate">{item.label}</span>
                   </Link>
                 ))}
               </div>
@@ -902,18 +901,18 @@ export default function Home() {
         </section>
 
         {/* ========================================================================= */}
-        {/* 5. INTERACTIVE DEMO (Plain English, Real Life Example) */}
+        {/* 5. INTERACTIVE DEMO (Linear Product Panel Framing) */}
         {/* ========================================================================= */}
-        <section className="hairline-card p-6 sm:p-8 space-y-6">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-border pb-4">
+        <section className="linear-product-panel p-6 sm:p-8 space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-hairline pb-4">
             <div>
-              <span className="type-mono-eyebrow text-[10px] text-muted-foreground mb-1 block">
+              <span className="type-eyebrow text-[10px] text-ink-subtle mb-1 block uppercase tracking-[0.4px]">
                 SEE IT IN ACTION
               </span>
-              <h2 className="type-heading-md text-foreground">
+              <h2 className="type-heading-md text-ink">
                 Ask questions in plain English, get instant answers
               </h2>
-              <p className="text-xs text-muted-foreground mt-0.5">
+              <p className="text-xs text-ink-subtle mt-0.5">
                 Click any question below to see how the AI pulls clear, helpful answers from a real rental contract:
               </p>
             </div>
@@ -935,10 +934,10 @@ export default function Home() {
                   type="button"
                   onClick={() => setSelectedPromptIndex(idx)}
                   className={cn(
-                    "text-xs px-3 py-1.5 rounded-[6px] transition-all font-medium border cursor-pointer",
+                    "text-xs px-3.5 py-1.5 rounded-full transition-all font-medium border cursor-pointer",
                     selectedPromptIndex === idx
-                      ? "bg-[#171717] dark:bg-white text-white dark:text-black font-semibold border-transparent shadow-xs"
-                      : "bg-secondary text-muted-foreground border-border hover:text-foreground hover:bg-muted"
+                      ? "bg-primary text-white border-primary font-medium shadow-xs"
+                      : "bg-surface-1 text-ink-subtle border-hairline hover:text-ink hover:bg-surface-2"
                   )}
                 >
                   {item.title}
@@ -946,22 +945,33 @@ export default function Home() {
               ))}
             </div>
 
-            {/* Conversation Preview Box */}
-            <div className="p-4 sm:p-5 rounded-[8px] bg-secondary/40 border border-border space-y-3 text-xs">
-              <div className="flex items-start gap-3">
-                <span className="type-mono-eyebrow text-[10px] text-muted-foreground px-1.5 py-0.5 rounded-[4px] bg-card border border-border shrink-0">
-                  YOU
+            {/* Conversation Preview Box: Paper Document Sheet Presentation */}
+            <div className="paper-sheet paper-sheet-stacked p-5 sm:p-6 rounded-[12px] border border-paper-border space-y-4 shadow-xs text-xs">
+              <div className="flex items-start justify-between gap-3">
+                <div className="flex items-start gap-3">
+                  <span className="type-mono-eyebrow text-[10px] text-ink-subtle px-2 py-0.5 rounded-[4px] bg-surface-2 border border-hairline shrink-0">
+                    QUESTION
+                  </span>
+                  <p className="font-semibold text-ink text-xs sm:text-sm">
+                    {samplePrompts[selectedPromptIndex].query}
+                  </p>
+                </div>
+
+                <span className="paper-citation-pill text-[9px] shrink-0 hidden sm:inline-flex">
+                  Page 1, §3
                 </span>
-                <p className="font-medium text-foreground text-xs sm:text-sm">
-                  {samplePrompts[selectedPromptIndex].query}
-                </p>
               </div>
 
-              <div className="flex items-start gap-3 pt-3 border-t border-border">
-                <span className="type-mono-eyebrow text-[10px] text-foreground px-1.5 py-0.5 rounded-[4px] bg-card border border-border shrink-0">
-                  ANSWER
-                </span>
-                <p className="text-muted-foreground leading-relaxed text-xs sm:text-sm">
+              <div className="pt-3 border-t border-hairline space-y-2">
+                <div className="flex items-center gap-2">
+                  <span className="type-mono-eyebrow text-[10px] text-primary-hover px-2 py-0.5 rounded-[4px] bg-primary/15 border border-primary/25 shrink-0 font-medium">
+                    DOCUMENT ANSWER
+                  </span>
+                  <span className="type-mono-eyebrow text-[10px] text-ink-subtle">
+                    Source Verified
+                  </span>
+                </div>
+                <p className="paper-prose text-ink-muted leading-relaxed text-xs sm:text-sm pl-1">
                   {samplePrompts[selectedPromptIndex].response}
                 </p>
               </div>
@@ -974,28 +984,28 @@ export default function Home() {
         {/* ========================================================================= */}
         <section className="space-y-6">
           <div className="text-center max-w-xl mx-auto space-y-1.5">
-            <span className="type-mono-eyebrow text-[11px] text-muted-foreground">
+            <span className="type-eyebrow text-[11px] text-ink-subtle uppercase tracking-[0.4px]">
               BUILT FOR YOUR DAILY ROUTINE
             </span>
-            <h2 className="type-heading-md text-foreground">
+            <h2 className="type-heading-md text-ink">
               Designed for real people and busy schedules
             </h2>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-ink-subtle">
               Whether you are preparing for exams, applying for jobs, or sending client invoices.
             </p>
           </div>
 
           {/* Persona Tabs */}
           <div className="flex justify-center">
-            <div className="inline-flex p-1 rounded-[64px] bg-secondary border border-border gap-1">
+            <div className="inline-flex p-1 rounded-full bg-surface-1 border border-hairline gap-1 shadow-xs">
               <button
                 type="button"
                 onClick={() => setActivePersona("students")}
                 className={cn(
-                  "flex items-center gap-2 px-4 py-1.5 text-xs font-medium rounded-[64px] transition-all cursor-pointer",
+                  "flex items-center gap-2 px-4 py-1.5 text-xs font-medium rounded-full transition-all cursor-pointer",
                   activePersona === "students"
-                    ? "bg-[#171717] dark:bg-white text-white dark:text-black shadow-xs font-semibold"
-                    : "text-muted-foreground hover:text-foreground"
+                    ? "bg-primary text-white font-medium shadow-xs"
+                    : "text-ink-subtle hover:text-ink hover:bg-surface-2"
                 )}
               >
                 <GraduationCap className="h-3.5 w-3.5" />
@@ -1006,10 +1016,10 @@ export default function Home() {
                 type="button"
                 onClick={() => setActivePersona("professionals")}
                 className={cn(
-                  "flex items-center gap-2 px-4 py-1.5 text-xs font-medium rounded-[64px] transition-all cursor-pointer",
+                  "flex items-center gap-2 px-4 py-1.5 text-xs font-medium rounded-full transition-all cursor-pointer",
                   activePersona === "professionals"
-                    ? "bg-[#171717] dark:bg-white text-white dark:text-black shadow-xs font-semibold"
-                    : "text-muted-foreground hover:text-foreground"
+                    ? "bg-primary text-white font-medium shadow-xs"
+                    : "text-ink-subtle hover:text-ink hover:bg-surface-2"
                 )}
               >
                 <Briefcase className="h-3.5 w-3.5" />
@@ -1020,10 +1030,10 @@ export default function Home() {
                 type="button"
                 onClick={() => setActivePersona("business")}
                 className={cn(
-                  "flex items-center gap-2 px-4 py-1.5 text-xs font-medium rounded-[64px] transition-all cursor-pointer",
+                  "flex items-center gap-2 px-4 py-1.5 text-xs font-medium rounded-full transition-all cursor-pointer",
                   activePersona === "business"
-                    ? "bg-[#171717] dark:bg-white text-white dark:text-black shadow-xs font-semibold"
-                    : "text-muted-foreground hover:text-foreground"
+                    ? "bg-primary text-white font-medium shadow-xs"
+                    : "text-ink-subtle hover:text-ink hover:bg-surface-2"
                 )}
               >
                 <Store className="h-3.5 w-3.5" />
@@ -1037,23 +1047,23 @@ export default function Home() {
             {activePersona === "students" && (
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="space-y-2">
-                  <span className="type-mono-eyebrow text-[10px] text-muted-foreground">01 • SUMMARIZE</span>
-                  <h3 className="font-semibold text-sm text-foreground">Summarize 50-Page Readings</h3>
-                  <p className="text-xs text-muted-foreground leading-relaxed">
+                  <span className="type-eyebrow text-[10px] text-primary tracking-[0.4px] font-mono">01 • SUMMARIZE</span>
+                  <h3 className="font-semibold text-sm text-ink">Summarize 50-Page Readings</h3>
+                  <p className="text-xs text-ink-subtle leading-relaxed">
                     Ask for a quick bulleted summary of dense research papers and textbook chapters before class or exams.
                   </p>
                 </div>
                 <div className="space-y-2">
-                  <span className="type-mono-eyebrow text-[10px] text-muted-foreground">02 • ORGANIZE</span>
-                  <h3 className="font-semibold text-sm text-foreground">Merge Lecture Slides &amp; Notes</h3>
-                  <p className="text-xs text-muted-foreground leading-relaxed">
+                  <span className="type-eyebrow text-[10px] text-primary tracking-[0.4px] font-mono">02 • ORGANIZE</span>
+                  <h3 className="font-semibold text-sm text-ink">Merge Lecture Slides &amp; Notes</h3>
+                  <p className="text-xs text-ink-subtle leading-relaxed">
                     Combine PDFs from each semester week into a single study guide so all your material is in one place.
                   </p>
                 </div>
                 <div className="space-y-2">
-                  <span className="type-mono-eyebrow text-[10px] text-muted-foreground">03 • COPY TEXT</span>
-                  <h3 className="font-semibold text-sm text-foreground">Copy Text from Book Photos</h3>
-                  <p className="text-xs text-muted-foreground leading-relaxed">
+                  <span className="type-eyebrow text-[10px] text-primary tracking-[0.4px] font-mono">03 • COPY TEXT</span>
+                  <h3 className="font-semibold text-sm text-ink">Copy Text from Book Photos</h3>
+                  <p className="text-xs text-ink-subtle leading-relaxed">
                     Took a photo of a whiteboard or library book? Use the text scanner to turn that photo into editable notes.
                   </p>
                 </div>
@@ -1063,23 +1073,23 @@ export default function Home() {
             {activePersona === "professionals" && (
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="space-y-2">
-                  <span className="type-mono-eyebrow text-[10px] text-muted-foreground">01 • JOB READY</span>
-                  <h3 className="font-semibold text-sm text-foreground">Shrink Resume for Job Portals</h3>
-                  <p className="text-xs text-muted-foreground leading-relaxed">
+                  <span className="type-eyebrow text-[10px] text-primary tracking-[0.4px] font-mono">01 • JOB READY</span>
+                  <h3 className="font-semibold text-sm text-ink">Shrink Resume for Job Portals</h3>
+                  <p className="text-xs text-ink-subtle leading-relaxed">
                     Job portals often reject resumes over 1MB or 2MB. Compress your file in one click without blurry text.
                   </p>
                 </div>
                 <div className="space-y-2">
-                  <span className="type-mono-eyebrow text-[10px] text-muted-foreground">02 • APPLICATIONS</span>
-                  <h3 className="font-semibold text-sm text-foreground">Combine Application Packets</h3>
-                  <p className="text-xs text-muted-foreground leading-relaxed">
+                  <span className="type-eyebrow text-[10px] text-primary tracking-[0.4px] font-mono">02 • APPLICATIONS</span>
+                  <h3 className="font-semibold text-sm text-ink">Combine Application Packets</h3>
+                  <p className="text-xs text-ink-subtle leading-relaxed">
                     Merge your resume, cover letter, references, and work samples into one neat file for hiring managers.
                   </p>
                 </div>
                 <div className="space-y-2">
-                  <span className="type-mono-eyebrow text-[10px] text-muted-foreground">03 • PEACE OF MIND</span>
-                  <h3 className="font-semibold text-sm text-foreground">Check Agreements in Plain English</h3>
-                  <p className="text-xs text-muted-foreground leading-relaxed">
+                  <span className="type-eyebrow text-[10px] text-primary tracking-[0.4px] font-mono">03 • PEACE OF MIND</span>
+                  <h3 className="font-semibold text-sm text-ink">Check Agreements in Plain English</h3>
+                  <p className="text-xs text-ink-subtle leading-relaxed">
                     Ask questions about employment agreements, NDAs, or non-competes to understand the exact terms before signing.
                   </p>
                 </div>
@@ -1089,23 +1099,23 @@ export default function Home() {
             {activePersona === "business" && (
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="space-y-2">
-                  <span className="type-mono-eyebrow text-[10px] text-muted-foreground">01 • INVOICING</span>
-                  <h3 className="font-semibold text-sm text-foreground">Spreadsheets to Clean Invoices</h3>
-                  <p className="text-xs text-muted-foreground leading-relaxed">
+                  <span className="type-eyebrow text-[10px] text-primary tracking-[0.4px] font-mono">01 • INVOICING</span>
+                  <h3 className="font-semibold text-sm text-ink">Spreadsheets to Clean Invoices</h3>
+                  <p className="text-xs text-ink-subtle leading-relaxed">
                     Convert Excel (.xlsx) and CSV spreadsheets into professional, clean PDF invoices ready to send to clients.
                   </p>
                 </div>
                 <div className="space-y-2">
-                  <span className="type-mono-eyebrow text-[10px] text-muted-foreground">02 • 100% CONFIDENTIAL</span>
-                  <h3 className="font-semibold text-sm text-foreground">Completely Private Financials</h3>
-                  <p className="text-xs text-muted-foreground leading-relaxed">
+                  <span className="type-eyebrow text-[10px] text-primary tracking-[0.4px] font-mono">02 • 100% CONFIDENTIAL</span>
+                  <h3 className="font-semibold text-sm text-ink">Completely Private Financials</h3>
+                  <p className="text-xs text-ink-subtle leading-relaxed">
                     Because processing happens entirely on your machine, your accounting, tax, and client files stay strictly private.
                   </p>
                 </div>
                 <div className="space-y-2">
-                  <span className="type-mono-eyebrow text-[10px] text-muted-foreground">03 • PRIVACY</span>
-                  <h3 className="font-semibold text-sm text-foreground">Black Out Sensitive Details</h3>
-                  <p className="text-xs text-muted-foreground leading-relaxed">
+                  <span className="type-eyebrow text-[10px] text-primary tracking-[0.4px] font-mono">03 • PRIVACY</span>
+                  <h3 className="font-semibold text-sm text-ink">Black Out Sensitive Details</h3>
+                  <p className="text-xs text-ink-subtle leading-relaxed">
                     Use the editor to black out bank account numbers or private addresses before sharing documents externally.
                   </p>
                 </div>
@@ -1119,57 +1129,57 @@ export default function Home() {
         {/* ========================================================================= */}
         <section className="hairline-card p-6 sm:p-8 space-y-5">
           <div className="max-w-xl space-y-1">
-            <span className="type-mono-eyebrow text-[11px] text-muted-foreground">
+            <span className="type-eyebrow text-[11px] text-ink-subtle uppercase tracking-[0.4px]">
               YOUR PRIVACY MATTERS
             </span>
-            <h2 className="type-heading-md text-foreground">
+            <h2 className="type-heading-md text-ink">
               Why keeping files on your device is better
             </h2>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-ink-subtle">
               Most online PDF tools upload your sensitive documents to their servers. Here is how we do things differently:
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
             {/* Standard Cloud PDF Sites */}
-            <div className="p-5 rounded-[8px] border border-border bg-secondary/30 space-y-3">
-              <div className="flex items-center gap-2 font-semibold text-xs text-foreground">
-                <X className="h-4 w-4 text-muted-foreground" />
+            <div className="p-5 rounded-[12px] border border-hairline bg-surface-1 space-y-3">
+              <div className="flex items-center gap-2 font-semibold text-xs text-ink-subtle">
+                <X className="h-4 w-4 text-ink-tertiary" />
                 <span>Typical PDF Websites</span>
               </div>
-              <ul className="space-y-2 text-xs text-muted-foreground">
+              <ul className="space-y-2 text-xs text-ink-subtle">
                 <li className="flex items-start gap-2">
-                  <span className="text-muted-foreground mt-0.5">•</span>
+                  <span className="text-ink-tertiary mt-0.5">•</span>
                   <span>Upload your private contracts, tax returns, and records to remote servers.</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-muted-foreground mt-0.5">•</span>
+                  <span className="text-ink-tertiary mt-0.5">•</span>
                   <span>Require signups, collect emails, or ask for paid subscriptions after 2 files.</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-muted-foreground mt-0.5">•</span>
+                  <span className="text-ink-tertiary mt-0.5">•</span>
                   <span>Store your files in cloud databases where data leaks can happen.</span>
                 </li>
               </ul>
             </div>
 
-            {/* PDF AI Master */}
-            <div className="p-5 rounded-[8px] border border-border bg-card space-y-3 shadow-xs">
-              <div className="flex items-center gap-2 font-semibold text-xs text-foreground">
-                <Check className="h-4 w-4 text-emerald-500" />
-                <span>PDF AI Master</span>
+            {/* PDFKit */}
+            <div className="p-5 rounded-[12px] border border-hairline-strong bg-surface-2 space-y-3 shadow-xs">
+              <div className="flex items-center gap-2 font-semibold text-xs text-ink">
+                <PDFKitLogo size={18} />
+                <span>PDFKit</span>
               </div>
-              <ul className="space-y-2 text-xs text-foreground">
+              <ul className="space-y-2 text-xs text-ink">
                 <li className="flex items-start gap-2">
-                  <span className="text-emerald-500 mt-0.5 font-bold">✓</span>
+                  <span className="text-[#16a34a] mt-0.5 font-bold">✓</span>
                   <span>Runs 100% inside your web browser. Your files never leave your computer.</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-emerald-500 mt-0.5 font-bold">✓</span>
+                  <span className="text-[#16a34a] mt-0.5 font-bold">✓</span>
                   <span>No account needed, no email required, no daily limits, and always free.</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-emerald-500 mt-0.5 font-bold">✓</span>
+                  <span className="text-[#16a34a] mt-0.5 font-bold">✓</span>
                   <span>Instant processing with zero wait times and complete confidentiality.</span>
                 </li>
               </ul>
@@ -1182,15 +1192,15 @@ export default function Home() {
         {/* ========================================================================= */}
         <section className="space-y-4 max-w-3xl mx-auto w-full">
           <div className="text-center space-y-1">
-            <span className="type-mono-eyebrow text-[11px] text-muted-foreground">
+            <span className="type-eyebrow text-[11px] text-ink-subtle uppercase tracking-[0.4px]">
               FREQUENTLY ASKED QUESTIONS
             </span>
-            <h2 className="type-heading-md text-foreground">
+            <h2 className="type-heading-md text-ink">
               Simple, transparent answers
             </h2>
           </div>
 
-          <div className="divide-y divide-border border border-border rounded-xl bg-card overflow-hidden shadow-xs">
+          <div className="divide-y divide-hairline border border-hairline rounded-[12px] bg-surface-1 overflow-hidden shadow-xs">
             {faqs.map((faq, index) => {
               const isOpen = openFaq === index;
               return (
@@ -1198,17 +1208,17 @@ export default function Home() {
                   <button
                     type="button"
                     onClick={() => toggleFaq(index)}
-                    className="w-full py-4 px-5 text-left flex items-center justify-between gap-4 font-medium text-xs sm:text-sm text-foreground hover:bg-secondary/40 transition-colors cursor-pointer"
+                    className="w-full py-4 px-5 text-left flex items-center justify-between gap-4 font-medium text-xs sm:text-sm text-ink hover:bg-surface-2/50 transition-colors cursor-pointer"
                   >
                     <span>{faq.q}</span>
                     {isOpen ? (
-                      <ChevronUp className="h-4 w-4 text-muted-foreground shrink-0" />
+                      <ChevronUp className="h-4 w-4 text-ink-subtle shrink-0" />
                     ) : (
-                      <ChevronDown className="h-4 w-4 text-muted-foreground shrink-0" />
+                      <ChevronDown className="h-4 w-4 text-ink-subtle shrink-0" />
                     )}
                   </button>
                   {isOpen && (
-                    <div className="px-5 pb-4 pt-1 text-xs sm:text-sm text-muted-foreground leading-relaxed bg-secondary/10">
+                    <div className="px-5 pb-4 pt-1 text-xs sm:text-sm text-ink-muted leading-relaxed bg-surface-2/20">
                       {faq.a}
                     </div>
                   )}
@@ -1219,23 +1229,23 @@ export default function Home() {
         </section>
 
         {/* ========================================================================= */}
-        {/* 9. BOTTOM CALL TO ACTION */}
+        {/* 9. BOTTOM CALL TO ACTION (Linear cta-banner) */}
         {/* ========================================================================= */}
-        <section className="hairline-card p-8 sm:p-12 text-center space-y-5 max-w-2xl mx-auto">
-          <span className="type-mono-eyebrow text-[11px] text-muted-foreground">
+        <section className="hairline-card p-8 sm:p-14 text-center space-y-6 max-w-2xl mx-auto">
+          <span className="type-eyebrow text-[11px] text-primary tracking-[0.4px] uppercase font-semibold">
             START IMMEDIATELY
           </span>
-          <h2 className="type-display-xl text-foreground">
+          <h2 className="type-display-md text-ink">
             Ready to work with your documents?
           </h2>
-          <p className="text-xs sm:text-sm text-muted-foreground max-w-md mx-auto leading-relaxed">
+          <p className="text-xs sm:text-sm text-ink-subtle max-w-md mx-auto leading-relaxed">
             No signup, no waiting. Choose any tool or drag and drop your file to get started immediately.
           </p>
           <div className="pt-2 flex flex-wrap justify-center gap-3">
             <Link href="/chat">
               <button
                 type="button"
-                className="h-10 px-6 rounded-[100px] bg-[#171717] dark:bg-white text-white dark:text-black font-medium text-xs sm:text-sm inline-flex items-center gap-2 cursor-pointer shadow-xs active:scale-[0.98]"
+                className="h-9 px-5 rounded-[8px] bg-primary text-white hover:bg-primary-hover active:bg-primary-focus font-medium text-xs sm:text-sm inline-flex items-center gap-2 cursor-pointer shadow-xs transition-all active:scale-[0.98]"
               >
                 <Sparkles className="h-3.5 w-3.5" />
                 <span>Chat with a Document</span>
@@ -1244,7 +1254,7 @@ export default function Home() {
             <Link href="/tools/view">
               <button
                 type="button"
-                className="h-10 px-6 rounded-[100px] bg-card text-foreground border border-border hover:border-foreground/30 font-medium text-xs sm:text-sm inline-flex items-center gap-2 cursor-pointer shadow-xs active:scale-[0.98]"
+                className="h-9 px-5 rounded-[8px] bg-surface-1 text-ink border border-hairline hover:bg-surface-2 hover:border-hairline-strong font-medium text-xs sm:text-sm inline-flex items-center gap-2 cursor-pointer shadow-xs transition-all active:scale-[0.98]"
               >
                 <Eye className="h-3.5 w-3.5 opacity-70" />
                 <span>Open PDF Reader</span>

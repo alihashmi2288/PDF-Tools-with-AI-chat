@@ -425,7 +425,7 @@ export function PDFEditor({ file }: PDFEditorProps) {
 
     return (
         <div className="flex h-full">
-            <div className="w-80 border-r bg-background p-4 space-y-4">
+            <div className="w-80 border-r border-hairline bg-surface-1 p-4 space-y-4 subtle-scrollbar overflow-y-auto">
                 <div className="space-y-2">
                     <h3 className="font-semibold">Tools</h3>
                     <div className="grid grid-cols-2 gap-2">
@@ -573,7 +573,7 @@ export function PDFEditor({ file }: PDFEditorProps) {
                 </div>
             </div>
 
-            <div className="flex-1 overflow-auto bg-gray-100">
+            <div className="flex-1 overflow-auto bg-canvas paper-desk-mat">
                 <div className="p-4">
                     <div className="flex items-center justify-between mb-4">
                         <div className="flex items-center gap-2">

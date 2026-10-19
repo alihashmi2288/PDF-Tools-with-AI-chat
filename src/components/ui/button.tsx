@@ -5,45 +5,61 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-all cursor-pointer disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:ring-1 focus-visible:ring-ring select-none active:scale-[0.98]",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap text-xs sm:text-sm font-medium transition-all duration-150 cursor-pointer disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:ring-2 focus-visible:ring-primary/40 select-none active:scale-[0.98]",
   {
     variants: {
       variant: {
-        // App / Chrome Default (6px square)
+        // Apple Primary: #3B82F6 with hover #2563EB & active #1D4ED8
         default:
-          "bg-primary text-primary-foreground hover:bg-primary/90 rounded-[6px] border border-transparent shadow-xs",
-        destructive:
-          "bg-destructive text-white hover:bg-destructive/90 rounded-[6px]",
-        outline:
-          "border border-border bg-card text-foreground hover:bg-muted/80 hover:border-foreground/20 rounded-[6px] shadow-xs",
-        secondary:
-          "bg-secondary text-secondary-foreground hover:bg-secondary/80 rounded-[6px] border border-border/40",
-        ghost:
-          "text-muted-foreground hover:text-foreground hover:bg-secondary/70 rounded-[6px]",
-        link:
-          "text-link underline-offset-4 hover:underline p-0 h-auto rounded-none",
+          "bg-primary text-white hover:bg-primary-hover active:bg-primary-focus rounded-[8px] border border-transparent shadow-xs font-medium",
+        primary:
+          "bg-primary text-white hover:bg-primary-hover active:bg-primary-focus rounded-[8px] border border-transparent shadow-xs font-medium",
 
-        // Bimodal Marketing Pills from DESIGN.md
+        // Apple Secondary: Surface with hairline border & subtle hover
+        secondary:
+          "bg-surface-1 text-ink hover:bg-surface-2 hover:border-hairline-strong rounded-[8px] border border-hairline shadow-xs font-medium",
+
+        // Apple Tertiary / Transparent
+        tertiary:
+          "bg-transparent text-ink hover:bg-surface-2 hover:text-primary rounded-[8px] border border-transparent",
+
+        // Apple Inverse: Pure white on dark / clean contrast
+        inverse:
+          "bg-white text-black hover:bg-neutral-100 rounded-[8px] border border-transparent font-medium shadow-xs",
+
+        // Apple Outline
+        outline:
+          "border border-hairline bg-transparent text-ink hover:bg-surface-2 hover:border-hairline-strong rounded-[8px]",
+
+        destructive:
+          "bg-destructive text-white hover:bg-destructive/90 rounded-[8px] shadow-xs font-medium",
+
+        ghost:
+          "text-ink-muted hover:text-ink hover:bg-surface-2 rounded-[8px]",
+
+        link:
+          "text-primary underline-offset-4 hover:underline hover:text-primary-hover p-0 h-auto rounded-none",
+
         pill:
-          "bg-[#171717] text-white hover:bg-[#2e2e2e] dark:bg-white dark:text-black dark:hover:bg-[#ededed] rounded-[100px] border border-transparent font-medium shadow-xs",
+          "bg-primary text-white hover:bg-primary-hover active:bg-primary-focus rounded-full font-medium shadow-xs",
         "pill-secondary":
-          "bg-card text-foreground border border-border hover:border-foreground/30 rounded-[100px] font-medium shadow-xs",
-        
-        // Category Pill
+          "bg-surface-1 text-ink border border-hairline hover:bg-surface-2 hover:border-hairline-strong rounded-full font-medium shadow-xs",
+
+        // Segmented control / filter tab variant
         category:
-          "bg-card text-muted-foreground border border-border hover:text-foreground hover:border-foreground/20 rounded-[64px] font-medium",
+          "bg-surface-2/60 text-ink-subtle border border-hairline hover:text-ink hover:border-hairline-strong rounded-full font-medium transition-all",
         "category-active":
-          "bg-primary text-primary-foreground border border-primary rounded-[64px] font-medium shadow-xs",
+          "bg-primary text-white border border-primary rounded-full font-medium shadow-xs",
       },
       size: {
-        default: "h-8 px-3 text-xs",
-        sm: "h-7 px-2 text-xs rounded-[6px]",
-        lg: "h-10 px-5 text-sm",
-        pill: "h-10 px-5 text-[14px]",
-        "pill-sm": "h-8 px-4 text-xs",
-        icon: "size-8 rounded-[6px]",
+        default: "h-8.5 px-3.5 text-xs rounded-[8px]",
+        sm: "h-7 px-2.5 text-xs rounded-[6px]",
+        lg: "h-10 px-5 text-sm rounded-[8px]",
+        pill: "h-9 px-4 text-xs sm:text-sm rounded-full",
+        "pill-sm": "h-7 px-3 text-xs rounded-full",
+        icon: "size-8 rounded-[8px]",
         "icon-sm": "size-7 rounded-[6px]",
-        "icon-circular": "size-8 rounded-full border border-border bg-card text-foreground hover:bg-secondary/80",
+        "icon-circular": "size-8 rounded-full border border-hairline bg-surface-1 text-ink hover:bg-surface-2 shadow-xs",
       },
     },
     defaultVariants: {

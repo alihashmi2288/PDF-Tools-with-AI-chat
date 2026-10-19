@@ -21,6 +21,7 @@ import {
     X
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { PaperProse } from "@/components/ui/paper-prose";
 
 interface WorkspaceDocument {
     id: string;
@@ -175,19 +176,19 @@ export default function MultiPdfWorkspacePage() {
     const activeDocsCount = documents.filter(d => d.isActive).length;
 
     return (
-        <div className="max-w-6xl mx-auto py-2 space-y-4">
+        <div className="max-w-6xl mx-auto py-4 space-y-4">
             {/* Header */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-border/60 pb-3">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-hairline pb-4">
                 <div className="space-y-1">
-                    <div className="flex items-center gap-2">
-                        <div className="h-7 w-7 rounded-lg bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center border border-blue-500/20">
+                    <div className="flex items-center gap-2.5">
+                        <div className="h-7 w-7 rounded-[8px] bg-primary/10 text-primary flex items-center justify-center border border-primary/20">
                             <FolderGit2 className="h-4 w-4" />
                         </div>
-                        <h1 className="text-xl font-bold tracking-tight text-foreground">
+                        <h1 className="type-headline text-ink">
                             Multi-PDF Project Workspace
                         </h1>
                     </div>
-                    <p className="text-xs text-muted-foreground">
+                    <p className="type-subhead text-ink-subtle">
                         Ask questions across multiple documents at the same time. Compare files, summarize key points, and find answers in seconds.
                     </p>
                 </div>
@@ -204,7 +205,7 @@ export default function MultiPdfWorkspacePage() {
                     <Button
                         size="sm"
                         onClick={() => fileInputRef.current?.click()}
-                        className="h-8 text-xs font-semibold gap-1.5 cursor-pointer bg-blue-600 hover:bg-blue-700 text-white"
+                        className="button-primary h-8 text-xs font-medium gap-1.5 cursor-pointer rounded-[8px]"
                     >
                         <Upload className="h-3.5 w-3.5" />
                         <span>Add PDF Files</span>
@@ -214,66 +215,74 @@ export default function MultiPdfWorkspacePage() {
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 h-[calc(100vh-12rem)] min-h-[550px]">
                 {/* Left Column: Project Documents Shelf (4 cols) */}
-                <div className="lg:col-span-4 rounded-xl border border-border/70 bg-card p-4 flex flex-col justify-between shadow-xs">
+                <div className="lg:col-span-4 hairline-card rounded-[12px] bg-surface-1 p-4 flex flex-col justify-between">
                     <div className="space-y-3">
-                        <div className="flex items-center justify-between border-b border-border/40 pb-2">
+                        <div className="flex items-center justify-between border-b border-hairline pb-2.5">
                             <div className="flex items-center gap-1.5">
-                                <Layers className="h-3.5 w-3.5 text-blue-500" />
-                                <span className="text-xs font-bold text-foreground">
+                                <Layers className="h-3.5 w-3.5 text-primary" />
+                                <span className="type-eyebrow text-ink">
                                     Project Documents
                                 </span>
                             </div>
-                            <span className="text-[10px] font-mono text-muted-foreground">
+                            <span className="type-caption font-mono text-ink-tertiary">
                                 {activeDocsCount} of {documents.length} active
                             </span>
                         </div>
 
                         {documents.length === 0 ? (
-                            <div className="p-8 border border-dashed border-border/80 rounded-xl text-center space-y-2 bg-secondary/15">
-                                <FileText className="h-8 w-8 text-muted-foreground/60 mx-auto" />
-                                <p className="text-xs font-semibold text-foreground">
-                                    No documents loaded yet
-                                </p>
-                                <p className="text-[11px] text-muted-foreground">
-                                    Upload up to 20 PDFs to ask cross-document questions
-                                </p>
+                            <div className="paper-empty-sheet p-8 text-center space-y-2.5">
+                                <div className="h-10 w-10 rounded-[8px] bg-surface-2 flex items-center justify-center border border-hairline mx-auto shadow-xs">
+                                    <FileText className="h-5 w-5 text-ink-subtle" />
+                                </div>
+                                <div>
+                                    <p className="text-xs font-semibold text-ink">
+                                        No project documents loaded
+                                    </p>
+                                    <p className="type-caption text-ink-subtle mt-0.5 max-w-[200px] mx-auto">
+                                        Upload 2 or more files to synthesize answers across all sources
+                                    </p>
+                                </div>
                                 <Button
                                     size="sm"
                                     variant="outline"
                                     onClick={() => fileInputRef.current?.click()}
-                                    className="h-7 text-xs cursor-pointer mt-1"
+                                    className="button-secondary h-7 text-xs cursor-pointer mt-1 rounded-[6px]"
                                 >
                                     Browse PDFs
                                 </Button>
                             </div>
                         ) : (
-                            <div className="space-y-2 max-h-[360px] overflow-y-auto pr-1">
+                            <div className="space-y-2 max-h-[360px] overflow-y-auto pr-1 subtle-scrollbar">
                                 {documents.map((doc) => (
                                     <div
                                         key={doc.id}
                                         className={cn(
-                                            "p-2.5 rounded-lg border text-xs flex items-center justify-between gap-2 transition-all",
+                                            "p-3 rounded-[8px] border text-xs flex items-center justify-between gap-2 transition-all shadow-xs",
                                             doc.isActive
-                                                ? "border-border/80 bg-secondary/30"
-                                                : "border-border/40 bg-secondary/10 opacity-60"
+                                                ? "paper-sheet border-paper-border text-ink"
+                                                : "border-hairline bg-surface-1 text-ink-tertiary opacity-60"
                                         )}
                                     >
-                                        <div className="flex items-center gap-2 truncate">
+                                        <div className="flex items-center gap-2.5 truncate">
                                             <input
                                                 type="checkbox"
                                                 checked={doc.isActive}
                                                 onChange={() => toggleDocumentActive(doc.id)}
-                                                className="rounded text-blue-600 cursor-pointer"
+                                                className="rounded-[4px] accent-primary cursor-pointer h-3.5 w-3.5"
                                             />
                                             <div className="truncate">
-                                                <p className="font-semibold text-foreground truncate">
+                                                <p className="font-medium text-ink truncate text-xs">
                                                     {doc.name}
                                                 </p>
-                                                <p className="text-[10px] font-mono text-muted-foreground">
-                                                    {(doc.size / 1024).toFixed(1)} KB • {doc.isExtracting ? (
-                                                        <span className="text-amber-500">Extracting...</span>
+                                                <p className="type-caption font-mono text-ink-subtle flex items-center gap-1.5 mt-0.5">
+                                                    <span>{(doc.size / 1024).toFixed(1)} KB</span>
+                                                    <span>•</span>
+                                                    {doc.isExtracting ? (
+                                                        <span className="text-[#f2994a]">Extracting...</span>
                                                     ) : (
-                                                        <span className="text-emerald-500 font-medium">Ready</span>
+                                                        <span className="text-[#16a34a] font-medium flex items-center gap-0.5">
+                                                            <CheckCircle2 className="h-2.5 w-2.5 inline" /> Ready
+                                                        </span>
                                                     )}
                                                 </p>
                                             </div>
@@ -282,7 +291,8 @@ export default function MultiPdfWorkspacePage() {
                                         <button
                                             type="button"
                                             onClick={() => removeDocument(doc.id)}
-                                            className="text-muted-foreground hover:text-destructive cursor-pointer p-1 shrink-0"
+                                            className="text-ink-tertiary hover:text-[#eb5757] cursor-pointer p-1 shrink-0 transition-colors"
+                                            title="Remove from project"
                                         >
                                             <Trash2 className="h-3.5 w-3.5" />
                                         </button>
@@ -293,8 +303,8 @@ export default function MultiPdfWorkspacePage() {
                     </div>
 
                     {/* Quick Cross-Doc Prompts */}
-                    <div className="pt-3 border-t border-border/40 space-y-1.5">
-                        <span className="text-[11px] font-semibold text-muted-foreground">
+                    <div className="pt-3 border-t border-hairline space-y-1.5">
+                        <span className="type-eyebrow text-ink-subtle block">
                             Suggested Cross-Doc Queries:
                         </span>
                         <div className="space-y-1">
@@ -308,7 +318,7 @@ export default function MultiPdfWorkspacePage() {
                                     type="button"
                                     onClick={() => handleSendMessage(promptText)}
                                     disabled={activeDocsCount === 0 || isSubmitting}
-                                    className="w-full text-left p-1.5 rounded text-[11px] text-muted-foreground hover:text-foreground hover:bg-secondary/50 truncate cursor-pointer transition-colors block border border-transparent hover:border-border/60"
+                                    className="w-full text-left p-1.5 rounded-[6px] text-[11px] text-ink-subtle hover:text-ink hover:bg-surface-2 truncate cursor-pointer transition-colors block border border-transparent hover:border-hairline"
                                 >
                                     ↳ {promptText}
                                 </button>
@@ -318,23 +328,23 @@ export default function MultiPdfWorkspacePage() {
                 </div>
 
                 {/* Right Column: Cross-Document Chat Feed (8 cols) */}
-                <div className="lg:col-span-8 rounded-xl border border-border/70 bg-card flex flex-col justify-between overflow-hidden shadow-xs">
+                <div className="lg:col-span-8 hairline-card rounded-[12px] bg-surface-1 flex flex-col justify-between overflow-hidden">
                     {/* Chat Messages */}
-                    <div className="flex-1 overflow-y-auto p-4 space-y-4">
+                    <div className="flex-1 overflow-y-auto p-4 space-y-4 subtle-scrollbar">
                         {messages.map((m) => (
                             <div
                                 key={m.id}
                                 className={cn(
-                                    "flex gap-3 text-xs leading-relaxed max-w-[88%]",
+                                    "flex gap-3 text-xs leading-relaxed max-w-[90%]",
                                     m.role === 'user' ? "ml-auto flex-row-reverse" : ""
                                 )}
                             >
                                 <div
                                     className={cn(
-                                        "h-7 w-7 rounded-lg flex items-center justify-center shrink-0 border",
+                                        "h-7 w-7 rounded-full flex items-center justify-center shrink-0 border mt-0.5 shadow-xs",
                                         m.role === 'user'
-                                            ? "bg-foreground text-background border-foreground font-semibold"
-                                            : "bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20"
+                                            ? "bg-primary text-white border-transparent"
+                                            : "bg-surface-2 text-primary border-hairline"
                                     )}
                                 >
                                     {m.role === 'user' ? <User className="h-3.5 w-3.5" /> : <Bot className="h-3.5 w-3.5" />}
@@ -342,24 +352,29 @@ export default function MultiPdfWorkspacePage() {
 
                                 <div
                                     className={cn(
-                                        "p-3 rounded-xl border whitespace-pre-wrap",
+                                        "shadow-xs text-xs",
                                         m.role === 'user'
-                                            ? "bg-foreground text-background border-foreground"
-                                            : "bg-secondary/25 text-foreground border-border/60 shadow-xs"
+                                            ? "bg-primary text-white p-3.5 rounded-2xl rounded-br-xs whitespace-pre-wrap"
+                                            : "bg-surface-2 text-ink border border-hairline p-4 rounded-2xl rounded-bl-xs"
                                     )}
                                 >
-                                    {m.content}
+                                    {m.role === 'assistant' ? (
+                                        <PaperProse content={m.content} title="project-workspace-synthesis" />
+                                    ) : (
+                                        m.content
+                                    )}
                                 </div>
                             </div>
                         ))}
 
                         {isSubmitting && (
                             <div className="flex gap-3 text-xs max-w-[88%]">
-                                <div className="h-7 w-7 rounded-lg bg-blue-500/10 text-blue-600 flex items-center justify-center border border-blue-500/20 shrink-0">
+                                <div className="h-7 w-7 rounded-[8px] bg-primary/10 text-primary flex items-center justify-center border border-primary/20 shrink-0">
                                     <Bot className="h-3.5 w-3.5" />
                                 </div>
-                                <div className="p-3 rounded-xl border border-border/60 bg-secondary/25 flex items-center gap-2 text-muted-foreground">
-                                    <Loader2 className="h-3.5 w-3.5 animate-spin text-blue-500" />
+
+                                <div className="p-3.5 rounded-[10px] border border-hairline bg-surface-2 flex items-center gap-2 text-ink-subtle">
+                                    <Loader2 className="h-3.5 w-3.5 animate-spin text-primary" />
                                     <span>Synthesizing cross-document citations...</span>
                                 </div>
                             </div>
@@ -373,20 +388,20 @@ export default function MultiPdfWorkspacePage() {
                             e.preventDefault();
                             handleSendMessage();
                         }}
-                        className="p-3 border-t border-border/40 bg-secondary/15 flex items-center gap-2"
+                        className="p-3 border-t border-hairline bg-surface-2 flex items-center gap-2"
                     >
                         <Input
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
                             placeholder={activeDocsCount > 0 ? `Ask across ${activeDocsCount} active documents...` : "Upload documents to begin asking questions..."}
                             disabled={activeDocsCount === 0 || isSubmitting}
-                            className="h-10 text-xs bg-background"
+                            className="h-10 text-xs bg-surface-1 border-hairline rounded-[8px]"
                         />
                         <Button
                             type="submit"
                             size="sm"
                             disabled={!input.trim() || activeDocsCount === 0 || isSubmitting}
-                            className="h-10 px-4 text-xs font-semibold gap-1.5 cursor-pointer bg-blue-600 hover:bg-blue-700 text-white shrink-0"
+                            className="button-primary h-10 px-4 text-xs font-medium gap-1.5 cursor-pointer shrink-0 rounded-[8px]"
                         >
                             <Send className="h-3.5 w-3.5" />
                             <span>Send</span>

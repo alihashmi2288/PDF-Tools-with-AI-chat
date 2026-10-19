@@ -281,18 +281,18 @@ export default function SignPdfPage() {
     const currentPageItems = placedItems.filter(item => item.pageIndex === currentPageIndex);
 
     return (
-        <div className="max-w-5xl mx-auto py-4 space-y-6">
+        <div className="max-w-5xl mx-auto py-6 space-y-6">
             {/* Header */}
-            <div className="space-y-1.5 border-b border-border/60 pb-4">
-                <div className="flex items-center gap-2">
-                    <div className="h-8 w-8 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center border border-emerald-500/20">
+            <div className="space-y-1.5 border-b border-hairline pb-5">
+                <div className="flex items-center gap-2.5">
+                    <div className="h-8 w-8 rounded-[8px] bg-primary/10 text-primary flex items-center justify-center border border-primary/20">
                         <PenTool className="h-4 w-4" />
                     </div>
-                    <h1 className="text-2xl font-bold tracking-tight text-foreground">
+                    <h1 className="type-headline text-ink">
                         e-Sign PDF Document
                     </h1>
                 </div>
-                <p className="text-xs sm:text-sm text-muted-foreground">
+                <p className="type-subhead text-ink-subtle">
                     Draw, type, or upload transparent signatures, place date &amp; initials fields, and download a signed PDF directly from your browser.
                 </p>
             </div>
@@ -307,9 +307,9 @@ export default function SignPdfPage() {
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
                     {/* Left Column: Signature Creation Tools (4 cols) */}
                     <div className="lg:col-span-4 space-y-4">
-                        <div className="p-4 rounded-xl border border-border/70 bg-card space-y-4 shadow-xs">
-                            <div className="flex items-center justify-between border-b border-border/40 pb-2.5">
-                                <span className="text-xs font-semibold text-foreground">
+                        <div className="hairline-card p-4 rounded-[12px] bg-surface-1 space-y-4">
+                            <div className="flex items-center justify-between border-b border-hairline pb-2.5">
+                                <span className="type-eyebrow text-ink">
                                     Create Your Signature
                                 </span>
                                 <div className="flex items-center gap-1.5">
@@ -320,7 +320,7 @@ export default function SignPdfPage() {
                                             onClick={() => setInkColor(color)}
                                             className={cn(
                                                 "h-4 w-4 rounded-full border transition-transform cursor-pointer",
-                                                inkColor === color ? "scale-125 border-foreground" : "border-border/60"
+                                                inkColor === color ? "scale-125 border-ink" : "border-hairline"
                                             )}
                                             style={{ backgroundColor: color }}
                                         />
@@ -329,13 +329,13 @@ export default function SignPdfPage() {
                             </div>
 
                             {/* Tabs: Draw / Type / Upload */}
-                            <div className="grid grid-cols-3 gap-1 bg-secondary/40 p-1 rounded-lg border border-border/50">
+                            <div className="grid grid-cols-3 gap-1 bg-surface-2 p-1 rounded-[8px] border border-hairline">
                                 <button
                                     type="button"
                                     onClick={() => setActiveTab('draw')}
                                     className={cn(
-                                        "py-1 text-xs font-medium rounded-md transition-all flex items-center justify-center gap-1 cursor-pointer",
-                                        activeTab === 'draw' ? "bg-card text-foreground font-semibold shadow-xs" : "text-muted-foreground"
+                                        "py-1 text-xs font-medium rounded-[6px] transition-all flex items-center justify-center gap-1 cursor-pointer",
+                                        activeTab === 'draw' ? "bg-surface-3 text-ink border border-hairline-strong shadow-xs font-medium" : "text-ink-subtle hover:text-ink"
                                     )}
                                 >
                                     <PenTool className="h-3 w-3" />
@@ -345,8 +345,8 @@ export default function SignPdfPage() {
                                     type="button"
                                     onClick={() => setActiveTab('type')}
                                     className={cn(
-                                        "py-1 text-xs font-medium rounded-md transition-all flex items-center justify-center gap-1 cursor-pointer",
-                                        activeTab === 'type' ? "bg-card text-foreground font-semibold shadow-xs" : "text-muted-foreground"
+                                        "py-1 text-xs font-medium rounded-[6px] transition-all flex items-center justify-center gap-1 cursor-pointer",
+                                        activeTab === 'type' ? "bg-surface-3 text-ink border border-hairline-strong shadow-xs font-medium" : "text-ink-subtle hover:text-ink"
                                     )}
                                 >
                                     <Type className="h-3 w-3" />
@@ -356,8 +356,8 @@ export default function SignPdfPage() {
                                     type="button"
                                     onClick={() => setActiveTab('upload')}
                                     className={cn(
-                                        "py-1 text-xs font-medium rounded-md transition-all flex items-center justify-center gap-1 cursor-pointer",
-                                        activeTab === 'upload' ? "bg-card text-foreground font-semibold shadow-xs" : "text-muted-foreground"
+                                        "py-1 text-xs font-medium rounded-[6px] transition-all flex items-center justify-center gap-1 cursor-pointer",
+                                        activeTab === 'upload' ? "bg-surface-3 text-ink border border-hairline-strong shadow-xs font-medium" : "text-ink-subtle hover:text-ink"
                                     )}
                                 >
                                     <Upload className="h-3 w-3" />
@@ -463,8 +463,8 @@ export default function SignPdfPage() {
                             )}
 
                             {/* Action Buttons to Place Items */}
-                            <div className="space-y-2 pt-2 border-t border-border/40">
-                                <span className="text-[11px] font-semibold text-muted-foreground">
+                            <div className="space-y-2 pt-2 border-t border-hairline">
+                                <span className="type-eyebrow text-ink-subtle block">
                                     Stamp Fields Onto Page {currentPageIndex + 1}:
                                 </span>
                                 <div className="grid grid-cols-2 gap-2">
@@ -472,36 +472,36 @@ export default function SignPdfPage() {
                                         size="sm"
                                         variant="secondary"
                                         onClick={() => placeElement('signature-image')}
-                                        className="h-8 text-xs font-medium gap-1.5 justify-start cursor-pointer"
+                                        className="button-secondary h-8 text-xs font-medium gap-1.5 justify-start cursor-pointer rounded-[8px]"
                                     >
-                                        <PenTool className="h-3.5 w-3.5 text-emerald-500" />
+                                        <PenTool className="h-3.5 w-3.5 text-primary" />
                                         <span>+ Signature</span>
                                     </Button>
                                     <Button
                                         size="sm"
                                         variant="secondary"
                                         onClick={() => placeElement('date-stamp')}
-                                        className="h-8 text-xs font-medium gap-1.5 justify-start cursor-pointer"
+                                        className="button-secondary h-8 text-xs font-medium gap-1.5 justify-start cursor-pointer rounded-[8px]"
                                     >
-                                        <Calendar className="h-3.5 w-3.5 text-blue-500" />
+                                        <Calendar className="h-3.5 w-3.5 text-primary" />
                                         <span>+ Today&apos;s Date</span>
                                     </Button>
                                     <Button
                                         size="sm"
                                         variant="secondary"
                                         onClick={() => placeElement('typed-text')}
-                                        className="h-8 text-xs font-medium gap-1.5 justify-start cursor-pointer"
+                                        className="button-secondary h-8 text-xs font-medium gap-1.5 justify-start cursor-pointer rounded-[8px]"
                                     >
-                                        <Type className="h-3.5 w-3.5 text-purple-500" />
+                                        <Type className="h-3.5 w-3.5 text-primary" />
                                         <span>+ Print Name</span>
                                     </Button>
                                     <Button
                                         size="sm"
                                         variant="secondary"
                                         onClick={() => placeElement('checkmark')}
-                                        className="h-8 text-xs font-medium gap-1.5 justify-start cursor-pointer"
+                                        className="button-secondary h-8 text-xs font-medium gap-1.5 justify-start cursor-pointer rounded-[8px]"
                                     >
-                                        <Check className="h-3.5 w-3.5 text-amber-500" />
+                                        <Check className="h-3.5 w-3.5 text-[#16a34a]" />
                                         <span>+ Checkmark</span>
                                     </Button>
                                 </div>
@@ -509,16 +509,16 @@ export default function SignPdfPage() {
                         </div>
 
                         {/* Placed Items List & Burn CTA */}
-                        <div className="p-4 rounded-xl border border-border/70 bg-card space-y-3 shadow-xs">
+                        <div className="hairline-card p-4 rounded-[12px] bg-surface-1 space-y-3">
                             <div className="flex items-center justify-between">
-                                <span className="text-xs font-semibold text-foreground">
+                                <span className="type-eyebrow text-ink">
                                     Placed Stamps ({placedItems.length})
                                 </span>
                                 {placedItems.length > 0 && (
                                     <button
                                         type="button"
                                         onClick={() => setPlacedItems([])}
-                                        className="text-[10px] text-destructive hover:underline cursor-pointer"
+                                        className="type-caption text-[#eb5757] hover:underline cursor-pointer"
                                     >
                                         Clear all
                                     </button>
@@ -526,7 +526,7 @@ export default function SignPdfPage() {
                             </div>
 
                             {placedItems.length === 0 ? (
-                                <p className="text-xs text-muted-foreground text-center py-2">
+                                <p className="type-caption text-ink-subtle text-center py-2">
                                     No fields placed yet. Click a field above to place it on this page.
                                 </p>
                             ) : (
@@ -536,10 +536,10 @@ export default function SignPdfPage() {
                                             key={item.id}
                                             onClick={() => setSelectedItemId(item.id)}
                                             className={cn(
-                                                "p-2 rounded-lg border text-xs flex items-center justify-between cursor-pointer transition-all",
+                                                "p-2 rounded-[8px] border text-xs flex items-center justify-between cursor-pointer transition-all",
                                                 selectedItemId === item.id
-                                                    ? "border-emerald-500 bg-emerald-500/10 font-semibold"
-                                                    : "border-border/60 bg-secondary/20 hover:bg-secondary/40"
+                                                    ? "border-primary bg-primary/10 text-ink font-medium"
+                                                    : "border-hairline bg-surface-2 text-ink-secondary hover:bg-surface-3"
                                             )}
                                         >
                                             <span className="truncate max-w-[180px]">
@@ -551,7 +551,7 @@ export default function SignPdfPage() {
                                                     e.stopPropagation();
                                                     deletePlacedItem(item.id);
                                                 }}
-                                                className="text-muted-foreground hover:text-destructive cursor-pointer p-0.5"
+                                                className="text-ink-tertiary hover:text-[#eb5757] cursor-pointer p-0.5"
                                             >
                                                 <Trash2 className="h-3.5 w-3.5" />
                                             </button>
@@ -563,7 +563,7 @@ export default function SignPdfPage() {
                             <Button
                                 onClick={handleSignAndSave}
                                 disabled={isSigning || placedItems.length === 0}
-                                className="w-full h-10 text-xs font-semibold gap-2 cursor-pointer bg-emerald-600 hover:bg-emerald-700 text-white"
+                                className="button-primary w-full h-10 text-xs font-medium gap-2 cursor-pointer rounded-[8px]"
                             >
                                 {isSigning ? (
                                     <>
@@ -583,7 +583,7 @@ export default function SignPdfPage() {
                                     <a
                                         href={signedPdfUrl}
                                         download={`${file.name.replace(/\.pdf$/i, '')}_signed.pdf`}
-                                        className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-600 dark:text-emerald-400 hover:underline"
+                                        className="inline-flex items-center gap-1.5 text-xs font-medium text-primary hover:underline"
                                     >
                                         <Download className="h-3.5 w-3.5" />
                                         Download Signed PDF Now
@@ -595,26 +595,26 @@ export default function SignPdfPage() {
 
                     {/* Right Column: Visual PDF Interactive Placement Canvas (8 cols) */}
                     <div className="lg:col-span-8 space-y-4">
-                        <div className="p-4 rounded-xl border border-border/70 bg-card space-y-3 shadow-xs">
+                        <div className="hairline-card p-4 rounded-[12px] bg-surface-1 space-y-3">
                             {/* Page Navigator */}
-                            <div className="flex items-center justify-between border-b border-border/40 pb-2.5">
+                            <div className="flex items-center justify-between border-b border-hairline pb-2.5">
                                 <div className="flex items-center gap-2">
                                     <Button
                                         variant="ghost"
                                         size="icon"
-                                        className="h-7 w-7"
+                                        className="h-7 w-7 rounded-[6px]"
                                         disabled={currentPageIndex <= 0}
                                         onClick={() => changePage(-1)}
                                     >
                                         <ChevronLeft className="h-4 w-4" />
                                     </Button>
-                                    <span className="text-xs font-mono font-medium text-foreground">
+                                    <span className="type-caption font-mono font-medium text-ink">
                                         Page {currentPageIndex + 1} of {pageCount}
                                     </span>
                                     <Button
                                         variant="ghost"
                                         size="icon"
-                                        className="h-7 w-7"
+                                        className="h-7 w-7 rounded-[6px]"
                                         disabled={currentPageIndex >= pageCount - 1}
                                         onClick={() => changePage(1)}
                                     >
@@ -622,13 +622,13 @@ export default function SignPdfPage() {
                                     </Button>
                                 </div>
 
-                                <span className="text-[11px] text-muted-foreground">
+                                <span className="type-caption text-ink-subtle">
                                     Drag fields below to position them precisely
                                 </span>
                             </div>
 
                             {/* PDF Page Interactive Preview Box */}
-                            <div className="relative border border-border/60 rounded-xl bg-secondary/30 min-h-[500px] flex items-center justify-center overflow-hidden p-3 select-none">
+                            <div className="relative border border-hairline rounded-[12px] bg-canvas min-h-[500px] flex items-center justify-center overflow-hidden p-3 select-none">
                                 {isLoadingPage ? (
                                     <div className="flex items-center gap-2 text-xs text-muted-foreground font-mono">
                                         <Loader2 className="h-4 w-4 animate-spin text-emerald-500" />

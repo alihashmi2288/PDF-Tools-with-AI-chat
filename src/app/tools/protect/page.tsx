@@ -73,17 +73,17 @@ export default function ProtectPdfPage() {
     };
 
     return (
-        <div className="max-w-2xl mx-auto py-4 space-y-6">
-            <div className="space-y-1.5 border-b border-border/60 pb-4">
-                <div className="flex items-center gap-2">
-                    <div className="h-8 w-8 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center border border-emerald-500/20">
+        <div className="max-w-2xl mx-auto py-6 space-y-6">
+            <div className="space-y-1.5 border-b border-hairline pb-5">
+                <div className="flex items-center gap-2.5">
+                    <div className="h-8 w-8 rounded-[8px] bg-primary/10 text-primary flex items-center justify-center border border-primary/20">
                         <Lock className="h-4 w-4" />
                     </div>
-                    <h1 className="text-2xl font-bold tracking-tight text-foreground">
+                    <h1 className="type-headline text-ink">
                         Protect PDF with Password (AES-256)
                     </h1>
                 </div>
-                <p className="text-xs sm:text-sm text-muted-foreground">
+                <p className="type-subhead text-ink-subtle">
                     Encrypt your confidential PDFs with military-grade AES-256 standard encryption and lock down copying or editing permissions.
                 </p>
             </div>
@@ -95,17 +95,17 @@ export default function ProtectPdfPage() {
                     subtitle="Zero-knowledge encryption • Powered locally in your browser with Web Crypto"
                 />
             ) : (
-                <div className="p-6 rounded-xl border border-border/70 bg-card space-y-5 shadow-xs">
-                    <div className="flex items-center justify-between border-b border-border/40 pb-3">
+                <div className="hairline-card p-6 rounded-[12px] bg-surface-1 space-y-5">
+                    <div className="flex items-center justify-between border-b border-hairline pb-3">
                         <div className="flex items-center gap-3">
-                            <div className="h-9 w-9 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center border border-emerald-500/20">
+                            <div className="h-9 w-9 rounded-[8px] bg-primary/10 text-primary flex items-center justify-center border border-primary/20">
                                 <Lock className="h-4 w-4" />
                             </div>
                             <div>
-                                <p className="font-semibold text-sm text-foreground truncate max-w-sm">
+                                <p className="font-medium text-sm text-ink truncate max-w-sm">
                                     {file.name}
                                 </p>
-                                <p className="text-[11px] font-mono text-muted-foreground">
+                                <p className="type-caption font-mono text-ink-subtle">
                                     {(file.size / 1024).toFixed(1)} KB • Encryption: AES-256
                                 </p>
                             </div>
@@ -114,7 +114,7 @@ export default function ProtectPdfPage() {
                         <Button
                             variant="ghost"
                             size="sm"
-                            className="h-8 text-xs text-muted-foreground hover:text-foreground cursor-pointer"
+                            className="h-8 text-xs text-ink-subtle hover:text-ink cursor-pointer rounded-[6px]"
                             onClick={() => {
                                 setFile(null);
                                 setProtectedPdfUrl(null);
@@ -129,7 +129,7 @@ export default function ProtectPdfPage() {
                             {/* Password Inputs */}
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                 <div className="space-y-1.5">
-                                    <Label className="text-xs font-semibold text-foreground">
+                                    <Label className="type-eyebrow text-ink-subtle">
                                         Choose Password
                                     </Label>
                                     <div className="relative">
@@ -138,12 +138,12 @@ export default function ProtectPdfPage() {
                                             value={userPassword}
                                             onChange={(e) => setUserPassword(e.target.value)}
                                             placeholder="Enter strong password"
-                                            className="h-9 text-xs pr-8"
+                                            className="h-9 text-xs pr-8 bg-surface-2 border-hairline rounded-[8px]"
                                         />
                                         <button
                                             type="button"
                                             onClick={() => setShowPassword(!showPassword)}
-                                            className="absolute right-2 top-2.5 text-muted-foreground hover:text-foreground cursor-pointer"
+                                            className="absolute right-2.5 top-2.5 text-ink-tertiary hover:text-ink cursor-pointer"
                                         >
                                             {showPassword ? <EyeOff className="h-3.5 w-3.5" /> : <Eye className="h-3.5 w-3.5" />}
                                         </button>
@@ -151,7 +151,7 @@ export default function ProtectPdfPage() {
                                 </div>
 
                                 <div className="space-y-1.5">
-                                    <Label className="text-xs font-semibold text-foreground">
+                                    <Label className="type-eyebrow text-ink-subtle">
                                         Confirm Password
                                     </Label>
                                     <Input
@@ -159,53 +159,53 @@ export default function ProtectPdfPage() {
                                         value={confirmPassword}
                                         onChange={(e) => setConfirmPassword(e.target.value)}
                                         placeholder="Repeat password"
-                                        className="h-9 text-xs"
+                                        className="h-9 text-xs bg-surface-2 border-hairline rounded-[8px]"
                                     />
                                 </div>
                             </div>
 
                             {/* Granular Permissions Locks */}
-                            <div className="space-y-2 pt-2 border-t border-border/40">
-                                <span className="text-xs font-semibold text-foreground">
+                            <div className="space-y-2 pt-2 border-t border-hairline">
+                                <span className="type-eyebrow text-ink-subtle block">
                                     Permission Locks (Security Policies):
                                 </span>
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
-                                    <label className="flex items-center gap-2 p-2 rounded-lg border border-border/60 bg-secondary/20 cursor-pointer">
+                                    <label className="flex items-center gap-2 p-2.5 rounded-[8px] border border-hairline bg-surface-2 text-ink cursor-pointer hover:bg-surface-3 transition-colors">
                                         <input
                                             type="checkbox"
                                             checked={allowPrinting}
                                             onChange={(e) => setAllowPrinting(e.target.checked)}
-                                            className="rounded text-emerald-600 cursor-pointer"
+                                            className="rounded-[4px] accent-primary cursor-pointer"
                                         />
                                         <span>Allow Document Printing</span>
                                     </label>
 
-                                    <label className="flex items-center gap-2 p-2 rounded-lg border border-border/60 bg-secondary/20 cursor-pointer">
+                                    <label className="flex items-center gap-2 p-2.5 rounded-[8px] border border-hairline bg-surface-2 text-ink cursor-pointer hover:bg-surface-3 transition-colors">
                                         <input
                                             type="checkbox"
                                             checked={allowCopying}
                                             onChange={(e) => setAllowCopying(e.target.checked)}
-                                            className="rounded text-emerald-600 cursor-pointer"
+                                            className="rounded-[4px] accent-primary cursor-pointer"
                                         />
                                         <span>Allow Copying Text / Content</span>
                                     </label>
 
-                                    <label className="flex items-center gap-2 p-2 rounded-lg border border-border/60 bg-secondary/20 cursor-pointer">
+                                    <label className="flex items-center gap-2 p-2.5 rounded-[8px] border border-hairline bg-surface-2 text-ink cursor-pointer hover:bg-surface-3 transition-colors">
                                         <input
                                             type="checkbox"
                                             checked={allowModifying}
                                             onChange={(e) => setAllowModifying(e.target.checked)}
-                                            className="rounded text-emerald-600 cursor-pointer"
+                                            className="rounded-[4px] accent-primary cursor-pointer"
                                         />
                                         <span>Allow Modifying Pages</span>
                                     </label>
 
-                                    <label className="flex items-center gap-2 p-2 rounded-lg border border-border/60 bg-secondary/20 cursor-pointer">
+                                    <label className="flex items-center gap-2 p-2.5 rounded-[8px] border border-hairline bg-surface-2 text-ink cursor-pointer hover:bg-surface-3 transition-colors">
                                         <input
                                             type="checkbox"
                                             checked={allowFillingForms}
                                             onChange={(e) => setAllowFillingForms(e.target.checked)}
-                                            className="rounded text-emerald-600 cursor-pointer"
+                                            className="rounded-[4px] accent-primary cursor-pointer"
                                         />
                                         <span>Allow Form Field Filling</span>
                                     </label>
@@ -215,7 +215,7 @@ export default function ProtectPdfPage() {
                             <Button
                                 onClick={handleProtect}
                                 disabled={isProtecting || !userPassword}
-                                className="w-full h-10 text-xs font-semibold gap-2 cursor-pointer bg-emerald-600 hover:bg-emerald-700 text-white"
+                                className="button-primary w-full h-10 text-xs font-medium gap-2 cursor-pointer rounded-[8px]"
                             >
                                 {isProtecting ? (
                                     <>
@@ -231,15 +231,15 @@ export default function ProtectPdfPage() {
                             </Button>
                         </div>
                     ) : (
-                        <div className="p-5 rounded-xl border border-emerald-500/30 bg-emerald-500/5 space-y-4 text-center">
-                            <div className="h-10 w-10 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mx-auto border border-emerald-500/20">
+                        <div className="p-5 rounded-[12px] border border-[#16a34a]/30 bg-[#16a34a]/5 space-y-4 text-center">
+                            <div className="h-10 w-10 rounded-full bg-[#16a34a]/10 text-[#16a34a] flex items-center justify-center mx-auto border border-[#16a34a]/20">
                                 <ShieldCheck className="h-5 w-5" />
                             </div>
                             <div className="space-y-1">
-                                <h3 className="font-bold text-sm text-foreground">
+                                <h3 className="type-card-title text-ink">
                                     PDF Successfully Encrypted!
                                 </h3>
-                                <p className="text-xs text-muted-foreground">
+                                <p className="type-caption text-ink-subtle">
                                     Your file now requires the password to open in Adobe Acrobat or any browser.
                                 </p>
                             </div>
@@ -249,7 +249,7 @@ export default function ProtectPdfPage() {
                                     href={protectedPdfUrl}
                                     download={`${file.name.replace(/\.pdf$/i, '')}_protected.pdf`}
                                 >
-                                    <Button className="h-9 px-5 text-xs font-semibold gap-2 cursor-pointer bg-emerald-600 hover:bg-emerald-700 text-white">
+                                    <Button className="button-primary h-9 px-5 text-xs font-medium gap-2 cursor-pointer rounded-[8px]">
                                         <Download className="h-3.5 w-3.5" />
                                         <span>Download Protected PDF</span>
                                     </Button>

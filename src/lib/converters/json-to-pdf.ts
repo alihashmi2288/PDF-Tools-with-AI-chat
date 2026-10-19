@@ -24,7 +24,7 @@ export async function convertJsonToPdf(
 
     const title = options.title || 'Structured Data Report';
     const subtitle = options.subtitle || `Generated on ${new Date().toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}`;
-    const org = options.organization || 'PDF Master AI Analytics';
+    const org = options.organization || 'PDFKit Analytics';
 
     // Theme color definitions
     const themes = {

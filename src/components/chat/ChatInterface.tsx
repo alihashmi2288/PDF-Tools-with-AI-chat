@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Send, Bot, Sparkles, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { usePDFContext } from "@/context/PDFContext";
+import { PaperProse } from "@/components/ui/paper-prose";
 
 interface ChatInterfaceProps {
     context?: string;
@@ -67,18 +68,18 @@ export function ChatInterface({ context, className }: ChatInterfaceProps) {
     ];
 
     return (
-        <div className={cn("flex flex-col h-full border border-border rounded-xl overflow-hidden bg-card shadow-xs", className)}>
+        <div className={cn("flex flex-col h-full border border-hairline rounded-[12px] overflow-hidden bg-surface-1 shadow-xs", className)}>
             {/* Header info */}
-            <div className="px-4 py-2.5 border-b border-border bg-secondary/30 flex items-center justify-between">
+            <div className="px-4 py-2.5 border-b border-hairline bg-surface-2/60 flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                    <div className="h-5 w-5 rounded-[4px] bg-secondary flex items-center justify-center border border-border">
-                        <Sparkles className="h-3 w-3 text-foreground" />
+                    <div className="h-5 w-5 rounded-[6px] bg-primary/20 flex items-center justify-center border border-primary/30">
+                        <Sparkles className="h-3 w-3 text-primary" />
                     </div>
-                    <span className="type-mono-eyebrow text-[10px] text-foreground font-semibold">
+                    <span className="type-mono-eyebrow text-[10px] text-ink font-semibold tracking-[0.4px]">
                         AI Document Assistant
                     </span>
                 </div>
-                <span className="type-mono-eyebrow text-[9px] text-muted-foreground px-1.5 py-0.5 rounded-[4px] bg-card border border-border">
+                <span className="type-mono-eyebrow text-[9px] text-ink-muted px-2 py-0.5 rounded-full bg-surface-2 border border-hairline">
                     Instant AI Answers
                 </span>
             </div>
@@ -94,24 +95,28 @@ export function ChatInterface({ context, className }: ChatInterfaceProps) {
                         )}
                     >
                         {msg.role === "assistant" && (
-                            <div className="h-7 w-7 rounded-[6px] bg-secondary flex items-center justify-center shrink-0 border border-border mt-0.5">
-                                <Bot className="h-3.5 w-3.5 text-foreground" />
+                            <div className="h-7 w-7 rounded-full bg-surface-2 flex items-center justify-center shrink-0 border border-hairline mt-0.5 shadow-xs">
+                                <Bot className="h-3.5 w-3.5 text-primary" />
                             </div>
                         )}
 
                         <div
                             className={cn(
-                                "rounded-xl px-4 py-2.5 text-xs leading-relaxed max-w-[85%] whitespace-pre-wrap",
+                                "text-xs leading-relaxed max-w-[85%]",
                                 msg.role === "user"
-                                    ? "bg-[#171717] dark:bg-white text-white dark:text-black font-medium shadow-xs"
-                                    : "bg-secondary text-foreground border border-border"
+                                    ? "bg-primary text-white font-normal shadow-xs px-4 py-2.5 rounded-2xl rounded-br-xs whitespace-pre-wrap"
+                                    : "bg-surface-2 text-ink border border-hairline p-4 rounded-2xl rounded-bl-xs shadow-xs"
                             )}
                         >
-                            {msg.content}
+                            {msg.role === "assistant" ? (
+                                <PaperProse content={msg.content} title="ai-document-answer" />
+                            ) : (
+                                msg.content
+                            )}
                         </div>
 
                         {msg.role === "user" && (
-                            <div className="h-7 w-7 rounded-[6px] bg-[#171717] dark:bg-white text-white dark:text-black flex items-center justify-center shrink-0 shadow-xs mt-0.5 font-bold text-[10px]">
+                            <div className="h-7 w-7 rounded-full bg-primary text-white flex items-center justify-center shrink-0 shadow-xs mt-0.5 font-bold text-[10px]">
                                 U
                             </div>
                         )}
@@ -119,13 +124,13 @@ export function ChatInterface({ context, className }: ChatInterfaceProps) {
                 ))}
 
                 {isLoading && (
-                    <div className="flex items-center gap-2.5 text-xs text-muted-foreground">
-                        <div className="h-7 w-7 rounded-[6px] bg-secondary flex items-center justify-center shrink-0 border border-border">
-                            <Bot className="h-3.5 w-3.5 text-foreground animate-pulse" />
+                    <div className="flex items-center gap-2.5 text-xs text-ink-subtle">
+                        <div className="h-7 w-7 rounded-[8px] bg-surface-2 flex items-center justify-center shrink-0 border border-hairline">
+                            <Bot className="h-3.5 w-3.5 text-primary animate-pulse" />
                         </div>
-                        <div className="p-2.5 rounded-xl bg-secondary border border-border flex items-center gap-2">
-                            <Loader2 className="h-3 w-3 animate-spin text-muted-foreground" />
-                            <span className="type-mono-eyebrow text-[10px] text-muted-foreground">Reading your document...</span>
+                        <div className="p-2.5 rounded-[10px] bg-surface-2 border border-hairline flex items-center gap-2">
+                            <Loader2 className="h-3 w-3 animate-spin text-primary" />
+                            <span className="type-mono-eyebrow text-[10px] text-ink-subtle">Reading your document...</span>
                         </div>
                     </div>
                 )}
@@ -141,7 +146,7 @@ export function ChatInterface({ context, className }: ChatInterfaceProps) {
                             type="button"
                             disabled={isLoading}
                             onClick={() => handleSubmit(undefined, prompt)}
-                            className="text-[11px] px-2.5 py-1 rounded-[6px] bg-secondary hover:bg-muted border border-border text-muted-foreground hover:text-foreground transition-colors text-left cursor-pointer"
+                            className="text-[11px] px-2.5 py-1 rounded-[6px] bg-surface-2 hover:bg-surface-3 border border-hairline text-ink-muted hover:text-ink transition-colors text-left cursor-pointer"
                         >
                             {prompt}
                         </button>
@@ -150,20 +155,20 @@ export function ChatInterface({ context, className }: ChatInterfaceProps) {
             )}
 
             {/* Input Bar */}
-            <div className="p-3 border-t border-border bg-card">
+            <div className="p-3 border-t border-hairline bg-surface-1">
                 <form onSubmit={(e) => handleSubmit(e)} className="flex items-center gap-2">
                     <input
                         value={input}
                         onChange={(e) => setInput(e.target.value)}
                         placeholder={context ? "Ask anything about this document..." : "Ask a question about your document..."}
                         disabled={isLoading}
-                        className="flex-1 h-8 px-3 text-xs rounded-[6px] bg-secondary border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-foreground/30 transition-all"
+                        className="flex-1 h-8.5 px-3 text-xs rounded-[8px] bg-surface-2 border border-hairline text-ink placeholder:text-ink-subtle focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/30 transition-all"
                     />
                     <Button 
                         type="submit" 
                         size="sm" 
                         disabled={isLoading || !input.trim()}
-                        className="h-8 px-3 text-xs gap-1.5"
+                        className="h-8.5 px-3 text-xs gap-1.5"
                     >
                         <Send className="h-3.5 w-3.5" />
                         <span className="sr-only">Send</span>
